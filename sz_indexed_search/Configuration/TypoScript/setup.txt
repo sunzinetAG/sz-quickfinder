@@ -1,0 +1,14 @@
+page {
+	includeJS {
+		sz_indexed_search_autocomplete = EXT:sz_indexed_search/Resources/Public/Javascript/autocomplete.js
+		sz_indexed_search = EXT:sz_indexed_search/Resources/Public/Javascript/main.js
+	}
+	includeCSS {
+		sz_indexed_search_autocomplete = EXT:sz_indexed_search/Resources/Public/Css/main.css
+	}
+}
+plugin.tx_szindexedsearch {
+	settings {
+		pageroot = {$global.search.pageroot}
+	}
+}
