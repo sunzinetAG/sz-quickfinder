@@ -702,7 +702,7 @@
 	};
 
 	// Create chainable jQuery plugin:
-	$.fn.autocomplete = function (options, args) {
+	$.fn.szautocomplete = function (options, args) {
 		var dataKey = 'autocomplete';
 		// If function invoked without argument return
 		// instance of the first matched element:

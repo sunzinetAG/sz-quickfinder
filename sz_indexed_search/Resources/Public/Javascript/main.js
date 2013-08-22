@@ -3,7 +3,7 @@
 
 	var initAutocomplete = function() {
 		var $searchbox = $('.tx-indexedsearch-searchbox-sword');
-		$searchbox.autocomplete({
+		$searchbox.szautocomplete({
 			serviceUrl: '/index.php?eID=tx_szindexedsearch_autocomplete',
 			paramName: 'tx_szindexedsearch_pi99[searchValue]'
 		});
