@@ -31,7 +31,7 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 		$rows = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows(
 			$select,
 			$table,
-			'title LIKE "%' . $GLOBALS['TYPO3_DB']->escapeStrForLike($searchValue, 'pages') . '%" AND doktype !=4 AND doktype !=254' . $enableFields . ' AND uid IN (' . $allowedPages. ') AND nav_hide = 1',
+			'title LIKE "%' . $GLOBALS['TYPO3_DB']->escapeStrForLike($searchValue, 'pages') . '%" AND doktype !=4 AND doktype !=254' . $enableFields . ' AND uid IN (' . $allowedPages. ') AND nav_hide = 0',
 			'',
 			'',
 			10

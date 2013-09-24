@@ -15,7 +15,7 @@ plugin.tx_szindexedsearch {
 }
 
 plugin.tx_indexedsearch {
-	templateFile =  EXT:sz_indexed_search/Template/Public/indexed_search.html
+	templateFile =  EXT:sz_indexed_search/Template/indexed_search.html
 }
 
 lib.contents {
