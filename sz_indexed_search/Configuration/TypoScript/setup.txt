@@ -7,8 +7,40 @@ page {
 		sz_indexed_search_autocomplete = EXT:sz_indexed_search/Resources/Public/Css/main.css
 	}
 }
+
 plugin.tx_szindexedsearch {
 	settings {
 		pageroot = {$global.search.pageroot}
 	}
 }
+
+plugin.tx_indexedsearch {
+	templateFile =  EXT:sz_indexed_search/Template/Public/indexed_search.html
+}
+
+lib.contents {
+ 	# Search form
+	search = COA
+	search {
+		10 = TEXT
+		10 {
+			dataWrap = <form action="|" class="search-form" method="post">
+			typolink {
+				parameter = {$global.pages.search}
+				returnLast = url
+			}
+		}
+		20 = TEXT
+		20 {
+			wrap (
+				<fieldset>
+					<input id="searchbox-sword" name="tx_indexedsearch[sword]" type="text" value="|" class="tx-indexedsearch-searchbox-sword" />
+					<input type="submit" />
+				</fieldset>
+				</form>
+			)
+		}
+	}
+}
+
+lib.templates.base.variables.search =< lib.contents.search

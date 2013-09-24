@@ -22,6 +22,8 @@ $EM_CONF[$_EXTKEY] = array(
 		'depends' => array(
 			'extbase' => '1.3',
 			'fluid' => '1.3',
+			'indexed_search' => '4.7.7',
+			'indexed_search_mysql' => '1.0.0',
 			'typo3' => '4.5',
 		),
 		'conflicts' => array(
