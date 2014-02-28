@@ -11,7 +11,37 @@ page {
 plugin.tx_szindexedsearch {
 	settings {
 		pageroot = {$global.search.pageroot}
+		homePageUid = {$global.homePageUid}
+
+		enable_documents = 0
+		show_breadcrumbs_to_documents = 0
+		reg_search_exp = %|%
+		max_results = 3
+		highlight_search_results = 1
+		additional_button = 0
+
+		customSearch {
+			Pages {
+				table = pages
+				searchFields = title, keywords
+				where = doktype !=4, doktype !=254, nav_hide=0
+				###{$breadcrumbs} is reserved
+				title = {$title}
+				linkField = uid
+				important = 1
+			}
+		}
 	}
+
+	# Override or add translations here:
+#	_LOCAL_LANG {
+#		de {
+#			pages = Seiten
+#		}
+#		en {
+#			pages = Pages
+#		}
+#	}
 }
 
 plugin.tx_indexedsearch {
@@ -35,7 +65,7 @@ lib.contents {
 		20 {
 			wrap (
 				<fieldset>
-					<input id="searchbox-sword" name="tx_indexedsearch[sword]" type="text" value="|" class="tx-indexedsearch-searchbox-sword" />
+					<input id="searchbox-sword" name="tx_indexedsearch[sword]" type="text" value="|" class="tx-indexedsearch-searchbox-sword search" />
 					<input type="submit" />
 				</fieldset>
 				</form>

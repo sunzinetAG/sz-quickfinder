@@ -6,6 +6,19 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="pages">Pages</label>
+			<label index="documents">Documents</label>
+			<label index="quicklaunch">Quicklaunch</label>
+			<label index="noresults">No Results</label>
+			<label index="all_search_results">Show all search results</label>
+		</languageKey>
+
+		<languageKey index="de" type="array">
+				<label index="pages">Seiten</label>
+				<label index="documents">Dokumente</label>
+				<label index="quicklaunch">Schnellzugriff</label>
+				<label index="noresults">Keine Suchergebnisse</label>
+				<label index="all_search_results">Alle Suchergebnisse anzeigen</label>
 		</languageKey>
 	</data>
 </T3locallang>
