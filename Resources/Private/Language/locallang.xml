@@ -14,11 +14,11 @@
 		</languageKey>
 
 		<languageKey index="de" type="array">
-				<label index="pages">Seiten</label>
-				<label index="documents">Dokumente</label>
-				<label index="quicklaunch">Schnellzugriff</label>
-				<label index="noresults">Keine Suchergebnisse</label>
-				<label index="all_search_results">Alle Suchergebnisse anzeigen</label>
+			<label index="pages">Seiten</label>
+			<label index="documents">Dokumente</label>
+			<label index="quicklaunch">Schnellzugriff</label>
+			<label index="noresults">Keine Suchergebnisse</label>
+			<label index="all_search_results">Alle Suchergebnisse anzeigen</label>
 		</languageKey>
 	</data>
 </T3locallang>

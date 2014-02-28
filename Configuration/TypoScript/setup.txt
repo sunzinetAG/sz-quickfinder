@@ -13,7 +13,7 @@ plugin.tx_szindexedsearch {
 		pageroot = {$global.search.pageroot}
 		homePageUid = {$global.homePageUid}
 
-		enable_documents = 0
+		enable_documents = 1
 		show_breadcrumbs_to_documents = 0
 		reg_search_exp = %|%
 		max_results = 3

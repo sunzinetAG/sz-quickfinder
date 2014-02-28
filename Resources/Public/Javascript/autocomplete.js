@@ -498,9 +498,9 @@
 				container.children().first().addClass(classSelected);
 			}
 
-			jQuery('.tx-indexedsearch-searchbox-sword-trigger').click(function(e){
+			$('.tx-indexedsearch-searchbox-sword-trigger').click(function(e){
 				e.preventDefault();
-				jQuery(".search-form").submit();
+				$(".search-form").submit();
 			});
 
 			that.findBestHint();

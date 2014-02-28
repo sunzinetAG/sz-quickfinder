@@ -97,7 +97,9 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 
 						$href = $fileFolder . $media;
 
-						if(include_once(PATH_site.'/typo3conf/ext/naw_securedl/Classes/Service/Tx_NawSecuredlService.php')){
+
+						if(t3lib_extMgm::isLoaded('naw_securedl')){
+							include_once(PATH_site.'/typo3conf/ext/naw_securedl/Classes/Service/Tx_NawSecuredlService.php');
 							/* @var $objSecureDownloads tx_nawsecuredl */
 							$objSecureDownloads = t3lib_div::makeInstance('Tx_NawSecuredlService');
 
@@ -129,7 +131,7 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	 * Builds custom queries and returns them in an array
 	 *
 	 * @param string $searchValue
-	 * @param array $searchConditions
+	 * @param array $searchConditions set by typoscript
 	 * @return array
 	 */
 	protected function getCustomResults($searchValue, $searchConditions) {
