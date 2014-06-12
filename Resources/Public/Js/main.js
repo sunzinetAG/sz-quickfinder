@@ -3,7 +3,7 @@
  */
 (function($) {
 	'use strict';
-	var pageType = 8375;
+	var pageType = 1402582595;
 	var timer = null;
 
 	var initAutocomplete = function() {
