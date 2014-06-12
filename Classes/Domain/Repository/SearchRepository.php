@@ -55,96 +55,131 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	protected $logicalOr = array();
 
 	/**
+	 * constraints
+	 *
+	 * @var array
+	 */
+	protected $constraints = array();
+
+	/**
+	 * @var Tx_Extbase_Persistence_Query
+	 */
+	protected $query;
+
+	/**
+	 * TypoScript settings
+	 *
+	 * @var array
+	 */
+	protected $settings;
+
+	/**
+	 * Enable Breadcrumbs for given Types
+	 *
+	 * @var array
+	 */
+	protected $showBreadcrumbInSeachresult = array(
+		'Tx_SzIndexedSearch_Domain_Model_Page',
+		'Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay',
+		'Tx_SzIndexedSearch_Domain_Model_File'
+	);
+
+	/**
 	 * Builds the custom Search
 	 *
 	 * @param Tx_SzIndexedSearch_Domain_Model_CustomSearch $customSearch
 	 * @param array $settings
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 * @return array|Tx_Extbase_Persistence_QueryResult
 	 */
 	public function customSearch(Tx_SzIndexedSearch_Domain_Model_CustomSearch $customSearch, array $settings) {
-
-		if($customSearch->getTable() === 'Tx_SzIndexedSearch_Domain_Model_Page' AND $this->createQuery()->getQuerySettings()->getLanguageUid() !== 0) {
-			$this->type = 'Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay';
-		} else {
-			$this->type = $customSearch->getTable();
-		}
-
-		$query = $this->persistenceManager->createQueryForType($this->type);
-
-		$query->getQuerySettings()
-				->setRespectStoragePage(FALSE)
-				->setRespectSysLanguage(TRUE)
-				->setLanguageMode('strict');
-
-		$constraints = array();
+		$this->settings = $settings;
+		$this->setType($customSearch->getTable());
+		$this->query = $this->persistenceManager->createQueryForType($this->type);
+		$this->setQuerySettings();
+		$this->constraints = array();
 
 		foreach($customSearch->getSearchFields() as $propertyName) {
-			$constraints[] = $query->like($propertyName, $this->regSearchExp($customSearch->getSearchString(), $settings));
+			$this->constraints[] = $this->query->like($propertyName, $this->regSearchExp($customSearch->getSearchString(), $this->settings));
 		}
 
-		$this->getCustomEnableFields($query, $query->getQuerySettings()->getStoragePageIds());
+		$this->getCustomEnableFields($this->query->getQuerySettings()->getStoragePageIds());
+		$this->prepareQuery();
 
-		array_push($this->logicalAnd, $query->logicalOr($constraints));
-
-		$query->matching(
-			$query->logicalAnd(
-				$this->logicalAnd,
-				$query->logicalOr($this->logicalOr)
-			)
-		);
-
-		$this->logicalAnd = array();
-		$this->logicalOr = array();
-
-		$query->setLimit(intval($settings['max_results']));
-
-		$results = $query->execute();
+		$results = $this->query->execute();
 
 		foreach($results as $result) {
-			if($result->changeUidToPid == true) {
-				if($customSearch->getTable() == 'Tx_SzIndexedSearch_Domain_Model_Page' || $customSearch->getTable() == 'Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay' || $customSearch->getTable() == 'Tx_SzIndexedSearch_Domain_Model_File') {
-					$result->setBreadcrumb($this->getBreadcrumb($result->getUid(), $query->getQuerySettings()->getLanguageUid(), $settings['breadcrumb_seperator']));
-				}
-			} else {
-				if($customSearch->getTable() == 'Tx_SzIndexedSearch_Domain_Model_Page' || $customSearch->getTable() == 'Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay' || $customSearch->getTable() == 'Tx_SzIndexedSearch_Domain_Model_File') {
-					$result->setBreadcrumb($this->getBreadcrumb($result->getPid(), $query->getQuerySettings()->getLanguageUid(), $settings['breadcrumb_seperator']));
-				}
-			}
+			($result->changeUidToPid) ? $result->setBreadcrumb($this->getBreadcrumb($result->getUid())) : $result->setBreadcrumb($this->getBreadcrumb($result->getPid()));
 		}
 
 		return $results;
 	}
 
+	protected function prepareQuery() {
+		$this->query->matching(
+			$this->query->logicalAnd(
+				$this->logicalAnd,
+				$this->query->logicalOr($this->logicalOr)
+			)
+		);
+		$this->query->setLimit(intval($this->settings['max_results']));
+	}
+
 	/**
-	 * @param $query \TYPO3\CMS\Extbase\Persistence\QueryInterface
-	 * @param array $storagePids
+	 * Sets the type of the Model
+	 *
+	 * @param $type
 	 */
-	protected function getCustomEnableFields($query, $storagePids) {
-		if($this->type === 'Tx_SzIndexedSearch_Domain_Model_Page') {
-			foreach($storagePids as $storagePid) {
-				array_push($this->logicalOr, $query->in('uid', $this->extendPidListByChildren($storagePid, 6)));
-			}
-			array_push($this->logicalAnd, $query->equals('nav_hide', 0));
-			array_push($this->logicalAnd, $query->logicalNot($query->equals('doktype', 254)));
-			array_push($this->logicalAnd, $query->logicalNot($query->equals('doktype', 4)));
+	protected function setType($type) {
+		if($type === 'Tx_SzIndexedSearch_Domain_Model_Page' AND $this->createQuery()->getQuerySettings()->getLanguageUid() !== 0) {
+			$this->type = 'Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay';
 		} else {
-			foreach($storagePids as $storagePid) {
-				array_push($this->logicalOr, $query->in('pid', $this->extendPidListByChildren($storagePid, 6)));
-			}
+			$this->type = $type;
 		}
 	}
 
 	/**
+	 * Set the QuerySettings
+	 */
+	protected function setQuerySettings() {
+		$this->query->getQuerySettings()
+				->setRespectStoragePage(FALSE)
+				->setRespectSysLanguage(TRUE)
+				->setLanguageMode('strict');
+	}
+
+	/**
+	 * Fills logicalAnd and logicalOr for the Query
+	 *
+	 * @param array $storagePids
+	 */
+	protected function getCustomEnableFields($storagePids) {
+		if($this->type === 'Tx_SzIndexedSearch_Domain_Model_Page') {
+			foreach($storagePids as $storagePid) {
+				array_push($this->logicalOr, $this->query->in('uid', $this->extendPidListByChildren($storagePid, 6)));
+			}
+			array_push($this->logicalAnd, $this->query->equals('nav_hide', 0));
+			array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
+			array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
+		} else {
+			foreach($storagePids as $storagePid) {
+				array_push($this->logicalOr, $this->query->in('pid', $this->extendPidListByChildren($storagePid, 6)));
+			}
+		}
+		array_push($this->logicalAnd, $this->query->logicalOr($this->constraints));
+	}
+
+	/**
+	 * Prepare string with given reqExp
+	 *
 	 * @param $searchString
-	 * @param $settings
 	 * @return mixed|string
 	 */
-	protected function regSearchExp($searchString, $settings) {
+	protected function regSearchExp($searchString) {
 		$searchString = urldecode($searchString);
 		$searchString = $GLOBALS['TYPO3_DB']->escapeStrForLike($searchString, 'pages');
 		$searchString = $GLOBALS['TYPO3_DB']->quoteStr($searchString, 'pages');
-		if($settings['reg_search_exp']) {
-			$searchString = str_replace('|', $searchString, $GLOBALS['TYPO3_DB']->quoteStr($settings['reg_search_exp'], 'pages'));
+		if($this->settings['reg_search_exp']) {
+			$searchString = str_replace('|', $searchString, $GLOBALS['TYPO3_DB']->quoteStr($this->settings['reg_search_exp'], 'pages'));
 		} else {
 			$searchString = '%' . $searchString . '%';
 		}
@@ -184,38 +219,29 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	/**
 	 * Builds breadcrumbs
 	 *
-	 * @param int $pid
-	 * @return string The breadcrumbs
-	 */
-
-	/**
-	 * Builds breadcrumbs
-	 *
 	 * @param int $pid Page Id
-	 * @param int $sys_language_uid
-	 * @param string $seperator
 	 * @return string The Breadcrumb
 	 */
-	protected function getBreadcrumb($pid, $sys_language_uid = 0, $seperator = '>') {
+	protected function getBreadcrumb($pid) {
 		/** @var $pageSelect t3lib_pageSelect */
 		$pageSelect = $this->objectManager->create('t3lib_pageSelect');
-		$pageSelect->init(TRUE);
+		$pageSelect->init(false);
 
 		$result = '';
 		$i = 0;
 		foreach(array_reverse($pageSelect->getRootLine($pid)) as $breadcrumb) {
-			if($sys_language_uid != 0) {
-				$page = $pageSelect->getPageOverlay($breadcrumb['uid'], $sys_language_uid);
+			if($this->query->getQuerySettings()->getLanguageUid() != 0) {
+				$page = $pageSelect->getPageOverlay($breadcrumb['uid'], $this->query->getQuerySettings()->getLanguageUid());
 			} else {
-				$page = $pageSelect->getPage($breadcrumb['uid'], $sys_language_uid);
+				$page = $pageSelect->getPage($breadcrumb['uid'], $this->query->getQuerySettings()->getLanguageUid());
 			}
 			if(!$page) {
-				$page = $pageSelect->getPage($breadcrumb['uid'], $sys_language_uid);
+				$page = $pageSelect->getPage($breadcrumb['uid'], $this->query->getQuerySettings()->getLanguageUid());
 			}
 			$pageTitle = $page['tx_realurl_pathsegment'] ? ucfirst($page['tx_realurl_pathsegment']) : ucfirst($page['title']);
 			if(!$page['nav_hide'] AND $page['tx_realurl_exclude'] != '1') {
 				if($i > 0) {
-					$result .= ' ' . $seperator . ' ';
+					$result .= ' ' . $this->settings['breadcrumb_seperator'] . ' ';
 				}
 				$result .= $pageTitle;
 				$i++;

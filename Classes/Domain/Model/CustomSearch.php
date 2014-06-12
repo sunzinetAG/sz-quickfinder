@@ -33,8 +33,6 @@
  */
 class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 
-	//	Todo: description
-
 	/**
 	 * table
 	 *

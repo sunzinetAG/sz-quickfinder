@@ -92,10 +92,9 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	 */
 	protected function buildModelFromTyposcript($typoscript, $searchString) {
 		/** @var $csObj Tx_SzIndexedSearch_Domain_Model_CustomSearch */
-		$csObj = t3lib_div::makeInstance('Tx_SzIndexedSearch_Domain_Model_CustomSearch');
+		$csObj = $this->objectManager->create('Tx_SzIndexedSearch_Domain_Model_CustomSearch');
 		$csObj->setTable($typoscript['table']);
 		$csObj->setSearchFields(explode(',', str_replace(' ', '', $typoscript['searchFields'])));
-		Tx_Extbase_Utility_Debugger::var_dump($csObj->getSearchFields());
 		$csObj->setSearchString($searchString);
 
 		return $csObj;
