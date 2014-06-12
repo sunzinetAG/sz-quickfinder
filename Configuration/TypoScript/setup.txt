@@ -1,77 +1,146 @@
-page {
-	includeJS {
-		sz_indexed_search_autocomplete = EXT:sz_indexed_search/Resources/Public/Javascript/autocomplete.js
-		sz_indexed_search = EXT:sz_indexed_search/Resources/Public/Javascript/main.js
-	}
-	includeCSS {
-		sz_indexed_search_autocomplete = EXT:sz_indexed_search/Resources/Public/Css/main.css
-	}
-}
-
 plugin.tx_szindexedsearch {
+	view {
+		templateRootPath = {$plugin.tx_szindexedsearch.view.templateRootPath}
+		partialRootPath = {$plugin.tx_szindexedsearch.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_szindexedsearch.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_szindexedsearch.persistence.storagePid}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		#rewrittenPropertyMapper = 1
+	}
 	settings {
-		pageroot = {$global.search.pageroot}
-		homePageUid = {$global.homePageUid}
+		homePageUid = 2
+		searchPid = 140
 
-		enable_documents = 1
-		show_breadcrumbs_to_documents = 0
 		reg_search_exp = %|%
 		max_results = 3
-		highlight_search_results = 1
-		additional_button = 0
+		breadcrumb_seperator = /
 
 		customSearch {
-			Pages {
-				table = pages
+			Page {
+				table = Tx_SzIndexedSearch_Domain_Model_Page
 				searchFields = title, keywords
-				where = doktype !=4, doktype !=254, nav_hide=0
-				###{$breadcrumbs} is reserved
-				title = {$title}
-				linkField = uid
-				important = 1
+			}
+			#More examples:
+#			Documents {
+#				table = Tx_SzIndexedSearch_Domain_Model_File
+#				searchFields = title
+#			}
+#			News {
+#				table = tx_news_domain_model_news
+#				searchFields = title
+#			}
+#			User {
+#				table = Tx_SzIndexedSearch_Domain_Model_User
+#				searchFields = name
+#			}
+#			Content {
+#				table = Tx_SzIndexedSearch_Domain_Model_Content
+#				searchFields = header
+#			}
+		}
+	}
+
+	_CSS_DEFAULT_STYLE (
+		.tx-indexedsearch-searchbox-results {
+			display: none;
+			position: absolute;
+			padding: 20px;
+			border: 1px solid #ccc;
+			background: #fff;
+			z-index: 9999;
+			width: 240px;
+			height: auto;
+		}
+
+		.tx-indexedsearch-searchbox-results .ajax-loader {
+			width: 32px;
+			height: 32px;
+			margin: 40px auto;
+			background: url(/typo3conf/ext/sz_indexed_search/Resources/Public/Icons/ajax-loader.gif);
+		}
+	)
+}
+
+config.tx_extbase {
+	persistence {
+		classes {
+			Tx_SzIndexedSearch_Domain_Model_Page {
+				mapping {
+					tableName = pages
+				}
+			}
+			Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay {
+				mapping {
+					tableName = pages_language_overlay
+				}
+			}
+			Tx_SzIndexedSearch_Domain_Model_File {
+				mapping {
+					tableName = sys_file_reference
+				}
+			}
+			Tx_SzIndexedSearch_Domain_Model_User {
+				mapping {
+					tableName = fe_users
+				}
+			}
+			Tx_SzIndexedSearch_Domain_Model_Content {
+				mapping {
+					tableName = tt_content
+				}
+			}
+		}
+	}
+}
+
+ajaxRequest = PAGE
+ajaxRequest {
+	typeNum = 8375
+	10 = USER
+	10 {
+		userFunc = tx_extbase_core_bootstrap->run
+		pluginName = Pi1
+		extensionName = SzIndexedSearch
+		switchableControllerActions {
+			Search {
+				1 = autocomplete
+				2 = search
 			}
 		}
 	}
 
-	# Override or add translations here:
-#	_LOCAL_LANG {
-#		de {
-#			pages = Seiten
-#		}
-#		en {
-#			pages = Pages
-#		}
-#	}
+	view =< plugin.tx_szindexedsearch.view
+	persistence =< plugin.sz_indexed_search.persistence
+	settings =< plugin.sz_indexed_search.settings
 }
 
-plugin.tx_indexedsearch {
-	plugin.tx_indexedsearch.search.rootPidList = {$global.search.pageroot}
-	templateFile =  EXT:sz_indexed_search/Template/indexed_search.html
-}
-
-lib.contents {
- 	# Search form
-	search = COA
-	search {
-		10 = TEXT
-		10 {
-			dataWrap = <form action="|" class="search-form" method="post">
-			typolink {
-				parameter = {$global.pages.search}
-				returnLast = url
-			}
-		}
-		20 = TEXT
-		20 {
-			wrap (
-				<fieldset>
-					<input id="searchbox-sword" name="tx_indexedsearch[sword]" type="text" value="|" class="tx-indexedsearch-searchbox-sword search" />
-					<input type="submit" />
-				</fieldset>
-				</form>
-			)
-		}
+page {
+	includeJS {
+		sz_indexed_search = EXT:sz_indexed_search/Resources/Public/Js/main.js
 	}
 }
 
-lib.templates.base.variables.search =< lib.contents.search
+lib.tx_szindexedsearch = COA
+lib.tx_szindexedsearch {
+	10 = USER
+	10 {
+		userFunc = tx_extbase_core_bootstrap->run
+		pluginName = Pi1
+		extensionName = SzIndexedSearch
+		switchableControllerActions {
+			Search {
+				1 = index
+				2 = search
+			}
+		}
+
+		settings =< plugin.tx_szindexedsearch.settings
+		persistence =< plugin.tx_szindexedsearch.persistence
+		view =< plugin.tx_szindexedsearch.view
+	}
+
+}

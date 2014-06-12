@@ -1,0 +1,7 @@
+{namespace sz=Tx_SzIndexedSearch_ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:for each="{results}" as="result">
+	<f:link.page pageUid="{result.pid}" section="{result.uid}"><sz:format.highlight>{result.header}</sz:format.highlight></f:link.page><br>
+</f:for>
