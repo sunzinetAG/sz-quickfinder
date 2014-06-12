@@ -10,44 +10,58 @@
 
 class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_DomainObject_AbstractEntity {
 
-//	Todo: description
-
 	/**
 	 * title
+	 *
 	 * @var string
 	 */
 	protected $title;
 
 	/**
 	 * url
+	 *
 	 * @var string
 	 */
 	protected $url;
 
 	/**
 	 * subtitle
+	 *
 	 * @var string
 	 */
 	protected $subtitle;
 
 	/**
 	 * keywords
+	 *
 	 * @var string
 	 */
 	protected $keywords;
 
 	/**
 	 * author
+	 *
 	 * @var string
 	 */
 	protected $author;
 
+	/**
+	 * changeUidToPid
+	 *
+	 * @var bool
+	 */
 	public $changeUidToPid = false;
 
+	/**
+	 * breadcrumb
+	 *
+	 * @var string
+	 */
 	protected $breadcrumb;
 
 	/**
 	 * Returns the title
+	 *
 	 * @return string $title
 	 */
 	public function getTitle() {
@@ -56,6 +70,7 @@ class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_Dom
 
 	/**
 	 * Returns the url
+	 *
 	 * @return string $url
 	 */
 	public function getUrl() {
@@ -64,6 +79,7 @@ class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_Dom
 
 	/**
 	 * Returns the subtitle
+	 *
 	 * @return string $subtitle
 	 */
 	public function getSubtitle() {
@@ -72,6 +88,7 @@ class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_Dom
 
 	/**
 	 * Returns the keywords
+	 *
 	 * @return string $keywords
 	 */
 	public function getKeywords() {
@@ -80,6 +97,7 @@ class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_Dom
 
 	/**
 	 * Returns the author
+	 *
 	 * @return string $author
 	 */
 	public function getAuthor() {
@@ -88,6 +106,7 @@ class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_Dom
 
 	/**
 	 * Returns the breadcrumb
+	 *
 	 * @return string $breadcrumb
 	 */
 	public function getBreadcrumb() {
@@ -96,6 +115,7 @@ class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_Dom
 
 	/**
 	 * Sets the breadcrumb
+	 *
 	 * @param string $breadcrumb
 	 */
 	public function setBreadcrumb($breadcrumb) {

@@ -10,30 +10,37 @@
 
 class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntity {
 
-//	Todo: description
-
 	/**
 	 * title
+	 *
 	 * @var string
 	 */
 	protected $title;
 
 	/**
 	 * description
+	 *
 	 * @var string
 	 */
 	protected $description;
 
 	/**
 	 * uidForeign
+	 *
 	 * @var int
 	 */
 	protected $uidForeign;
 
+	/**
+	 * breadcrumb
+	 *
+	 * @var string
+	 */
 	protected $breadcrumb;
 
 	/**
 	 * Returns the title
+	 *
 	 * @return string $title
 	 */
 	public function getTitle() {
@@ -42,6 +49,7 @@ class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_Abstr
 
 	/**
 	 * Returns the description
+	 *
 	 * @return string $description
 	 */
 	public function getDescription() {
@@ -50,6 +58,7 @@ class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_Abstr
 
 	/**
 	 * Returns the uidForeign
+	 *
 	 * @return int $uidForeign
 	 */
 	public function getUidForeign() {
@@ -58,6 +67,7 @@ class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_Abstr
 
 	/**
 	 * Returns the breadcrumb
+	 *
 	 * @return string $breadcrumb
 	 */
 	public function getBreadcrumb() {
@@ -66,6 +76,7 @@ class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_Abstr
 
 	/**
 	 * Sets the breadcrumb
+	 *
 	 * @param string $breadcrumb
 	 */
 	public function setBreadcrumb($breadcrumb) {

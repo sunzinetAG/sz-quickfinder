@@ -12,24 +12,28 @@ class Tx_SzIndexedSearch_Domain_Model_Content extends Tx_Extbase_DomainObject_Ab
 
 	/**
 	 * header
+	 *
 	 * @var string
 	 */
 	protected $header;
 
 	/**
 	 * bodytext
+	 *
 	 * @var string
 	 */
 	protected $bodytext;
 
 	/**
 	 * subheader
+	 *
 	 * @var string
 	 */
 	protected $subheader;
 
 	/**
 	 * Returns the header
+	 *
 	 * @return string $header
 	 */
 	public function getHeader() {
@@ -38,6 +42,7 @@ class Tx_SzIndexedSearch_Domain_Model_Content extends Tx_Extbase_DomainObject_Ab
 
 	/**
 	 * Returns the bodytext
+	 *
 	 * @return string $bodytext
 	 */
 	public function getBodytext() {
@@ -46,6 +51,7 @@ class Tx_SzIndexedSearch_Domain_Model_Content extends Tx_Extbase_DomainObject_Ab
 
 	/**
 	 * Returns the subheader
+	 *
 	 * @return string $subheader
 	 */
 	public function getSubheader() {

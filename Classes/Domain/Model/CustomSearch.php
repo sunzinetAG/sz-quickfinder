@@ -35,72 +35,77 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 
 	//	Todo: description
 
+	/**
+	 * table
+	 *
+	 * @var string
+	 */
 	protected $table;
 
+	/**
+	 * searchFields
+	 *
+	 * @var array
+	 */
 	protected $searchFields;
 
-	protected $where;
-
-	protected $title;
-
-	protected $linkField;
-
-	protected $important;
-
+	/**
+	 * searchString
+	 *
+	 * @var string
+	 */
 	protected $searchString;
 
+	/**
+	 * Sets the table
+	 *
+	 * @param string $table
+	 */
 	public function setTable($table) {
 		$this->table = $table;
 	}
 
+	/**
+	 * Returns the table
+	 *
+	 * @return string $table
+	 */
 	public function getTable() {
 		return $this->table;
 	}
 
+	/**
+	 * Sets the searchFields
+	 *
+	 * @param array $searchFields
+	 */
 	public function setSearchFields($searchFields) {
 		$this->searchFields = $searchFields;
 	}
 
+	/**
+	 * Returns the searchFields
+	 *
+	 * @return array $searchFields
+	 */
 	public function getSearchFields() {
 		return $this->searchFields;
 	}
 
-	public function setWhere($where) {
-		$this->where = $where;
-	}
-
-	public function getWhere() {
-		return $this->where;
-	}
-
-	public function setTitle($title) {
-		$this->title = $title;
-	}
-
-	public function getTitle() {
-		return $this->title;
-	}
-
-	public function setLinkField($linkField) {
-		$this->linkField = $linkField;
-	}
-
-	public function getLinkField() {
-		return $this->linkField;
-	}
-
-	public function setImportant($important) {
-		$this->important = $important;
-	}
-
-	public function getImportant() {
-		return $this->important;
-	}
-
+	/**
+	 * Sets the searchString
+	 *
+	 * @param string $searchString
+	 */
 	public function setSearchString($searchString) {
 		$this->searchString = $searchString;
 	}
 
+	/**
+	 * Returns the searchString
+	 *
+	 * @return string $searchString
+	 */
 	public function getSearchString() {
 		return $this->searchString;
 	}

@@ -33,15 +33,31 @@
  */
 class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_Persistence_Repository {
 
+	/**
+	 * Type of the Model
+	 *
+	 * @var object
+	 */
 	public $type;
 
+	/**
+	 * logicalAnd
+	 *
+	 * @var array
+	 */
 	protected $logicalAnd = array();
 
+	/**
+	 * logicalOr
+	 *
+	 * @var array
+	 */
 	protected $logicalOr = array();
 
 	/**
+	 * Builds the custom Search
+	 *
 	 * @param Tx_SzIndexedSearch_Domain_Model_CustomSearch $customSearch
-	 * @param int $L
 	 * @param array $settings
 	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
@@ -101,8 +117,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 
 	/**
 	 * @param $query \TYPO3\CMS\Extbase\Persistence\QueryInterface
-	 * @param $rootId
-	 * @return mixed
+	 * @param array $storagePids
 	 */
 	protected function getCustomEnableFields($query, $storagePids) {
 		if($this->type === 'Tx_SzIndexedSearch_Domain_Model_Page') {
@@ -172,8 +187,18 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * @param int $pid
 	 * @return string The breadcrumbs
 	 */
+
+	/**
+	 * Builds breadcrumbs
+	 *
+	 * @param int $pid Page Id
+	 * @param int $sys_language_uid
+	 * @param string $seperator
+	 * @return string The Breadcrumb
+	 */
 	protected function getBreadcrumb($pid, $sys_language_uid = 0, $seperator = '>') {
-		$pageSelect = new t3lib_pageSelect();
+		/** @var $pageSelect t3lib_pageSelect */
+		$pageSelect = $this->objectManager->create('t3lib_pageSelect');
 		$pageSelect->init(TRUE);
 
 		$result = '';

@@ -51,15 +51,16 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	}
 
 	/**
-	 *
+	 * Only show the SearchForm
 	 */
 	public function indexAction() {
 		$this->view->assign('searchPid', $this->settings['searchPid']);
 	}
 
 	/**
-	 * @param string $searchString
-	 * @return void
+	 * autocomplete action
+	 *
+	 * @param string $searchString The string
 	 */
 	public function autocompleteAction($searchString) {
 		$customSearchArray = $this->settings['customSearch'];
@@ -74,22 +75,27 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	}
 
 	/**
-	 * @param string $string
+	 * Goes foward to IndexedSearch
+	 *
+	 * @param string $string The string
 	 */
 	public function searchAction($string) {
 		$this->forward('search', 'Search', 'IndexedSearch', array('search'=> array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string)));
-//		$this->forward('autocomplete', 'Search', 'SzIndexedSearch', array('searchString' => 'test'));
 	}
 
+	/**
+	 * Fill the Model from TypoScript values
+	 *
+	 * @param array $typoscript TypoScript settings
+	 * @param string $searchString The string
+	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch $csObj
+	 */
 	protected function buildModelFromTyposcript($typoscript, $searchString) {
 		/** @var $csObj Tx_SzIndexedSearch_Domain_Model_CustomSearch */
 		$csObj = t3lib_div::makeInstance('Tx_SzIndexedSearch_Domain_Model_CustomSearch');
 		$csObj->setTable($typoscript['table']);
 		$csObj->setSearchFields(explode(',', str_replace(' ', '', $typoscript['searchFields'])));
-		$csObj->setWhere($typoscript['where']);
-		$csObj->setTitle($typoscript['title']);
-		$csObj->setLinkField($typoscript['linkField']);
-		$csObj->setImportant($typoscript['important']);
+		Tx_Extbase_Utility_Debugger::var_dump($csObj->getSearchFields());
 		$csObj->setSearchString($searchString);
 
 		return $csObj;
