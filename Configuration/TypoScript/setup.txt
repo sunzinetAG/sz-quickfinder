@@ -100,6 +100,7 @@ config.tx_extbase {
 ajaxRequest = PAGE
 ajaxRequest {
 	typeNum = 1402582595
+	config.disableAllHeaderCode = 1
 	10 = USER
 	10 {
 		userFunc = tx_extbase_core_bootstrap->run

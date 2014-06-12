@@ -9,12 +9,12 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	array(
 		'Search' => 'index, search, autocomplete',
 
-	)
+	),
 	// non-cacheable actions
-//	array(
-//		'Search' => 'index, search, autocomplete',
-//
-//	)
+	array(
+		'Search' => 'autocomplete',
+
+	)
 );
 
 ?>
