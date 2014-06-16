@@ -108,8 +108,13 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 		$results = $this->query->execute();
 
 		foreach($results as $result) {
-			($result->changeUidToPid) ? $result->setBreadcrumb($this->getBreadcrumb($result->getUid())) : $result->setBreadcrumb($this->getBreadcrumb($result->getPid()));
+			if(in_array($this->type, $this->showBreadcrumbInSeachresult)) {
+				($result->changeUidToPid) ? $result->setBreadcrumb($this->getBreadcrumb($result->getUid())) : $result->setBreadcrumb($this->getBreadcrumb($result->getPid()));
+			}
 		}
+
+		$this->logicalAnd = array();
+		$this->logicalOr = array();
 
 		return $results;
 	}
