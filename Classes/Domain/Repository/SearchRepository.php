@@ -158,18 +158,21 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * @param array $storagePids
 	 */
 	protected function getCustomEnableFields($storagePids) {
-		if($this->type === 'Tx_SzIndexedSearch_Domain_Model_Page') {
-			foreach($storagePids as $storagePid) {
-				array_push($this->logicalOr, $this->query->in('uid', $this->extendPidListByChildren($storagePid, 6)));
-			}
-			array_push($this->logicalAnd, $this->query->equals('nav_hide', 0));
-			array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
-			array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
-		} else {
-			foreach($storagePids as $storagePid) {
-				array_push($this->logicalOr, $this->query->in('pid', $this->extendPidListByChildren($storagePid, 6)));
-			}
+		switch($this->type) {
+			case 'Tx_SzIndexedSearch_Domain_Model_Page':
+				array_push($this->logicalAnd, $this->query->equals('nav_hide', 0));
+				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
+				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
+				break;
+			case 'Tx_SzIndexedSearch_Domain_Model_File':
+				array_push($this->logicalAnd, $this->query->equals('fieldname', 'media'));
+				break;
 		}
+
+		foreach($storagePids as $storagePid) {
+			array_push($this->logicalOr, $this->query->in('pid', $this->extendPidListByChildren($storagePid, 6)));
+		}
+
 		array_push($this->logicalAnd, $this->query->logicalOr($this->constraints));
 	}
 
