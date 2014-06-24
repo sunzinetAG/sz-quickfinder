@@ -11,6 +11,7 @@
 		$searchbox.attr('autocomplete', 'off');
 		var container =  $('.tx-indexedsearch-searchbox-results');
 		$searchbox.bind('click keyup',function(e) {
+			var $this = jQuery(this);
 			var L = $('body').attr('data-languid');
 			if(timer) {
 				clearTimeout(timer);
@@ -19,9 +20,9 @@
 				if(e.type != 'click') {
 					jQuery('.tx-indexedsearch-searchbox-results').html('<div class="ajax-loader"></div>');
 				}
-				if($searchbox.val().length > 2) {
+				if($this.val().length > 2) {
 					$.ajax({
-						url: './?type=' + pageType + '&L=' + L + '&tx_szindexedsearch_pi1[searchString]=' + encodeURIComponent($searchbox.val()),
+						url: './?type=' + pageType + '&L=' + L + '&tx_szindexedsearch_pi1[searchString]=' + encodeURIComponent($this.val()),
 						success: function(response) {
 							container.html(response);
 							container.show();
