@@ -1,8 +1,14 @@
 plugin.tx_szindexedsearch {
 	view {
-		templateRootPath = {$plugin.tx_szindexedsearch.view.templateRootPath}
-		partialRootPath = {$plugin.tx_szindexedsearch.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_szindexedsearch.view.layoutRootPath}
+		templateRootPaths {
+			100 = {$plugin.tx_szindexedsearch.view.templateRootPath}
+		}
+		partialRootPaths {
+			100 = {$plugin.tx_szindexedsearch.view.partialRootPath}
+		}
+		layoutRootPaths {
+			100 = {$plugin.tx_szindexedsearch.view.layoutRootPath}
+		}
 	}
 	persistence {
 		storagePid = {$plugin.tx_szindexedsearch.persistence.storagePid}
