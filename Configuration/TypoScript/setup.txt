@@ -25,6 +25,13 @@ plugin.tx_szindexedsearch {
 		max_results = 3
 		breadcrumb_seperator = /
 
+		customEnableFields {
+			file {
+					# commaseperated list of tablefields within the sys_file_reference-table
+				fieldname = media
+			}
+		}
+
 		customSearch {
 			Page {
 				table = Tx_SzIndexedSearch_Domain_Model_Page

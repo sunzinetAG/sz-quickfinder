@@ -165,7 +165,12 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
 				break;
 			case 'Tx_SzIndexedSearch_Domain_Model_File':
-				array_push($this->logicalAnd, $this->query->equals('fieldname', 'media'));
+				$enablefields = explode(',', $this->settings['customEnableFields']['file']['fieldname']);
+				$constraints = array();
+				foreach ($enablefields as $field) {
+					$constraints[] = $this->query->equals('fieldname', trim($field));
+				}
+				array_push($this->logicalAnd, $this->query->logicalOr($constraints));
 				break;
 		}
 

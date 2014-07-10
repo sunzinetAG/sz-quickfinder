@@ -11,6 +11,14 @@
 class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
+	 * fileCollectionRepository
+	 *
+	 * @var \TYPO3\CMS\Core\Resource\FileCollectionRepository
+	 * @inject
+	 */
+	protected $fileCollectionRepository;
+
+	/**
 	 * title
 	 *
 	 * @var string
@@ -83,6 +91,26 @@ class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_Abstr
 		$this->breadcrumb = $breadcrumb;
 	}
 
+	/**
+	 * @return array <\TYPO3\CMS\Core\Resource\File>
+	 */
+	public function getItem() {
+		$uid = $this->getUidLocal();
+		$obj = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->getFileObject($uid);
+		$item = $obj->toArray();
+
+		$itemAdds = array(
+			'breadcrumb' => $this->getBreadcrumb(),
+			'description' => $this->getDescription(),
+			'title' => $this->getTitle(),
+			'uid' => $this->getUid(),
+			'uidLocal' => $this->getUidLocal(),
+			'uidForeign' => $this->getUidForeign(),
+		);
+
+		$item = array_merge($item, $itemAdds);
+		return $item;
+	}
 
 
 }
