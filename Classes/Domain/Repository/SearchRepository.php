@@ -85,6 +85,23 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	);
 
 	/**
+	 * @var tx_szIndexedSearch_Utility_VersionCompatibility
+	 */
+	protected $versionCompatibilityUtility;
+
+	/**
+	 * @var int $sysLanguageUid
+	 */
+	protected $sysLanguageUid;
+
+	/**
+	 * @param tx_szIndexedSearch_Utility_VersionCompatibility $versionCompatibilityUtility
+	 */
+	public function injectVersionCompatibilityUtility(tx_szIndexedSearch_Utility_VersionCompatibility $versionCompatibilityUtility) {
+		$this->versionCompatibilityUtility = $versionCompatibilityUtility;
+	}
+
+	/**
 	 * Builds the custom Search
 	 *
 	 * @param Tx_SzIndexedSearch_Domain_Model_CustomSearch $customSearch
@@ -92,9 +109,10 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * @return array|Tx_Extbase_Persistence_QueryResult
 	 */
 	public function customSearch(Tx_SzIndexedSearch_Domain_Model_CustomSearch $customSearch, array $settings) {
+		$this->sysLanguageUid = $this->versionCompatibilityUtility->getLanguageUid($this->createQuery());
 		$this->settings = $settings;
 		$this->setType($customSearch->getTable());
-		$this->query = $this->persistenceManager->createQueryForType($this->type);
+		$this->query = $this->versionCompatibilityUtility->createQueryObject($this->type);
 		$this->setQuerySettings();
 		$this->constraints = array();
 
@@ -119,6 +137,11 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 		return $results;
 	}
 
+	/**
+	 * Prepares the query for execution
+	 *
+	 * @return void
+	 */
 	protected function prepareQuery() {
 		$this->query->matching(
 			$this->query->logicalAnd(
@@ -135,7 +158,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * @param $type
 	 */
 	protected function setType($type) {
-		if($type === 'Tx_SzIndexedSearch_Domain_Model_Page' AND $this->createQuery()->getQuerySettings()->getLanguageUid() !== 0) {
+		if($type === 'Tx_SzIndexedSearch_Domain_Model_Page' AND $this->sysLanguageUid !== 0) {
 			$this->type = 'Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay';
 		} else {
 			$this->type = $type;
@@ -148,8 +171,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	protected function setQuerySettings() {
 		$this->query->getQuerySettings()
 				->setRespectStoragePage(FALSE)
-				->setRespectSysLanguage(TRUE)
-				->setLanguageMode('strict');
+				->setRespectSysLanguage(TRUE);
 	}
 
 	/**
@@ -243,13 +265,13 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 		$result = '';
 		$i = 0;
 		foreach(array_reverse($pageSelect->getRootLine($pid)) as $breadcrumb) {
-			if($this->query->getQuerySettings()->getLanguageUid() != 0) {
-				$page = $pageSelect->getPageOverlay($breadcrumb['uid'], $this->query->getQuerySettings()->getLanguageUid());
+			if($this->sysLanguageUid != 0) {
+				$page = $pageSelect->getPageOverlay($breadcrumb['uid'], $this->sysLanguageUid);
 			} else {
-				$page = $pageSelect->getPage($breadcrumb['uid'], $this->query->getQuerySettings()->getLanguageUid());
+				$page = $pageSelect->getPage($breadcrumb['uid'], $this->sysLanguageUid);
 			}
 			if(!$page) {
-				$page = $pageSelect->getPage($breadcrumb['uid'], $this->query->getQuerySettings()->getLanguageUid());
+				$page = $pageSelect->getPage($breadcrumb['uid'], $this->sysLanguageUid);
 			}
 			$pageTitle = $page['tx_realurl_pathsegment'] ? ucfirst($page['tx_realurl_pathsegment']) : ucfirst($page['title']);
 			if(!$page['nav_hide'] AND $page['tx_realurl_exclude'] != '1') {

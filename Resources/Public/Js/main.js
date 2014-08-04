@@ -22,7 +22,7 @@
 				}
 				if($this.val().length > 2) {
 					$.ajax({
-						url: './?type=' + pageType + '&L=' + L + '&tx_szindexedsearch_pi1[searchString]=' + encodeURIComponent($this.val()),
+						url: '.' + window.location.pathname + '?type=' + pageType + '&L=' + L + '&tx_szindexedsearch_pi1[searchString]=' + encodeURIComponent($this.val()),
 						success: function(response) {
 							container.html(response);
 							container.show();
