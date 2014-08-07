@@ -117,9 +117,12 @@ class Tx_SzIndexedSearch_Domain_Model_Page extends Tx_Extbase_DomainObject_Abstr
 	 * Sets the breadcrumb
 	 *
 	 * @param string $breadcrumb
+	 * @return Tx_SzIndexedSearch_Domain_Model_Page
 	 */
 	public function setBreadcrumb($breadcrumb) {
 		$this->breadcrumb = $breadcrumb;
+
+		return $this;
 	}
 
 }

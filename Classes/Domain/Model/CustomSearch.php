@@ -55,12 +55,22 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	protected $searchString;
 
 	/**
+	 * script
+	 *
+	 * @var string
+	 */
+	protected $script = false;
+
+	/**
 	 * Sets the table
 	 *
 	 * @param string $table
+	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
 	 */
 	public function setTable($table) {
 		$this->table = $table;
+
+		return $this;
 	}
 
 	/**
@@ -76,9 +86,12 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	 * Sets the searchFields
 	 *
 	 * @param array $searchFields
+	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
 	 */
 	public function setSearchFields($searchFields) {
 		$this->searchFields = $searchFields;
+
+		return $this;
 	}
 
 	/**
@@ -94,9 +107,12 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	 * Sets the searchString
 	 *
 	 * @param string $searchString
+	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
 	 */
 	public function setSearchString($searchString) {
 		$this->searchString = $searchString;
+
+		return $this;
 	}
 
 	/**
@@ -106,6 +122,27 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	 */
 	public function getSearchString() {
 		return $this->searchString;
+	}
+
+	/**
+	 * Sets the scriptPath
+	 *
+	 * @param string $script
+	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 */
+	public function setScript($script) {
+		$this->script = $script;
+
+		return $this;
+	}
+
+	/**
+	 * Returns the scriptPath
+	 *
+	 * @return string
+	 */
+	public function getScript() {
+		return $this->script;
 	}
 
 }

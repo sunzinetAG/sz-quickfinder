@@ -41,6 +41,11 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	protected $searchRepository;
 
 	/**
+	 * @var Tx_SzIndexedSearch_Domain_Model_CustomSearch $csObj
+	 */
+	protected $csObj;
+
+	/**
 	 * injectSearchRepository
 	 *
 	 * @param Tx_SzIndexedSearch_Domain_Repository_SearchRepository $searchRepository
@@ -68,7 +73,15 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 		$results = array();
 
 		foreach($customSearchArray as $sectionName => $customSearch) {
-			$results[$sectionName] = $this->searchRepository->customSearch($this->buildModelFromTyposcript($customSearch, $searchString), $this->settings);
+			$this->buildModelFromTyposcript($customSearch, $searchString);
+
+			if(!$this->csObj->getScript()) {
+				$results[$sectionName] = $this->searchRepository->customSearch($this->csObj, $this->settings);
+			} else {
+				require_once($this->csObj->getScript());
+				$userFunc = $this->objectManager->create('sz_indexed_search_user_func');
+				$results[$sectionName] = $userFunc->main($this->settings);
+			}
 		}
 
 		$this->view->assign('results', $results);
@@ -88,16 +101,18 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	 *
 	 * @param array $typoscript TypoScript settings
 	 * @param string $searchString The string
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch $csObj
 	 */
 	protected function buildModelFromTyposcript($typoscript, $searchString) {
 		/** @var $csObj Tx_SzIndexedSearch_Domain_Model_CustomSearch */
 		$csObj = $this->objectManager->create('Tx_SzIndexedSearch_Domain_Model_CustomSearch');
-		$csObj->setTable($typoscript['table']);
-		$csObj->setSearchFields(explode(',', str_replace(' ', '', $typoscript['searchFields'])));
-		$csObj->setSearchString($searchString);
+		if($typoscript['script']) {
+			$csObj->setScript($typoscript['script']);
+		}
+		$csObj->setTable($typoscript['table'])
+			->setSearchFields(explode(',', str_replace(' ', '', $typoscript['searchFields'])))
+			->setSearchString($searchString);
 
-		return $csObj;
+		$this->csObj = $csObj;
 	}
 
 }
