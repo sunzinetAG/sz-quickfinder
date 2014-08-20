@@ -45,11 +45,11 @@ class Tx_szIndexedSearch_Utility_VersionCompatibility extends Tx_Extbase_Persist
 	 * @return bool
 	 */
 	public function isTypoThreeSixTwo() {
-		if(version_compare(TYPO3_version, '6.2.0') < 0) {
+		if(t3lib_div::int_from_ver(TYPO3_version) < t3lib_div::int_from_ver('6.2.0')) {
 			return false;
+		} else {
+			return true;
 		}
-
-		return true;
 	}
 
 }
