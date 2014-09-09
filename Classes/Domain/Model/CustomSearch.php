@@ -25,11 +25,11 @@
  ***************************************************************/
 
 /**
- *
+ * Class Tx_SzIndexedSearch_Domain_Model_CustomSearch
  *
  * @package sz_indexed_search
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
+ * @license http://www.gnu.org/licenses/gpl.html
+ * GNU General Public License, version 3 or later
  */
 class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 
@@ -59,7 +59,7 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	 *
 	 * @var string
 	 */
-	protected $script = false;
+	protected $script = FALSE;
 
 	/**
 	 * Sets the table
@@ -146,4 +146,3 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	}
 
 }
-?>

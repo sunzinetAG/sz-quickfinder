@@ -4,12 +4,13 @@
  *
  * @author Dennis Römmich <dennis@roemmich.eu>
  * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ * GNU General Public License, version 3 or later
  */
 class Tx_SzIndexedSearch_ViewHelpers_Format_FilterViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * @return Return only the word, which includes the given searchstring
+	 * @return string only the word, which includes the given searchstring
 	 */
 	public function render() {
 		$searchStringArr = t3lib_div::_GP('tx_szindexedsearch_pi1');
@@ -26,7 +27,7 @@ class Tx_SzIndexedSearch_ViewHelpers_Format_FilterViewHelper extends Tx_Fluid_Co
 
 			$returnArr = explode(',', $return);
 
-			$return = array_values(preg_grep('/'. $match[$i] . '/', $returnArr));
+			$return = array_values(preg_grep('/' . $match[$i] . '/', $returnArr));
 			$return = trim($return[0]);
 		}
 
@@ -34,5 +35,3 @@ class Tx_SzIndexedSearch_ViewHelpers_Format_FilterViewHelper extends Tx_Fluid_Co
 	}
 
 }
-
-?>

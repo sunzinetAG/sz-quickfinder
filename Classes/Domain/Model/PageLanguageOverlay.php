@@ -5,9 +5,13 @@
  *
  * @author Dennis Römmich <dennis@roemmich.eu>
  * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ * GNU General Public License, version 3 or later
  */
 
+/**
+ * Class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay
+ */
 class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
@@ -50,7 +54,7 @@ class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_Dom
 	 *
 	 * @var bool
 	 */
-	public $changeUidToPid = false;
+	public $changeUidToPid = FALSE;
 
 	/**
 	 * breadcrumb
@@ -125,7 +129,4 @@ class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_Dom
 		return $this;
 	}
 
-
 }
-
-?>

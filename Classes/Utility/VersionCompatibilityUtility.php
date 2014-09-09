@@ -5,7 +5,8 @@
  *
  * @author Dennis Römmich <dennis@roemmich.eu>
  * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ * GNU General Public License, version 3 or later
  */
 
 /**
@@ -20,7 +21,7 @@ class Tx_szIndexedSearch_Utility_VersionCompatibility extends Tx_Extbase_Persist
 	 * @return mixed
 	 */
 	public function getLanguageUid(Tx_Extbase_Persistence_QueryInterface $query) {
-		if(!$this->isTypoThreeSixTwo()) {
+		if (!$this->isTypoThreeSixTwo()) {
 			return $GLOBALS['TSFE']->sys_language_uid;
 		}
 
@@ -32,7 +33,7 @@ class Tx_szIndexedSearch_Utility_VersionCompatibility extends Tx_Extbase_Persist
 	 * @return mixed
 	 */
 	public function createQueryObject($type) {
-		if(!$this->isTypoThreeSixTwo()) {
+		if (!$this->isTypoThreeSixTwo()) {
 			return $this->queryFactory->create($type);
 		}
 
@@ -42,16 +43,14 @@ class Tx_szIndexedSearch_Utility_VersionCompatibility extends Tx_Extbase_Persist
 	/**
 	 * Checks, if we are in TYPO3 V. >= 6.2.0
 	 *
-	 * @return bool
+	 * @return TRUE|FALSE
 	 */
 	public function isTypoThreeSixTwo() {
-		if(t3lib_div::int_from_ver(TYPO3_version) < t3lib_div::int_from_ver('6.2.0')) {
-			return false;
-		} else {
-			return true;
+		if (t3lib_div::int_from_ver(TYPO3_version) < t3lib_div::int_from_ver('6.2.0')) {
+			return FALSE;
 		}
+
+		return TRUE;
 	}
 
 }
-
-?>

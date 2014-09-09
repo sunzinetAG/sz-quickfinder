@@ -25,11 +25,11 @@
  ***************************************************************/
 
 /**
- *
+ * Class Tx_SzIndexedSearch_Controller_SearchController
  *
  * @package sz_indexed_search
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
+ * @license http://www.gnu.org/licenses/gpl.html
+ * GNU General Public License, version 3 or later
  */
 class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Controller_ActionController {
 
@@ -57,6 +57,8 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 
 	/**
 	 * Only show the SearchForm
+	 *
+	 * @return void
 	 */
 	public function indexAction() {
 		$this->view->assign('searchPid', $this->settings['searchPid']);
@@ -66,16 +68,17 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	 * autocomplete action
 	 *
 	 * @param string $searchString The string
+	 * @return void
 	 */
 	public function autocompleteAction($searchString) {
 		$customSearchArray = $this->settings['customSearch'];
 
 		$results = array();
 
-		foreach($customSearchArray as $sectionName => $customSearch) {
+		foreach ($customSearchArray as $sectionName => $customSearch) {
 			$this->buildModelFromTyposcript($customSearch, $searchString);
 
-			if(!$this->csObj->getScript()) {
+			if (!$this->csObj->getScript()) {
 				$results[$sectionName] = $this->searchRepository->customSearch($this->csObj, $this->settings);
 			} else {
 				require_once($this->csObj->getScript());
@@ -91,9 +94,11 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	 * Goes foward to IndexedSearch
 	 *
 	 * @param string $string The string
+	 * @return void
 	 */
 	public function searchAction($string) {
-		$this->forward('search', 'Search', 'IndexedSearch', array('search'=> array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string)));
+		$params = array('search' => array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string));
+		$this->forward('search', 'Search', 'IndexedSearch', $params);
 	}
 
 	/**
@@ -101,11 +106,12 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	 *
 	 * @param array $typoscript TypoScript settings
 	 * @param string $searchString The string
+	 * @return void
 	 */
 	protected function buildModelFromTyposcript($typoscript, $searchString) {
 		/** @var $csObj Tx_SzIndexedSearch_Domain_Model_CustomSearch */
 		$csObj = $this->objectManager->create('Tx_SzIndexedSearch_Domain_Model_CustomSearch');
-		if($typoscript['script']) {
+		if ($typoscript['script']) {
 			$csObj->setScript($typoscript['script']);
 		}
 		$csObj->setTable($typoscript['table'])
@@ -116,4 +122,3 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	}
 
 }
-?>

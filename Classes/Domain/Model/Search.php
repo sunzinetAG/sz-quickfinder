@@ -25,14 +25,12 @@
  ***************************************************************/
 
 /**
- *
+ * Class Tx_SzIndexedSearch_Domain_Model_Search
  *
  * @package sz_indexed_search
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
+ * @license http://www.gnu.org/licenses/gpl.html
+ * GNU General Public License, version 3 or later
  */
 class Tx_SzIndexedSearch_Domain_Model_Search extends Tx_Extbase_DomainObject_AbstractEntity {
 
-
 }
-?>

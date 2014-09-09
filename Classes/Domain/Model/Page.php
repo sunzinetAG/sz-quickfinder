@@ -8,6 +8,9 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 
+/**
+ * Class Tx_SzIndexedSearch_Domain_Model_Page
+ */
 class Tx_SzIndexedSearch_Domain_Model_Page extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
@@ -57,7 +60,7 @@ class Tx_SzIndexedSearch_Domain_Model_Page extends Tx_Extbase_DomainObject_Abstr
 	 *
 	 * @var bool
 	 */
-	public $changeUidToPid = true;
+	public $changeUidToPid = TRUE;
 
 	/**
 	 * Returns the title
@@ -126,5 +129,3 @@ class Tx_SzIndexedSearch_Domain_Model_Page extends Tx_Extbase_DomainObject_Abstr
 	}
 
 }
-
-?>

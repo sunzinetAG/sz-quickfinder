@@ -25,11 +25,13 @@
  ***************************************************************/
 
 /**
+ * Search Repository for sz_indexed_search
  *
+ * Class Tx_SzIndexedSearch_Domain_Repository_SearchRepository
  *
  * @package sz_indexed_search
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
+ * @license http://www.gnu.org/licenses/gpl.html
+ * GNU General Public License, version 3 or later
  */
 class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_Persistence_Repository {
 
@@ -96,6 +98,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 
 	/**
 	 * @param tx_szIndexedSearch_Utility_VersionCompatibility $versionCompatibilityUtility
+	 * @return void
 	 */
 	public function injectVersionCompatibilityUtility(tx_szIndexedSearch_Utility_VersionCompatibility $versionCompatibilityUtility) {
 		$this->versionCompatibilityUtility = $versionCompatibilityUtility;
@@ -116,8 +119,11 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 		$this->setQuerySettings();
 		$this->constraints = array();
 
-		foreach($customSearch->getSearchFields() as $propertyName) {
-			$this->constraints[] = $this->query->like($propertyName, $this->regSearchExp($customSearch->getSearchString(), $this->settings));
+		foreach ($customSearch->getSearchFields() as $propertyName) {
+			$this->constraints[] = $this->query->like(
+				$propertyName,
+				$this->regSearchExp($customSearch->getSearchString(), $this->settings)
+			);
 		}
 
 		$this->getCustomEnableFields($this->query->getQuerySettings()->getStoragePageIds());
@@ -125,9 +131,11 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 
 		$results = $this->query->execute();
 
-		foreach($results as $result) {
-			if(in_array($this->type, $this->showBreadcrumbInSeachresult)) {
-				($result->changeUidToPid) ? $result->setBreadcrumb($this->getBreadcrumb($result->getUid())) : $result->setBreadcrumb($this->getBreadcrumb($result->getPid()));
+		foreach ($results as $result) {
+			if (in_array($this->type, $this->showBreadcrumbInSeachresult)) {
+				($result->changeUidToPid)
+						? $result->setBreadcrumb($this->getBreadcrumb($result->getUid()))
+						: $result->setBreadcrumb($this->getBreadcrumb($result->getPid()));
 			}
 		}
 
@@ -156,9 +164,10 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * Sets the type of the Model
 	 *
 	 * @param $type
+	 * @return void
 	 */
 	protected function setType($type) {
-		if($type === 'Tx_SzIndexedSearch_Domain_Model_Page' AND $this->sysLanguageUid !== 0) {
+		if ($type === 'Tx_SzIndexedSearch_Domain_Model_Page' AND $this->sysLanguageUid !== 0) {
 			$this->type = 'Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay';
 		} else {
 			$this->type = $type;
@@ -167,6 +176,8 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 
 	/**
 	 * Set the QuerySettings
+	 *
+	 * @return void
 	 */
 	protected function setQuerySettings() {
 		$this->query->getQuerySettings()
@@ -178,9 +189,10 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * Fills logicalAnd and logicalOr for the Query
 	 *
 	 * @param array $storagePids
+	 * @return void
 	 */
 	protected function getCustomEnableFields($storagePids) {
-		switch($this->type) {
+		switch ($this->type) {
 			case 'Tx_SzIndexedSearch_Domain_Model_Page':
 				array_push($this->logicalAnd, $this->query->equals('nav_hide', 0));
 				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
@@ -194,9 +206,11 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 				}
 				array_push($this->logicalAnd, $this->query->logicalOr($constraints));
 				break;
+			default:
+				throw new Tx_Extbase_MVC_Exception_InvalidRequestType('The requested PageType is not supported');
 		}
 
-		foreach($storagePids as $storagePid) {
+		foreach ($storagePids as $storagePid) {
 			array_push($this->logicalOr, $this->query->in('pid', $this->extendPidListByChildren($storagePid, 6)));
 		}
 
@@ -213,7 +227,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 		$searchString = urldecode($searchString);
 		$searchString = $GLOBALS['TYPO3_DB']->escapeStrForLike($searchString, 'pages');
 		$searchString = $GLOBALS['TYPO3_DB']->quoteStr($searchString, 'pages');
-		if($this->settings['reg_search_exp']) {
+		if ($this->settings['reg_search_exp']) {
 			$searchString = str_replace('|', $searchString, $GLOBALS['TYPO3_DB']->quoteStr($this->settings['reg_search_exp'], 'pages'));
 		} else {
 			$searchString = '%' . $searchString . '%';
@@ -236,7 +250,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 		}
 
 		/** @var $queryGenerator t3lib_queryGenerator */
-		$queryGenerator = $this->objectManager->create('t3lib_queryGenerator');
+		$queryGenerator = $this->objectManager->get('t3lib_queryGenerator');
 		$recursiveStoragePids = $pidList;
 		$storagePids = t3lib_div::intExplode(',', $pidList);
 		foreach ($storagePids as $startPid) {
@@ -259,23 +273,23 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 */
 	protected function getBreadcrumb($pid) {
 		/** @var $pageSelect t3lib_pageSelect */
-		$pageSelect = $this->objectManager->create('t3lib_pageSelect');
-		$pageSelect->init(false);
+		$pageSelect = $this->objectManager->get('t3lib_pageSelect');
+		$pageSelect->init(FALSE);
 
 		$result = '';
 		$i = 0;
-		foreach(array_reverse($pageSelect->getRootLine($pid)) as $breadcrumb) {
-			if($this->sysLanguageUid != 0) {
+		foreach (array_reverse($pageSelect->getRootLine($pid)) as $breadcrumb) {
+			if ($this->sysLanguageUid != 0) {
 				$page = $pageSelect->getPageOverlay($breadcrumb['uid'], $this->sysLanguageUid);
 			} else {
 				$page = $pageSelect->getPage($breadcrumb['uid'], $this->sysLanguageUid);
 			}
-			if(!$page) {
+			if (!$page) {
 				$page = $pageSelect->getPage($breadcrumb['uid'], $this->sysLanguageUid);
 			}
 			$pageTitle = $page['tx_realurl_pathsegment'] ? ucfirst($page['tx_realurl_pathsegment']) : ucfirst($page['title']);
-			if(!$page['nav_hide'] AND $page['tx_realurl_exclude'] != '1') {
-				if($i > 0) {
+			if (!$page['nav_hide'] AND $page['tx_realurl_exclude'] != '1') {
+				if ($i > 0) {
 					$result .= ' ' . $this->settings['breadcrumb_seperator'] . ' ';
 				}
 				$result .= $pageTitle;
@@ -287,4 +301,3 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	}
 
 }
-?>

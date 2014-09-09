@@ -8,6 +8,9 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 
+/**
+ * Class Tx_SzIndexedSearch_Domain_Model_File
+ */
 class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntity {
 
 	/**
@@ -115,7 +118,4 @@ class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_Abstr
 		return $item;
 	}
 
-
 }
-
-?>
