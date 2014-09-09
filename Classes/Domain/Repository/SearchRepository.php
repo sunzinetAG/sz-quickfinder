@@ -207,7 +207,6 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 				array_push($this->logicalAnd, $this->query->logicalOr($constraints));
 				break;
 			default:
-				throw new Tx_Extbase_MVC_Exception_InvalidRequestType('The requested PageType is not supported');
 		}
 
 		foreach ($storagePids as $storagePid) {
