@@ -33,28 +33,28 @@ plugin.tx_szindexedsearch {
 		}
 
 		customSearch {
-			Page {
+			page {
 				table = Tx_SzIndexedSearch_Domain_Model_Page
 				searchFields = title, keywords
 			}
 			#More examples:
-#			Documents {
+#			documents {
 #				table = Tx_SzIndexedSearch_Domain_Model_File
 #				searchFields = title
 #			}
-#			News {
+#			news {
 #				table = tx_news_domain_model_news
 #				searchFields = title
 #			}
-#			User {
+#			user {
 #				table = Tx_SzIndexedSearch_Domain_Model_User
 #				searchFields = name
 #			}
-#			Content {
+#			content {
 #				table = Tx_SzIndexedSearch_Domain_Model_Content
 #				searchFields = header
 #			}
-#			UserFunc {
+#			userFunc {
 #				script = fileadmin/templates/scripts/sz_indexed_search.php
 #			}
 		}

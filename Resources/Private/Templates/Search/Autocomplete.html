@@ -1,3 +1,5 @@
+{namespace sz=Tx_SzIndexedSearch_ViewHelpers}
+
 <f:layout name="Default" />
 
 <f:section name="main">
@@ -7,7 +9,7 @@
 	<f:for each="{results}" as="result" key="sectionName">
 		<f:if condition="{result}">
 			<h2>{sectionName}</h2>
-			<f:render partial="result{sectionName}" arguments="{results : result}" />
+			<f:render partial="result{sectionName -> sz:format.ucfirst()}" arguments="{results : result}" />
 		</f:if>
 	</f:for>
 
