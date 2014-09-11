@@ -11,6 +11,7 @@ plugin.tx_szindexedsearch {
 		}
 	}
 	persistence {
+		//diese Seiten werden durchsucht (Kommagetrennt)
 		storagePid = {$plugin.tx_szindexedsearch.persistence.storagePid}
 	}
 	features {

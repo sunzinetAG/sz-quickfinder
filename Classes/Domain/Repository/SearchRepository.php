@@ -153,7 +153,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	protected function prepareQuery() {
 		$this->query->matching(
 			$this->query->logicalAnd(
-				$this->logicalAnd,
+				$this->query->logicalAnd($this->logicalAnd),
 				$this->query->logicalOr($this->logicalOr)
 			)
 		);

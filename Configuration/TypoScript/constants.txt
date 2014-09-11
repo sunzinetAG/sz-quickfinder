@@ -9,6 +9,7 @@ plugin.tx_szindexedsearch {
 	}
 	persistence {
 		# cat=plugin.tx_szindexedsearch//a; type=string; label=Default storage PID
-		storagePid = 1, 4
+		//diese Seiten werden durchsucht (Kommagetrennt)
+		storagePid = 1
 	}
 }
