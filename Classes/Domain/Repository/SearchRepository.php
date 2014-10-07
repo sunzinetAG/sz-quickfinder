@@ -253,7 +253,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 		$recursiveStoragePids = $pidList;
 		$storagePids = t3lib_div::intExplode(',', $pidList);
 		foreach ($storagePids as $startPid) {
-			$pids = $queryGenerator->getTreeList($startPid, $recursive, 0, 1);
+			$pids = $queryGenerator->getTreeList($startPid, $recursive, 0, 'hidden=0 AND deleted=0');
 			if (strlen($pids) > 0) {
 				$recursiveStoragePids .= ',' . $pids;
 			}
