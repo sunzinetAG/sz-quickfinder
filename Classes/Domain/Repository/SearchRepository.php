@@ -287,7 +287,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 				$page = $pageSelect->getPage($breadcrumb['uid'], $this->sysLanguageUid);
 			}
 			$pageTitle = $page['tx_realurl_pathsegment'] ? ucfirst($page['tx_realurl_pathsegment']) : ucfirst($page['title']);
-			if (!$page['nav_hide'] AND $page['tx_realurl_exclude'] != '1') {
+			if (!empty($page) AND !$page['nav_hide'] != '1' AND $page['tx_realurl_exclude'] != '1') {
 				if ($i > 0) {
 					$result .= ' ' . $this->settings['breadcrumb_seperator'] . ' ';
 				}
