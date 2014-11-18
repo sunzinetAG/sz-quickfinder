@@ -7,9 +7,13 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tx_szindexedsearch_domain_model_search">Suchen</label>
+			<label index="tx_szindexedsearch_domain_model_search_all">Alle Ergebnisse zeigen</label>
+			<label index="tx_szindexedsearch_domain_model_search_quick">Schnellzugriff</label>
 		</languageKey>
 		<languageKey index="en" type="array">
 			<label index="tx_szindexedsearch_domain_model_search">Search</label>
+			<label index="tx_szindexedsearch_domain_model_search_all">Show all results</label>
+			<label index="tx_szindexedsearch_domain_model_search_quick">Quicksearch</label>
 		</languageKey>
 	</data>
 </T3locallang>
