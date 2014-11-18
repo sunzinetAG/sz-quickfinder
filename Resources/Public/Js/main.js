@@ -17,6 +17,7 @@
 				clearTimeout(timer);
 			}
 			timer = setTimeout(function(){
+				container.show();
 				if(e.type != 'click') {
 					jQuery('.tx-indexedsearch-searchbox-results').html('<div class="ajax-loader"></div>');
 				}
@@ -25,7 +26,6 @@
 						url: '.' + window.location.pathname + '?type=' + pageType + '&L=' + L + '&tx_szindexedsearch_pi1[searchString]=' + encodeURIComponent($this.val()),
 						success: function(response) {
 							container.html(response);
-							container.show();
 						},
 						error: function(error) {
 							console.error(error);
@@ -41,7 +41,7 @@
 			if(!container.is(e.target) && container.has(e.target).length === 0 && !$(e.target).hasClass('tx-indexedsearch-searchbox-sword')) {
 				container.hide();
 			}
-		})
+		});
 
 	};
 
