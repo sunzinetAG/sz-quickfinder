@@ -62,6 +62,13 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	protected $script = FALSE;
 
 	/**
+	 * maxResults
+	 *
+	 * @var int
+	 */
+	protected $maxResults;
+
+	/**
 	 * Sets the table
 	 *
 	 * @param string $table
@@ -143,6 +150,27 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	 */
 	public function getScript() {
 		return $this->script;
+	}
+
+	/**
+	 * Sets the maxResults
+	 *
+	 * @param int $maxResults
+	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 */
+	public function setMaxResults($maxResults) {
+		$this->maxResults = $maxResults;
+
+		return $this;
+	}
+
+	/**
+	 * Returns the maxResults
+	 *
+	 * @return int
+	 */
+	public function getMaxResults() {
+		return $this->maxResults;
 	}
 
 }

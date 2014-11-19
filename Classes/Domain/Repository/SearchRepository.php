@@ -97,6 +97,11 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	protected $sysLanguageUid;
 
 	/**
+	 * @var int $maxResults
+	 */
+	protected $maxResults = FALSE;
+
+	/**
 	 * @param tx_szIndexedSearch_Utility_VersionCompatibility $versionCompatibilityUtility
 	 * @return void
 	 */
@@ -115,6 +120,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 		$this->sysLanguageUid = $this->versionCompatibilityUtility->getLanguageUid($this->createQuery());
 		$this->settings = $settings;
 		$this->setType($customSearch->getTable());
+		$this->maxResults = $customSearch->getMaxResults();
 		$this->query = $this->versionCompatibilityUtility->createQueryObject($this->type);
 		$this->setQuerySettings();
 		$this->constraints = array();
@@ -157,7 +163,8 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 				$this->query->logicalOr($this->logicalOr)
 			)
 		);
-		$this->query->setLimit(intval($this->settings['max_results']));
+		$limit = ($this->maxResults) ? $this->maxResults : $this->settings['max_results'];
+		$this->query->setLimit(intval($limit));
 	}
 
 	/**
