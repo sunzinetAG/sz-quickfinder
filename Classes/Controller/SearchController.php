@@ -87,6 +87,7 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 			}
 		}
 
+		$this->view->assign('searchString', $searchString);
 		$this->view->assign('results', $results);
 	}
 
