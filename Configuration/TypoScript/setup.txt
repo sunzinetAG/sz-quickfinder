@@ -56,7 +56,10 @@ plugin.tx_szindexedsearch {
 #				searchFields = header
 #			}
 #			userFunc {
-#				script = fileadmin/templates/scripts/sz_indexed_search.php
+#				script = /typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
+#				params {
+#					searchFields = title
+#				}
 #			}
 		}
 	}
