@@ -201,7 +201,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	protected function getCustomEnableFields($storagePids) {
 		switch ($this->type) {
 			case 'Tx_SzIndexedSearch_Domain_Model_Page':
-				array_push($this->logicalAnd, $this->query->equals('nav_hide', 0));
+				array_push($this->logicalAnd, $this->query->equals('nav_hide', $this->settings['includeNavHiddenPages']));
 				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
 				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
 				break;
