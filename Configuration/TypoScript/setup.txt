@@ -22,6 +22,8 @@ plugin.tx_szindexedsearch {
 		homePageUid = 2
 		searchPid = 140
 
+		includeNavHiddenPages = 0
+
 		reg_search_exp = %|%
 		max_results = 3
 		breadcrumb_seperator = /
