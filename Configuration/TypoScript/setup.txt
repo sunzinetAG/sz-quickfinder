@@ -38,13 +38,13 @@ plugin.tx_szindexedsearch {
 				table = Tx_SzIndexedSearch_Domain_Model_Page
 				searchFields = title, keywords
 			}
+			news {
+				table = tx_news_domain_model_news
+				searchFields = title
+			}
 			#More examples:
 #			documents {
 #				table = Tx_SzIndexedSearch_Domain_Model_File
-#				searchFields = title
-#			}
-#			news {
-#				table = tx_news_domain_model_news
 #				searchFields = title
 #			}
 #			user {
@@ -56,7 +56,10 @@ plugin.tx_szindexedsearch {
 #				searchFields = header
 #			}
 #			userFunc {
-#				script = fileadmin/templates/scripts/sz_indexed_search.php
+#				script = /typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
+#				params {
+#					searchFields = title
+#				}
 #			}
 		}
 	}
