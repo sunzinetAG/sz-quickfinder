@@ -87,11 +87,6 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	);
 
 	/**
-	 * @var tx_szIndexedSearch_Utility_VersionCompatibility
-	 */
-	protected $versionCompatibilityUtility;
-
-	/**
 	 * @var int $sysLanguageUid
 	 */
 	protected $sysLanguageUid;
@@ -102,14 +97,6 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	protected $maxResults = FALSE;
 
 	/**
-	 * @param tx_szIndexedSearch_Utility_VersionCompatibility $versionCompatibilityUtility
-	 * @return void
-	 */
-	public function injectVersionCompatibilityUtility(tx_szIndexedSearch_Utility_VersionCompatibility $versionCompatibilityUtility) {
-		$this->versionCompatibilityUtility = $versionCompatibilityUtility;
-	}
-
-	/**
 	 * Builds the custom Search
 	 *
 	 * @param Tx_SzIndexedSearch_Domain_Model_CustomSearch $customSearch
@@ -117,11 +104,11 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * @return array|Tx_Extbase_Persistence_QueryResult
 	 */
 	public function customSearch(Tx_SzIndexedSearch_Domain_Model_CustomSearch $customSearch, array $settings) {
-		$this->sysLanguageUid = $this->versionCompatibilityUtility->getLanguageUid($this->createQuery());
 		$this->settings = $settings;
 		$this->setType($customSearch->getTable());
 		$this->maxResults = $customSearch->getMaxResults();
-		$this->query = $this->versionCompatibilityUtility->createQueryObject($this->type);
+		$this->query = $this->persistenceManager->createQueryForType($this->type);
+		$this->sysLanguageUid = $this->query->getQuerySettings()->getLanguageUid();
 		$this->setQuerySettings();
 		$this->constraints = array();
 
