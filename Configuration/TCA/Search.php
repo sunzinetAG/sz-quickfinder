@@ -107,5 +107,3 @@ $TCA['tx_szindexedsearch_domain_model_search'] = array(
 		)
 	),
 );
-
-?>
