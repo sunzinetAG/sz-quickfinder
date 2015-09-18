@@ -211,6 +211,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 				foreach ($enablefields as $field) {
 					$constraints[] = $this->query->equals('fieldname', trim($field));
 				}
+				array_push($this->logicalAnd,$this->query->equals('tablenames', 'tt_content'));
 				array_push($this->logicalAnd, $this->query->logicalOr($constraints));
 				break;
 			default:
