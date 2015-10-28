@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -23,15 +24,14 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
- * Class Tx_SzIndexedSearch_Domain_Model_CustomSearch
+ * Class CustomSearch
  *
- * @package sz_indexed_search
- * @license http://www.gnu.org/licenses/gpl.html
- * GNU General Public License, version 3 or later
+ * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
+abstract class CustomSearch extends AbstractEntity implements SearchableInterface {
 
 	/**
 	 * table
@@ -69,12 +69,28 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	protected $maxResults;
 
 	/**
+	 * breadcrumb
+	 *
+	 * @var string $breadcrumb
+	 */
+	protected $breadcrumb;
+
+	/**
+	 * getPageId
+	 *
+	 * @return int
+	 */
+	public function getPageId() {
+		return 1;
+	}
+
+	/**
 	 * Sets the table
 	 *
-	 * @param string $table
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @param SearchableInterface $table
+	 * @return self
 	 */
-	public function setTable($table) {
+	public function setTable(SearchableInterface $table) {
 		$this->table = $table;
 
 		return $this;
@@ -93,9 +109,9 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	 * Sets the searchFields
 	 *
 	 * @param array $searchFields
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @return $this
 	 */
-	public function setSearchFields($searchFields) {
+	public function setSearchFields(array $searchFields) {
 		$this->searchFields = $searchFields;
 
 		return $this;
@@ -114,7 +130,7 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	 * Sets the searchString
 	 *
 	 * @param string $searchString
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @return $this
 	 */
 	public function setSearchString($searchString) {
 		$this->searchString = $searchString;
@@ -135,7 +151,7 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	 * Sets the scriptPath
 	 *
 	 * @param string $script
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @return $this
 	 */
 	public function setScript($script) {
 		$this->script = $script;
@@ -155,8 +171,8 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	/**
 	 * Sets the maxResults
 	 *
-	 * @param int $maxResults
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @param integer $maxResults
+	 * @return $this
 	 */
 	public function setMaxResults($maxResults) {
 		$this->maxResults = $maxResults;
@@ -171,6 +187,29 @@ class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
 	 */
 	public function getMaxResults() {
 		return $this->maxResults;
+	}
+
+	/**
+	 * getBreadcrumb
+	 *
+	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
+	 * @return string
+	 */
+	public function getBreadcrumb() {
+		return $this->breadcrumb;
+	}
+
+	/**
+	 * setBreadcrumb
+	 *
+	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
+	 * @param string $breadcrumb
+	 * @return $this
+	 */
+	public function setBreadcrumb($breadcrumb) {
+		$this->breadcrumb = $breadcrumb;
+
+		return $this;
 	}
 
 }

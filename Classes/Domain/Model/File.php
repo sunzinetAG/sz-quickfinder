@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
 /**
  * Description of the phpfile 'Pages.php'
@@ -9,17 +10,11 @@
  */
 
 /**
- * Class Tx_SzIndexedSearch_Domain_Model_File
+ * Class File
+ *
+ * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntity {
-
-	/**
-	 * fileCollectionRepository
-	 *
-	 * @var \TYPO3\CMS\Core\Resource\FileCollectionRepository
-	 * @inject
-	 */
-	protected $fileCollectionRepository;
+class File extends CustomSearch {
 
 	/**
 	 * title
@@ -48,6 +43,16 @@ class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_Abstr
 	 * @var string
 	 */
 	protected $breadcrumb;
+
+	/**
+	 * getPageId
+	 *
+	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
+	 * @return int
+	 */
+	public function getPageId() {
+		return 1;
+	}
 
 	/**
 	 * Returns the title
@@ -89,33 +94,12 @@ class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_Abstr
 	 * Sets the breadcrumb
 	 *
 	 * @param string $breadcrumb
-	 * @return Tx_SzIndexedSearch_Domain_Model_File
+	 * @return $this
 	 */
 	public function setBreadcrumb($breadcrumb) {
 		$this->breadcrumb = $breadcrumb;
 
 		return $this;
-	}
-
-	/**
-	 * @return array <\TYPO3\CMS\Core\Resource\File>
-	 */
-	public function getItem() {
-		$uid = $this->getUidLocal();
-		$obj = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->getFileObject($uid);
-		$item = $obj->toArray();
-
-		$itemAdds = array(
-			'breadcrumb' => $this->getBreadcrumb(),
-			'description' => $this->getDescription(),
-			'title' => $this->getTitle(),
-			'uid' => $this->getUid(),
-			'uidLocal' => $this->getUidLocal(),
-			'uidForeign' => $this->getUidForeign(),
-		);
-
-		$item = array_merge($item, $itemAdds);
-		return $item;
 	}
 
 }

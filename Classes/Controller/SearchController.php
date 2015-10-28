@@ -1,9 +1,10 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Controller;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
+ *  (c) 2015 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
  *
  *  All rights reserved
  *
@@ -23,37 +24,31 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
- * Class Tx_SzIndexedSearch_Controller_SearchController
+ * Class SearchController
  *
- * @package sz_indexed_search
- * @license http://www.gnu.org/licenses/gpl.html
- * GNU General Public License, version 3 or later
+ * @package Sunzinet\SzIndexedSearch\Controller
  */
-class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Controller_ActionController {
+class SearchController extends ActionController {
 
 	/**
 	 * searchRepository
 	 *
-	 * @var Tx_SzIndexedSearch_Domain_Repository_SearchRepository
+	 * @var \Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository
+	 * @inject
 	 */
 	protected $searchRepository;
 
 	/**
-	 * @var Tx_SzIndexedSearch_Domain_Model_CustomSearch $csObj
-	 */
-	protected $csObj;
-
-	/**
-	 * injectSearchRepository
+	 * languageProvider
 	 *
-	 * @param Tx_SzIndexedSearch_Domain_Repository_SearchRepository $searchRepository
-	 * @return void
+	 * @var \Sunzinet\SzIndexedSearch\Provider\LanguageProvider
+	 * @deprecated
+	 * @inject
 	 */
-	public function injectSearchRepository(Tx_SzIndexedSearch_Domain_Repository_SearchRepository $searchRepository) {
-		$this->searchRepository = $searchRepository;
-	}
+	protected $languageProvider;
 
 	/**
 	 * Only show the SearchForm
@@ -76,15 +71,18 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 		$results = array();
 
 		foreach ($customSearchArray as $sectionName => $customSearch) {
-			$this->buildModelFromTyposcript($customSearch, $searchString);
+			/** @var \Sunzinet\SzIndexedSearch\Settings\TyposcriptSettings $settings */
+			$settings = $this->objectManager->get(\Sunzinet\SzIndexedSearch\Settings\TyposcriptSettings::class);
+			$settings->initSettings(array_merge($this->settings['global'], $customSearch));
+			$settings->setProperty('searchString', $searchString);
 
-			if (!$this->csObj->getScript()) {
-				$results[$sectionName] = $this->searchRepository->customSearch($this->csObj, $this->settings);
-			} else {
-				require_once($this->csObj->getScript());
-				$userFunc = $this->objectManager->get('sz_indexed_search_user_func');
-				$results[$sectionName] = $userFunc->main($this->settings, $customSearch['params']);
-			}
+			//$languageUid = $this->languageProvider->getLanguageUid();
+			//$this->languageProvider->setLanguage('de');
+
+			$this->searchRepository->prepareCustomSearch($settings);
+
+			die();
+			$results[$sectionName] = $this->searchRepository->customSearch($settings);
 		}
 
 		$this->view->assign('searchString', $searchString);
@@ -92,7 +90,7 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	}
 
 	/**
-	 * Goes foward to IndexedSearch
+	 * Goes forward to IndexedSearch
 	 *
 	 * @param string $string The string
 	 * @return void
@@ -100,27 +98,6 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	public function searchAction($string) {
 		$params = array('search' => array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string));
 		$this->forward('search', 'Search', 'IndexedSearch', $params);
-	}
-
-	/**
-	 * Fill the Model from TypoScript values
-	 *
-	 * @param array $typoscript TypoScript settings
-	 * @param string $searchString The string
-	 * @return void
-	 */
-	protected function buildModelFromTyposcript($typoscript, $searchString) {
-		/** @var $csObj Tx_SzIndexedSearch_Domain_Model_CustomSearch */
-		$csObj = $this->objectManager->get('Tx_SzIndexedSearch_Domain_Model_CustomSearch');
-		if ($typoscript['script']) {
-			$csObj->setScript($typoscript['script']);
-		}
-		$csObj->setTable($typoscript['table'])
-			->setSearchFields(explode(',', str_replace(' ', '', $typoscript['searchFields'])))
-			->setSearchString($searchString)
-			->setMaxResults($typoscript['max_results']);
-
-		$this->csObj = $csObj;
 	}
 
 }

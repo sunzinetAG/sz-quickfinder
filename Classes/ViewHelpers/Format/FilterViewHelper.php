@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\ViewHelpers\Format;
 /**
  * Description of the class 'HighlightViewHelper.php'
  *
@@ -7,13 +8,23 @@
  * @license http://www.gnu.org/licenses/gpl.html
  * GNU General Public License, version 3 or later
  */
-class Tx_SzIndexedSearch_ViewHelpers_Format_FilterViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
+/**
+ * Class FilterViewHelper
+ *
+ * @package Sunzinet\ViewHelpers\Format
+ */
+class FilterViewHelper extends AbstractViewHelper {
 
 	/**
-	 * @return string only the word, which includes the given searchstring
+	 * returns only the word, which includes the given searchstring
+	 *
+	 * @return string
 	 */
 	public function render() {
-		$searchStringArr = t3lib_div::_GP('tx_szindexedsearch_pi1');
+		$searchStringArr = GeneralUtility::_GP('tx_szindexedsearch_pi1');
 		$searchString = urldecode($searchStringArr['searchString']);
 
 		$return = htmlspecialchars_decode($this->renderChildren());

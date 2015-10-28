@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
 /**
  * Description of the phpfile 'Pages.php'
@@ -9,9 +10,11 @@
  */
 
 /**
- * Class Tx_SzIndexedSearch_Domain_Model_Page
+ * Class Page
+ *
+ * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class Tx_SzIndexedSearch_Domain_Model_Page extends Tx_Extbase_DomainObject_AbstractEntity {
+class Page extends CustomSearch {
 
 	/**
 	 * title
@@ -61,6 +64,15 @@ class Tx_SzIndexedSearch_Domain_Model_Page extends Tx_Extbase_DomainObject_Abstr
 	 * @var bool
 	 */
 	public $changeUidToPid = TRUE;
+
+	/**
+	 * getPageId
+	 *
+	 * @return int
+	 */
+	public function getPageId() {
+		return (int)$this->uid;
+	}
 
 	/**
 	 * Returns the title
@@ -120,7 +132,7 @@ class Tx_SzIndexedSearch_Domain_Model_Page extends Tx_Extbase_DomainObject_Abstr
 	 * Sets the breadcrumb
 	 *
 	 * @param string $breadcrumb
-	 * @return Tx_SzIndexedSearch_Domain_Model_Page
+	 * @return $this
 	 */
 	public function setBreadcrumb($breadcrumb) {
 		$this->breadcrumb = $breadcrumb;

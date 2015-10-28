@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
 /**
  * Description of the phpfile 'User.php'
@@ -9,7 +10,12 @@
  * GNU General Public License, version 3 or later
  */
 
-class Tx_SzIndexedSearch_Domain_Model_Content extends Tx_Extbase_DomainObject_AbstractEntity {
+/**
+ * Class Content
+ *
+ * @package Sunzinet\SzIndexedSearch\Domain\Model
+ */
+class Content extends CustomSearch {
 
 	/**
 	 * header
@@ -31,6 +37,24 @@ class Tx_SzIndexedSearch_Domain_Model_Content extends Tx_Extbase_DomainObject_Ab
 	 * @var string
 	 */
 	protected $subheader;
+
+	/**
+	 * breadcrumb
+	 *
+	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
+	 * @var string $breadcrumb
+	 */
+	protected $breadcrumb;
+
+	/**
+	 * getPageId
+	 *
+	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
+	 * @return int
+	 */
+	public function getPageId() {
+		return 1;
+	}
 
 	/**
 	 * Returns the header
@@ -57,6 +81,29 @@ class Tx_SzIndexedSearch_Domain_Model_Content extends Tx_Extbase_DomainObject_Ab
 	 */
 	public function getSubheader() {
 		return $this->subheader;
+	}
+
+	/**
+	 * getBreadcrumb
+	 *
+	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
+	 * @return string
+	 */
+	public function getBreadcrumb() {
+		return $this->breadcrumb;
+	}
+
+	/**
+	 * setBreadcrumb
+	 *
+	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
+	 * @param string $breadcrumb
+	 * @return $this
+	 */
+	public function setBreadcrumb($breadcrumb) {
+		$this->breadcrumb = $breadcrumb;
+
+		return $this;
 	}
 
 }

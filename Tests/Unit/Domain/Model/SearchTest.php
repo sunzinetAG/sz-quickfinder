@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
+ *  (c) 2015 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
  *  			
  *  All rights reserved
  *
@@ -23,6 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
  * Test case for class Tx_SzIndexedSearch_Domain_Model_Search.
@@ -36,26 +37,6 @@
  *
  * @author Dennis Römmich <dennis.roemmich@sunzinet.com>
  */
-class Tx_SzIndexedSearch_Domain_Model_SearchTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
-	/**
-	 * @var Tx_SzIndexedSearch_Domain_Model_Search
-	 */
-	protected $fixture;
+class Tx_SzIndexedSearch_Domain_Model_SearchTest extends UnitTestCase {
 
-	public function setUp() {
-		$this->fixture = new Tx_SzIndexedSearch_Domain_Model_Search();
-	}
-
-	public function tearDown() {
-		unset($this->fixture);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function dummyTestToNotLeaveThisFileEmpty() {
-		$this->markTestIncomplete();
-	}
-	
 }
-?>
