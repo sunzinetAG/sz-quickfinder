@@ -145,7 +145,7 @@ ajaxRequest {
 
 page {
 	includeJS {
-		sz_indexed_search = EXT:sz_indexed_search/Resources/Public/Js/main.js
+		sz_indexed_search = EXT:sz_indexed_search/Resources/Public/Js/SzIndexedSearch.min.js
 	}
 }
 

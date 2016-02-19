@@ -1,0 +1,24 @@
+{
+  "name": "szIndexedSearch",
+  "version": "3.0.0",
+  "description": "SzIndexedSearch - Autocomplete Plugin der sunzinet AG",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-uglify": "^0.11.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse"
+  },
+  "keywords": [
+    "szIndexedSearch"
+  ],
+  "author": {
+    "name": "Dennis Römmich",
+    "mail": "dr@sunzinet.com"
+  },
+  "company": "sunzinet AG",
+  "license": "MIT"
+}
