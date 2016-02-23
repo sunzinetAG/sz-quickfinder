@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
 /***************************************************************
  *  Copyright notice
@@ -25,13 +26,11 @@
  ***************************************************************/
 
 /**
- * Class Tx_SzIndexedSearch_Domain_Model_CustomSearch
+ * Class Content
  *
- * @package sz_indexed_search
- * @license http://www.gnu.org/licenses/gpl.html
- * GNU General Public License, version 3 or later
+ * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class Tx_SzIndexedSearch_Domain_Model_CustomSearch {
+class CustomSearch {
 
 	/**
 	 * table

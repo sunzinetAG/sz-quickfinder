@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
 /**
  * Description of the phpfile 'Pages.php'
@@ -10,9 +11,11 @@
  */
 
 /**
- * Class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay
+ * Class PageLanguageOverlay
+ *
+ * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay extends Tx_Extbase_DomainObject_AbstractEntity {
+class PageLanguageOverlay extends CustomSearch {
 
 	/**
 	 * title

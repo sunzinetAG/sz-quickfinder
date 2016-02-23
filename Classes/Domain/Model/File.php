@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
 /**
  * Description of the phpfile 'Pages.php'
@@ -9,9 +10,11 @@
  */
 
 /**
- * Class Tx_SzIndexedSearch_Domain_Model_File
+ * Class File
+ *
+ * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class Tx_SzIndexedSearch_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntity {
+class File extends CustomSearch {
 
 	/**
 	 * fileCollectionRepository

@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
 /**
  * Description of the phpfile 'User.php'
@@ -9,8 +10,10 @@
  */
 
 /**
- * Class Tx_SzIndexedSearch_Domain_Model_User
+ * Class User
+ *
+ * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class Tx_SzIndexedSearch_Domain_Model_User extends Tx_Extbase_Domain_Model_FrontendUser {
+class User extends CustomSearch {
 
 }

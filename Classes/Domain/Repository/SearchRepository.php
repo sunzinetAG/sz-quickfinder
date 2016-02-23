@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Repository;
 
 /***************************************************************
  *  Copyright notice
@@ -33,7 +34,22 @@
  * @license http://www.gnu.org/licenses/gpl.html
  * GNU General Public License, version 3 or later
  */
-class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_Persistence_Repository {
+
+use Sunzinet\SzIndexedSearch\Domain\Model\CustomSearch;
+use Sunzinet\SzIndexedSearch\Domain\Model\File;
+use Sunzinet\SzIndexedSearch\Domain\Model\Page;
+use Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Query;
+use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
+use TYPO3\CMS\Frontend\Page\PageRepository;
+
+/**
+ * Class SearchRepository
+ *
+ * @package Sunzinet\SzIndexedSearch\Domain\Repository
+ */
+class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 
 	/**
 	 * Type of the Model
@@ -64,7 +80,7 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	protected $constraints = array();
 
 	/**
-	 * @var Tx_Extbase_Persistence_Query
+	 * @var Query
 	 */
 	protected $query;
 
@@ -81,15 +97,11 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * @var array
 	 */
 	protected $showBreadcrumbInSeachresult = array(
-		'Tx_SzIndexedSearch_Domain_Model_Page',
-		'Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay',
-		'Tx_SzIndexedSearch_Domain_Model_File'
+		Page::class,
+		PageLanguageOverlay::class,
+		File::class
 	);
 
-	/**
-	 * @var tx_szIndexedSearch_Utility_VersionCompatibility
-	 */
-	protected $versionCompatibilityUtility;
 
 	/**
 	 * @var int $sysLanguageUid
@@ -101,27 +113,20 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 */
 	protected $maxResults = FALSE;
 
-	/**
-	 * @param tx_szIndexedSearch_Utility_VersionCompatibility $versionCompatibilityUtility
-	 * @return void
-	 */
-	public function injectVersionCompatibilityUtility(tx_szIndexedSearch_Utility_VersionCompatibility $versionCompatibilityUtility) {
-		$this->versionCompatibilityUtility = $versionCompatibilityUtility;
-	}
 
 	/**
 	 * Builds the custom Search
 	 *
-	 * @param Tx_SzIndexedSearch_Domain_Model_CustomSearch $customSearch
+	 * @param CustomSearch $customSearch
 	 * @param array $settings
-	 * @return array|Tx_Extbase_Persistence_QueryResult
+	 * @return array|QueryResult
 	 */
-	public function customSearch(Tx_SzIndexedSearch_Domain_Model_CustomSearch $customSearch, array $settings) {
-		$this->sysLanguageUid = $this->versionCompatibilityUtility->getLanguageUid($this->createQuery());
+	public function customSearch(CustomSearch $customSearch, array $settings) {
 		$this->settings = $settings;
 		$this->setType($customSearch->getTable());
 		$this->maxResults = $customSearch->getMaxResults();
-		$this->query = $this->versionCompatibilityUtility->createQueryObject($this->type);
+		$this->query = $this->persistenceManager->createQueryForType($this->type);
+		$this->sysLanguageUid = $this->query->getQuerySettings()->getLanguageUid();
 		$this->setQuerySettings();
 		$this->constraints = array();
 
@@ -174,8 +179,8 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * @return void
 	 */
 	protected function setType($type) {
-		if ($type === 'Tx_SzIndexedSearch_Domain_Model_Page' AND $this->sysLanguageUid !== 0) {
-			$this->type = 'Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay';
+		if ($type === Page::class AND $this->sysLanguageUid !== 0) {
+			$this->type = PageLanguageOverlay::class;
 		} else {
 			$this->type = $type;
 		}
@@ -200,12 +205,12 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 */
 	protected function getCustomEnableFields($storagePids) {
 		switch ($this->type) {
-			case 'Tx_SzIndexedSearch_Domain_Model_Page':
+			case 'Sunzinet\SzIndexedSearch\Domain\Model\Page':
 				array_push($this->logicalAnd, $this->query->equals('nav_hide', $this->settings['includeNavHiddenPages']));
 				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
 				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
 				break;
-			case 'Tx_SzIndexedSearch_Domain_Model_File':
+			case 'Sunzinet\SzIndexedSearch\Domain\Model\File':
 				$enablefields = explode(',', $this->settings['customEnableFields']['file']['fieldname']);
 				$constraints = array();
 				foreach ($enablefields as $field) {
@@ -256,10 +261,10 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 			return $pidList;
 		}
 
-		/** @var $queryGenerator t3lib_queryGenerator */
+		/** @var $queryGenerator \t3lib_queryGenerator */
 		$queryGenerator = $this->objectManager->get('t3lib_queryGenerator');
 		$recursiveStoragePids = $pidList;
-		$storagePids = t3lib_div::intExplode(',', $pidList);
+		$storagePids = GeneralUtility::intExplode(',', $pidList);
 		foreach ($storagePids as $startPid) {
 			$pids = $queryGenerator->getTreeList($startPid, $recursive, 0, 'hidden=0 AND deleted=0');
 			if (strlen($pids) > 0) {
@@ -279,8 +284,8 @@ class Tx_SzIndexedSearch_Domain_Repository_SearchRepository extends Tx_Extbase_P
 	 * @return string The Breadcrumb
 	 */
 	protected function getBreadcrumb($pid) {
-		/** @var $pageSelect t3lib_pageSelect */
-		$pageSelect = $this->objectManager->get('t3lib_pageSelect');
+		/** @var $pageSelect PageRepository */
+		$pageSelect = $this->objectManager->get('PageRepository::class');
 		$pageSelect->init(FALSE);
 
 		$result = '';

@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
 /**
  * Description of the phpfile 'User.php'
@@ -9,7 +10,12 @@
  * GNU General Public License, version 3 or later
  */
 
-class Tx_SzIndexedSearch_Domain_Model_Content extends Tx_Extbase_DomainObject_AbstractEntity {
+/**
+* Class Content
+ *
+ * @package Sunzinet\SzIndexedSearch\Domain\Model
+*/
+class Content extends CustomSearch {
 
 	/**
 	 * header

@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\Controller;
 
 /***************************************************************
  *  Copyright notice
@@ -24,6 +25,9 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sunzinet\SzIndexedSearch\Domain\Model\CustomSearch;
+use Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 /**
  * Class Tx_SzIndexedSearch_Controller_SearchController
  *
@@ -31,27 +35,27 @@
  * @license http://www.gnu.org/licenses/gpl.html
  * GNU General Public License, version 3 or later
  */
-class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Controller_ActionController {
+class SearchController extends ActionController {
 
 	/**
 	 * searchRepository
 	 *
-	 * @var Tx_SzIndexedSearch_Domain_Repository_SearchRepository
+	 * @var \Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository
 	 */
 	protected $searchRepository;
 
 	/**
-	 * @var Tx_SzIndexedSearch_Domain_Model_CustomSearch $csObj
+	 * @var CustomSearch $csObj
 	 */
 	protected $csObj;
 
 	/**
 	 * injectSearchRepository
 	 *
-	 * @param Tx_SzIndexedSearch_Domain_Repository_SearchRepository $searchRepository
+	 * @param SearchRepository $searchRepository
 	 * @return void
 	 */
-	public function injectSearchRepository(Tx_SzIndexedSearch_Domain_Repository_SearchRepository $searchRepository) {
+	public function injectSearchRepository(SearchRepository $searchRepository) {
 		$this->searchRepository = $searchRepository;
 	}
 
@@ -110,7 +114,7 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 	 * @return void
 	 */
 	protected function buildModelFromTyposcript($typoscript, $searchString) {
-		/** @var $csObj Tx_SzIndexedSearch_Domain_Model_CustomSearch */
+		/** @var $csObj CustomSearch */
 		$csObj = $this->objectManager->get('Tx_SzIndexedSearch_Domain_Model_CustomSearch');
 		if ($typoscript['script']) {
 			$csObj->setScript($typoscript['script']);

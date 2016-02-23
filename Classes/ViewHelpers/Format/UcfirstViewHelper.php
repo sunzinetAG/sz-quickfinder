@@ -1,4 +1,6 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\ViewHelpers\Format;
+
 /**
  * Description of the class 'UcfirstViewHelper.php'
  *
@@ -7,7 +9,14 @@
  * @license http://www.gnu.org/licenses/gpl.html
  * GNU General Public License, version 3 or later
  */
-class Tx_SzIndexedSearch_ViewHelpers_Format_UcfirstViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
+/**
+ * Class UcfirstViewHelper
+ *
+ * @package Sunzinet\ViewHelpers\Format
+ */
+class UcfirstViewHelper extends AbstractViewHelper {
 
 	/**
 	 * @return string The result with first letter uppercase

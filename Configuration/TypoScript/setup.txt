@@ -37,24 +37,24 @@ plugin.tx_szindexedsearch {
 
 		customSearch {
 			page {
-				table = Tx_SzIndexedSearch_Domain_Model_Page
+				model = Sunzinet\SzIndexedSearch\Domain\Model\Page
 				searchFields = title, keywords
 			}
 			news {
-				table = tx_news_domain_model_news
+				model = Sunzinet\SzIndexedSearch\Domain\Model\News
 				searchFields = title
 			}
 			#More examples:
 #			documents {
-#				table = Tx_SzIndexedSearch_Domain_Model_File
+#				model = Sunzinet\SzIndexedSearch\Domain\Model\File
 #				searchFields = title
 #			}
 #			user {
-#				table = Tx_SzIndexedSearch_Domain_Model_User
+#				model = Sunzinet\SzIndexedSearch\Domain\Model\User
 #				searchFields = name
 #			}
 #			content {
-#				table = Tx_SzIndexedSearch_Domain_Model_Content
+#				model = Sunzinet\SzIndexedSearch\Domain\Model\Content
 #				searchFields = header
 #			}
 #			userFunc {
@@ -90,34 +90,41 @@ plugin.tx_szindexedsearch {
 config.tx_extbase {
 	persistence {
 		classes {
-			Tx_SzIndexedSearch_Domain_Model_Page {
+			Sunzinet\SzIndexedSearch\Domain\Model\Page {
 				mapping {
 					tableName = pages
 				}
 			}
-			Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay {
+			Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay {
 				mapping {
 					tableName = pages_language_overlay
 				}
 			}
-			Tx_SzIndexedSearch_Domain_Model_File {
+			Sunzinet\SzIndexedSearch\Domain\Model\News {
+				mapping {
+					tableName = tx_news_domain_model_news
+				}
+			}
+			Sunzinet\SzIndexedSearch\Domain\Model\File {
 				mapping {
 					tableName = sys_file_reference
 				}
 			}
 			Tx_SzIndexedSearch_Domain_Model_User {
-				mapping {
-					tableName = fe_users
+				Sunzinet\SzIndexedSearch\Domain\Model\User {
+					mapping {
+						tableName = fe_users
+					}
 				}
-			}
-			Tx_SzIndexedSearch_Domain_Model_Content {
-				mapping {
-					tableName = tt_content
+				Tx_SzIndexedSearch_Domain_Model_Content {
+					Sunzinet\SzIndexedSearch\Domain\Model\Content {
+						mapping {
+							tableName = tt_content
+						}
+					}
 				}
 			}
 		}
-	}
-}
 
 ajaxRequest = PAGE
 ajaxRequest {
@@ -125,7 +132,7 @@ ajaxRequest {
 	config.disableAllHeaderCode = 1
 	10 = USER
 	10 {
-		userFunc = tx_extbase_core_bootstrap->run
+		userFunc = \TYPO3\CMS\Extbase\Core\Bootstrap->run
 		pluginName = Pi1
 		extensionName = SzIndexedSearch
 		switchableControllerActions {
