@@ -110,21 +110,23 @@ config.tx_extbase {
 					tableName = sys_file_reference
 				}
 			}
-			Tx_SzIndexedSearch_Domain_Model_User {
+			Sunzinet\SzIndexedSearch\Domain\Model\User {
 				Sunzinet\SzIndexedSearch\Domain\Model\User {
 					mapping {
 						tableName = fe_users
 					}
 				}
-				Tx_SzIndexedSearch_Domain_Model_Content {
-					Sunzinet\SzIndexedSearch\Domain\Model\Content {
-						mapping {
-							tableName = tt_content
-						}
+			}
+			Sunzinet\SzIndexedSearch\Domain\Model\Content {
+				Sunzinet\SzIndexedSearch\Domain\Model\Content {
+					mapping {
+						tableName = tt_content
 					}
 				}
 			}
 		}
+	}
+}
 
 ajaxRequest = PAGE
 ajaxRequest {
@@ -158,7 +160,7 @@ lib.tx_szindexedsearch = COA
 lib.tx_szindexedsearch {
 	10 = USER
 	10 {
-		userFunc = tx_extbase_core_bootstrap->run
+		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
 		pluginName = Pi1
 		extensionName = SzIndexedSearch
 		switchableControllerActions {

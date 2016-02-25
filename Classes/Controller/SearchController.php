@@ -115,7 +115,7 @@ class SearchController extends ActionController {
 	 */
 	protected function buildModelFromTyposcript($typoscript, $searchString) {
 		/** @var $csObj CustomSearch */
-		$csObj = $this->objectManager->get('Tx_SzIndexedSearch_Domain_Model_CustomSearch');
+		$csObj = $this->objectManager->get('CustomSearch');
 		if ($typoscript['script']) {
 			$csObj->setScript($typoscript['script']);
 		}
