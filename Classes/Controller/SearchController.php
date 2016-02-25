@@ -28,8 +28,9 @@ namespace Sunzinet\SzIndexedSearch\Controller;
 use Sunzinet\SzIndexedSearch\Domain\Model\CustomSearch;
 use Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+
 /**
- * Class Tx_SzIndexedSearch_Controller_SearchController
+ * Class SearchController
  *
  * @package sz_indexed_search
  * @license http://www.gnu.org/licenses/gpl.html
@@ -71,10 +72,10 @@ class SearchController extends ActionController {
 	/**
 	 * autocomplete action
 	 *
-	 * @param string $searchString The string
 	 * @return void
 	 */
-	public function autocompleteAction($searchString) {
+	public function autocompleteAction() {
+		$searchString = $this->request->getArgument('searchString');
 		$customSearchArray = $this->settings['customSearch'];
 
 		$results = array();
@@ -115,7 +116,7 @@ class SearchController extends ActionController {
 	 */
 	protected function buildModelFromTyposcript($typoscript, $searchString) {
 		/** @var $csObj CustomSearch */
-		$csObj = $this->objectManager->get('CustomSearch');
+		$csObj = $this->objectManager->get(CustomSearch::class);
 		if ($typoscript['script']) {
 			$csObj->setScript($typoscript['script']);
 		}

@@ -15,7 +15,11 @@ $boot = function ($extensionKey) {
 			'Search' => 'autocomplete',
 		)
 	);
+
+
 };
 
 $boot($_EXTKEY);
 unset($boot);
+
+\Sunzinet\SzIndexedSearch\Utility\AjaxDispatcher::activateAjaxDispatcher();

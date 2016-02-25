@@ -128,29 +128,29 @@ config.tx_extbase {
 	}
 }
 
-ajaxRequest = PAGE
-ajaxRequest {
-	typeNum = 1402582595
-	config.disableAllHeaderCode = 1
-	10 = USER
-	10 {
-		userFunc = \TYPO3\CMS\Extbase\Core\Bootstrap->run
-		vendorName = Sunzinet
-		extensionName = SzIndexedSearch
-		pluginName = Pi1
-
-		switchableControllerActions {
-			Search {
-				1 = autocomplete
-				2 = search
-			}
-		}
-
-		view =< plugin.tx_szindexedsearch.view
-		persistence =< plugin.sz_indexed_search.persistence
-		settings =< plugin.sz_indexed_search.settings
-	}
-}
+#ajaxRequest = PAGE
+#ajaxRequest {
+#	typeNum = 1402582595
+#	config.disableAllHeaderCode = 1
+#	10 = USER
+#	10 {
+#		userFunc = \TYPO3\CMS\Extbase\Core\Bootstrap->run
+#		vendorName = Sunzinet
+#		extensionName = SzIndexedSearch
+#		pluginName = Pi1
+#
+#		switchableControllerActions {
+#			Search {
+#				1 = autocomplete
+#				2 = search
+#			}
+#		}
+#
+#		view =< plugin.tx_szindexedsearch.view
+#		persistence =< plugin.sz_indexed_search.persistence
+#		settings =< plugin.sz_indexed_search.settings
+#	}
+#}
 
 page {
 	includeJS {
