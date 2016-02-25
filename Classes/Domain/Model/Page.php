@@ -123,7 +123,7 @@ class Page extends CustomSearch {
 	 * Sets the breadcrumb
 	 *
 	 * @param string $breadcrumb
-	 * @return Tx_SzIndexedSearch_Domain_Model_Page
+	 * @return Page
 	 */
 	public function setBreadcrumb($breadcrumb) {
 		$this->breadcrumb = $breadcrumb;

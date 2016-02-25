@@ -28,7 +28,7 @@ namespace Sunzinet\SzIndexedSearch\Domain\Repository;
 /**
  * Search Repository for sz_indexed_search
  *
- * Class Tx_SzIndexedSearch_Domain_Repository_SearchRepository
+ * Class SearchRepository
  *
  * @package sz_indexed_search
  * @license http://www.gnu.org/licenses/gpl.html

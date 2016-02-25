@@ -135,19 +135,21 @@ ajaxRequest {
 	10 = USER
 	10 {
 		userFunc = \TYPO3\CMS\Extbase\Core\Bootstrap->run
-		pluginName = Pi1
+		vendorName = Sunzinet
 		extensionName = SzIndexedSearch
+		pluginName = Pi1
+
 		switchableControllerActions {
 			Search {
 				1 = autocomplete
 				2 = search
 			}
 		}
-	}
 
-	view =< plugin.tx_szindexedsearch.view
-	persistence =< plugin.sz_indexed_search.persistence
-	settings =< plugin.sz_indexed_search.settings
+		view =< plugin.tx_szindexedsearch.view
+		persistence =< plugin.sz_indexed_search.persistence
+		settings =< plugin.sz_indexed_search.settings
+	}
 }
 
 page {
@@ -161,8 +163,10 @@ lib.tx_szindexedsearch {
 	10 = USER
 	10 {
 		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-		pluginName = Pi1
+		vendorName = Sunzinet
 		extensionName = SzIndexedSearch
+		pluginName = Pi1
+
 		switchableControllerActions {
 			Search {
 				1 = index

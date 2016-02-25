@@ -71,7 +71,7 @@ class CustomSearch {
 	 * Sets the table
 	 *
 	 * @param string $table
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @return CustomSearch
 	 */
 	public function setTable($table) {
 		$this->table = $table;
@@ -92,7 +92,7 @@ class CustomSearch {
 	 * Sets the searchFields
 	 *
 	 * @param array $searchFields
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @return CustomSearch
 	 */
 	public function setSearchFields($searchFields) {
 		$this->searchFields = $searchFields;
@@ -113,7 +113,7 @@ class CustomSearch {
 	 * Sets the searchString
 	 *
 	 * @param string $searchString
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @return CustomSearch
 	 */
 	public function setSearchString($searchString) {
 		$this->searchString = $searchString;
@@ -134,7 +134,7 @@ class CustomSearch {
 	 * Sets the scriptPath
 	 *
 	 * @param string $script
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @return CustomSearch
 	 */
 	public function setScript($script) {
 		$this->script = $script;
@@ -155,7 +155,7 @@ class CustomSearch {
 	 * Sets the maxResults
 	 *
 	 * @param int $maxResults
-	 * @return Tx_SzIndexedSearch_Domain_Model_CustomSearch
+	 * @return CustomSearch
 	 */
 	public function setMaxResults($maxResults) {
 		$this->maxResults = $maxResults;
