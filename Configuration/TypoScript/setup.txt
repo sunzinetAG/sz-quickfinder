@@ -78,7 +78,12 @@ plugin.tx_szindexedsearch {
 			height: auto;
 		}
 
-		.tx-indexedsearch-searchbox-results .ajax-loader {
+		.tx-indexedsearch-searchbox-results .results-list .result-breadcrumb {
+			display: block;
+			font-size: 12px;
+		}
+
+			.tx-indexedsearch-searchbox-results .ajax-loader {
 			width: 32px;
 			height: 32px;
 			margin: 40px auto;

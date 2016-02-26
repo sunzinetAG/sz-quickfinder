@@ -1,5 +1,10 @@
 <f:layout name="Default" />
 
 <f:for each="{results}" as="result">
-	Uid {result.uid}: {result.title}<br>
+	<li>
+		<f:link.action extensionName="News" controller="News" action="detail"
+					   arguments="{news: result}" pageUid="{settings.newsDetailPid}">
+			<sz:format.highlight>{result.title}</sz:format.highlight>
+		</f:link.action>
+	</li>
 </f:for>

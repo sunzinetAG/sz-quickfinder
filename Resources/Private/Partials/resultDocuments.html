@@ -3,7 +3,11 @@
 <f:layout name="Default" />
 
 <f:for each="{results}" as="result">
-	<f:link.page pageUid="{result.pid}" section="{result.uidForeign}"><sz:format.highlight>{result.title}</sz:format.highlight></f:link.page><br>
-	{result.breadcrumb}<br>
+	<li>
+		<f:link.page pageUid="{result.pid}">
+			<sz:format.highlight>{result.title}</sz:format.highlight>
+			<span class="result-breadcrumb">{result.breadcrumb}</span>
+		</f:link.page>
+	</li>
 </f:for>
 

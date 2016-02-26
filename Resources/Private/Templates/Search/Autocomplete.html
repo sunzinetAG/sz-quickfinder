@@ -10,8 +10,10 @@
 		<f:for each="{results}" as="result" key="sectionName">
 			<f:if condition="{result}">
 				<div class="{sectionName}-results">
-					<h2>{sectionName -> sz:format.ucfirst()}</h2>
-					<f:render partial="result{sectionName -> sz:format.ucfirst()}" arguments="{results : result}" />
+					<strong class="results-headline">{sectionName -> sz:format.ucfirst()}</strong>
+					<ul class="results-list">
+						<f:render partial="result{sectionName -> sz:format.ucfirst()}" arguments="{results : result}" />
+					</ul>
 				</div>
 			</f:if>
 		</f:for>
