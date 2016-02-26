@@ -42,7 +42,6 @@ use Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
-use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
@@ -154,7 +153,6 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 		$this->logicalAnd = array();
 		$this->logicalOr = array();
 
-		unset($this->query);
 		return $results;
 	}
 

@@ -4,18 +4,20 @@
 
 <f:section name="main">
 
-	<f:translate key="tx_szindexedsearch_domain_model_search_quick">Quick search</f:translate>
+	<f:translate key="search-quick">Quick search</f:translate>
 
 	<div class="results-drop">
 		<f:for each="{results}" as="result" key="sectionName">
 			<f:if condition="{result}">
-				<h2>{sectionName -> sz:format.ucfirst()}</h2>
-				<f:render partial="result{sectionName -> sz:format.ucfirst()}" arguments="{results : result}" />
+				<div class="{sectionName}-results">
+					<h2>{sectionName -> sz:format.ucfirst()}</h2>
+					<f:render partial="result{sectionName -> sz:format.ucfirst()}" arguments="{results : result}" />
+				</div>
 			</f:if>
 		</f:for>
 	</div>
 	<div class="search-holder">
-		<button type="submit" class="btn-search"><f:translate key="tx_szindexedsearch_domain_model_search_all">Search all</f:translate></button>
+		<button type="submit" class="btn-search"><f:translate key="search-all">Search all</f:translate></button>
 	</div>
 
 </f:section>
