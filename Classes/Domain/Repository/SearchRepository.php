@@ -42,6 +42,7 @@ use Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
@@ -122,18 +123,18 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 * @return array|QueryResult
 	 */
 	public function customSearch(CustomSearch $customSearch, array $settings) {
+		$this->sysLanguageUid = $GLOBALS['TSFE']->sys_language_uid;
 		$this->settings = $settings;
 		$this->setType($customSearch->getTable());
 		$this->maxResults = $customSearch->getMaxResults();
 		$this->query = $this->persistenceManager->createQueryForType($this->type);
-		$this->sysLanguageUid = $this->query->getQuerySettings()->getLanguageUid();
 		$this->setQuerySettings();
 		$this->constraints = array();
 
 		foreach ($customSearch->getSearchFields() as $propertyName) {
 			$this->constraints[] = $this->query->like(
 				$propertyName,
-				$this->regSearchExp($customSearch->getSearchString(), $this->settings)
+				$this->regSearchExp($customSearch->getSearchString())
 			);
 		}
 
@@ -153,6 +154,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 		$this->logicalAnd = array();
 		$this->logicalOr = array();
 
+		unset($this->query);
 		return $results;
 	}
 
@@ -261,8 +263,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 			return $pidList;
 		}
 
-		/** @var $queryGenerator \t3lib_queryGenerator */
-		$queryGenerator = $this->objectManager->get('t3lib_queryGenerator');
+		$queryGenerator = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Database\\QueryGenerator');
 		$recursiveStoragePids = $pidList;
 		$storagePids = GeneralUtility::intExplode(',', $pidList);
 		foreach ($storagePids as $startPid) {
@@ -285,7 +286,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 */
 	protected function getBreadcrumb($pid) {
 		/** @var $pageSelect PageRepository */
-		$pageSelect = $this->objectManager->get('PageRepository::class');
+		$pageSelect = $this->objectManager->get(PageRepository::class);
 		$pageSelect->init(FALSE);
 
 		$result = '';

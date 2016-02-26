@@ -30,7 +30,7 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class CustomSearch {
+class CustomSearch extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * table

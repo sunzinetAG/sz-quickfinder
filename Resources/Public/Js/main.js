@@ -23,8 +23,7 @@
 				}
 				if($this.val().length > 2) {
 
-					/**
-					 * 	$.ajax({
+					$.ajax({
 						url: '.' + window.location.pathname + '?type=' + pageType + '&L=' + L + '&tx_szindexedsearch_pi1[searchString]=' + encodeURIComponent($this.val()),
 						success: function(response) {
 							container.html(response);
@@ -33,34 +32,34 @@
 							console.error(error);
 						}
 					});
-					 */
 
-					var request =  {
-						id: 1,
-						mvc: {
-							vendor: 'Sunzinet',
-							extensionName: 'SzIndexedSearch',
-							pluginName: 'pi1',
-							controller: 'Search',
-							action: 'autocomplete',
-							format: 'html'
-						},
-						arguments: {
-							'searchString': encodeURIComponent($this.val())
-						}
-					};
-					$.ajax({
-						url: 'index.php',
-						type: 'GET',
-						dataType: 'html',
-						data: {
-							eID: 'szIsDispatcher',
-							request: request
-						},
-						success: function (result) {
-							jQuery('#newsReplace').html(result);
-						}
-					});
+
+					//var request =  {
+					//	id: 1,
+					//	mvc: {
+					//		vendor: 'Sunzinet',
+					//		extensionName: 'SzIndexedSearch',
+					//		pluginName: 'pi1',
+					//		controller: 'Search',
+					//		action: 'autocomplete',
+					//		format: 'html'
+					//	},
+					//	arguments: {
+					//		'searchString': encodeURIComponent($this.val())
+					//	}
+					//};
+					//$.ajax({
+					//	url: 'index.php',
+					//	type: 'GET',
+					//	dataType: 'html',
+					//	data: {
+					//		eID: 'szIsDispatcher',
+					//		request: request
+					//	},
+					//	success: function (result) {
+					//		jQuery('#newsReplace').html(result);
+					//	}
+					//});
 
 
 				} else {

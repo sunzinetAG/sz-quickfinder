@@ -28,6 +28,7 @@ namespace Sunzinet\SzIndexedSearch\Controller;
 use Sunzinet\SzIndexedSearch\Domain\Model\CustomSearch;
 use Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 
 /**
  * Class SearchController
@@ -72,10 +73,10 @@ class SearchController extends ActionController {
 	/**
 	 * autocomplete action
 	 *
+	 * @param string $searchString
 	 * @return void
 	 */
-	public function autocompleteAction() {
-		$searchString = $this->request->getArgument('searchString');
+	public function autocompleteAction($searchString) {
 		$customSearchArray = $this->settings['customSearch'];
 
 		$results = array();
@@ -120,7 +121,7 @@ class SearchController extends ActionController {
 		if ($typoscript['script']) {
 			$csObj->setScript($typoscript['script']);
 		}
-		$csObj->setTable($typoscript['table'])
+		$csObj->setTable($typoscript['model'])
 			->setSearchFields(explode(',', str_replace(' ', '', $typoscript['searchFields'])))
 			->setSearchString($searchString)
 			->setMaxResults($typoscript['max_results']);
