@@ -3,21 +3,26 @@ plugin.tx_szindexedsearch {
 		templateRootPaths {
 			100 = {$plugin.tx_szindexedsearch.view.templateRootPath}
 		}
+
 		partialRootPaths {
 			100 = {$plugin.tx_szindexedsearch.view.partialRootPath}
 		}
+
 		layoutRootPaths {
 			100 = {$plugin.tx_szindexedsearch.view.layoutRootPath}
 		}
 	}
+
 	persistence {
 		//diese Seiten werden durchsucht (Kommagetrennt)
 		storagePid = {$plugin.tx_szindexedsearch.persistence.storagePid}
 	}
+
 	features {
 		# uncomment the following line to enable the new Property Mapper.
 		#rewrittenPropertyMapper = 1
 	}
+
 	settings {
 		homePageUid = 2
 		searchPid = 140
@@ -30,7 +35,7 @@ plugin.tx_szindexedsearch {
 
 		customEnableFields {
 			file {
-					# commaseperated list of tablefields within the sys_file_reference-table
+				# commaseperated list of tablefields within the sys_file_reference-table
 				fieldname = media
 			}
 		}
@@ -40,10 +45,12 @@ plugin.tx_szindexedsearch {
 				model = Sunzinet\SzIndexedSearch\Domain\Model\Page
 				searchFields = title, keywords
 			}
+
 			news {
 				model = Sunzinet\SzIndexedSearch\Domain\Model\News
 				searchFields = title
 			}
+
 			#More examples:
 #			documents {
 #				model = Sunzinet\SzIndexedSearch\Domain\Model\File
@@ -100,26 +107,31 @@ config.tx_extbase {
 					tableName = pages
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay {
 				mapping {
 					tableName = pages_language_overlay
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\News {
 				mapping {
 					tableName = tx_news_domain_model_news
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\File {
 				mapping {
 					tableName = sys_file_reference
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\User {
 				mapping {
 					tableName = fe_users
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\Content {
 				mapping {
 					tableName = tt_content
@@ -146,8 +158,8 @@ ajaxRequest {
 				2 = search
 			}
 		}
-
 	}
+
 	view =< plugin.tx_szindexedsearch.view
 	persistence =< plugin.sz_indexed_search.persistence
 	settings =< plugin.sz_indexed_search.settings

@@ -1,10 +1,12 @@
 <?php
 
+namespace Sunzinet\SzIndexedSearch\Unit\Domain\Model;
+
 /***************************************************************
  *  Copyright notice
  *
  *  (c) 2014 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
- *  			
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -36,26 +38,33 @@
  *
  * @author Dennis Römmich <dennis.roemmich@sunzinet.com>
  */
-class Tx_SzIndexedSearch_Domain_Model_SearchTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
-	/**
-	 * @var Tx_SzIndexedSearch_Domain_Model_Search
-	 */
-	protected $fixture;
+use Sunzinet\SzIndexedSearch\Domain\Model\Search;
 
-	public function setUp() {
-		$this->fixture = new Tx_SzIndexedSearch_Domain_Model_Search();
-	}
+class SearchTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+{
+    /**
+     * @var Search
+     */
+    protected $fixture;
 
-	public function tearDown() {
-		unset($this->fixture);
-	}
-	
-	/**
-	 * @test
-	 */
-	public function dummyTestToNotLeaveThisFileEmpty() {
-		$this->markTestIncomplete();
-	}
-	
+    public function setUp()
+    {
+        $this->fixture = new Search();
+    }
+
+    public function tearDown()
+    {
+        unset($this->fixture);
+    }
+
+    /**
+     * @test
+     */
+    public function dummyTestToNotLeaveThisFileEmpty()
+    {
+        $this->markTestIncomplete();
+    }
+
 }
+
 ?>

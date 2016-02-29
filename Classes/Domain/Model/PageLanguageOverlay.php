@@ -1,135 +1,143 @@
 <?php
 namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
-/**
- * Description of the phpfile 'Pages.php'
- *
- * @author Dennis Römmich <dennis@roemmich.eu>
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html
- * GNU General Public License, version 3 or later
- */
+    /**
+     * Description of the phpfile 'Pages.php'
+     *
+     * @author Dennis Römmich <dennis@roemmich.eu>
+     * @copyright Copyright belongs to the respective authors
+     * @license http://www.gnu.org/licenses/gpl.html
+     * GNU General Public License, version 3 or later
+     */
 
 /**
  * Class PageLanguageOverlay
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class PageLanguageOverlay extends CustomSearch {
+class PageLanguageOverlay extends CustomSearch
+{
 
-	/**
-	 * title
-	 *
-	 * @var string
-	 */
-	protected $title;
+    /**
+     * title
+     *
+     * @var string
+     */
+    protected $title;
 
-	/**
-	 * url
-	 *
-	 * @var string
-	 */
-	protected $url;
+    /**
+     * url
+     *
+     * @var string
+     */
+    protected $url;
 
-	/**
-	 * subtitle
-	 *
-	 * @var string
-	 */
-	protected $subtitle;
+    /**
+     * subtitle
+     *
+     * @var string
+     */
+    protected $subtitle;
 
-	/**
-	 * keywords
-	 *
-	 * @var string
-	 */
-	protected $keywords;
+    /**
+     * keywords
+     *
+     * @var string
+     */
+    protected $keywords;
 
-	/**
-	 * author
-	 *
-	 * @var string
-	 */
-	protected $author;
+    /**
+     * author
+     *
+     * @var string
+     */
+    protected $author;
 
-	/**
-	 * changeUidToPid
-	 *
-	 * @var bool
-	 */
-	public $changeUidToPid = FALSE;
+    /**
+     * changeUidToPid
+     *
+     * @var bool
+     */
+    public $changeUidToPid = false;
 
-	/**
-	 * breadcrumb
-	 *
-	 * @var string
-	 */
-	protected $breadcrumb;
+    /**
+     * breadcrumb
+     *
+     * @var string
+     */
+    protected $breadcrumb;
 
-	/**
-	 * Returns the title
-	 *
-	 * @return string $title
-	 */
-	public function getTitle() {
-		return $this->title;
-	}
+    /**
+     * Returns the title
+     *
+     * @return string $title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	/**
-	 * Returns the url
-	 *
-	 * @return string $url
-	 */
-	public function getUrl() {
-		return $this->url;
-	}
+    /**
+     * Returns the url
+     *
+     * @return string $url
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
-	/**
-	 * Returns the subtitle
-	 *
-	 * @return string $subtitle
-	 */
-	public function getSubtitle() {
-		return $this->subtitle;
-	}
+    /**
+     * Returns the subtitle
+     *
+     * @return string $subtitle
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
 
-	/**
-	 * Returns the keywords
-	 *
-	 * @return string $keywords
-	 */
-	public function getKeywords() {
-		return $this->keywords;
-	}
+    /**
+     * Returns the keywords
+     *
+     * @return string $keywords
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
 
-	/**
-	 * Returns the author
-	 *
-	 * @return string $author
-	 */
-	public function getAuthor() {
-		return $this->author;
-	}
+    /**
+     * Returns the author
+     *
+     * @return string $author
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
 
-	/**
-	 * Returns the breadcrumb
-	 *
-	 * @return string $breadcrumb
-	 */
-	public function getBreadcrumb() {
-		return $this->breadcrumb;
-	}
+    /**
+     * Returns the breadcrumb
+     *
+     * @return string $breadcrumb
+     */
+    public function getBreadcrumb()
+    {
+        return $this->breadcrumb;
+    }
 
-	/**
-	 * Sets the breadcrumb
-	 *
-	 * @param string $breadcrumb
-	 * @return PageLanguageOverlay
-	 */
-	public function setBreadcrumb($breadcrumb) {
-		$this->breadcrumb = $breadcrumb;
+    /**
+     * Sets the breadcrumb
+     *
+     * @param string $breadcrumb
+     * @return PageLanguageOverlay
+     */
+    public function setBreadcrumb($breadcrumb)
+    {
+        $this->breadcrumb = $breadcrumb;
 
-		return $this;
-	}
+        return $this;
+    }
 
 }

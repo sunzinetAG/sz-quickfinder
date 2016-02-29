@@ -37,96 +37,102 @@ use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
  * @license http://www.gnu.org/licenses/gpl.html
  * GNU General Public License, version 3 or later
  */
-class SearchController extends ActionController {
+class SearchController extends ActionController
+{
 
-	/**
-	 * searchRepository
-	 *
-	 * @var \Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository
-	 */
-	protected $searchRepository;
+    /**
+     * searchRepository
+     *
+     * @var \Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository
+     */
+    protected $searchRepository;
 
-	/**
-	 * @var CustomSearch $csObj
-	 */
-	protected $csObj;
+    /**
+     * @var CustomSearch $csObj
+     */
+    protected $csObj;
 
-	/**
-	 * injectSearchRepository
-	 *
-	 * @param SearchRepository $searchRepository
-	 * @return void
-	 */
-	public function injectSearchRepository(SearchRepository $searchRepository) {
-		$this->searchRepository = $searchRepository;
-	}
+    /**
+     * injectSearchRepository
+     *
+     * @param SearchRepository $searchRepository
+     * @return void
+     */
+    public function injectSearchRepository(SearchRepository $searchRepository)
+    {
+        $this->searchRepository = $searchRepository;
+    }
 
-	/**
-	 * Only show the SearchForm
-	 *
-	 * @return void
-	 */
-	public function indexAction() {
-		$this->view->assign('searchPid', $this->settings['searchPid']);
-	}
+    /**
+     * Only show the SearchForm
+     *
+     * @return void
+     */
+    public function indexAction()
+    {
+        $this->view->assign('searchPid', $this->settings['searchPid']);
+    }
 
-	/**
-	 * autocomplete action
-	 *
-	 * @param string $searchString
-	 * @return void
-	 */
-	public function autocompleteAction($searchString) {
-		$customSearchArray = $this->settings['customSearch'];
+    /**
+     * autocomplete action
+     *
+     * @param string $searchString
+     * @return void
+     */
+    public function autocompleteAction($searchString)
+    {
+        $customSearchArray = $this->settings['customSearch'];
 
-		$results = array();
+        $results = array();
 
-		foreach ($customSearchArray as $sectionName => $customSearch) {
-			$this->buildModelFromTyposcript($customSearch, $searchString);
+        foreach ($customSearchArray as $sectionName => $customSearch) {
+            $this->buildModelFromTyposcript($customSearch, $searchString);
 
-			if (!$this->csObj->getScript()) {
-				$results[$sectionName] = $this->searchRepository->customSearch($this->csObj, $this->settings);
-			} else {
-				require_once($this->csObj->getScript());
-				$userFunc = $this->objectManager->get('sz_indexed_search_user_func');
-				$results[$sectionName] = $userFunc->main($this->settings, $customSearch['params']);
-			}
-		}
+            if (!$this->csObj->getScript()) {
+                $results[$sectionName] = $this->searchRepository->customSearch($this->csObj, $this->settings);
+            } else {
+                require_once($this->csObj->getScript());
+                $userFunc = $this->objectManager->get('sz_indexed_search_user_func');
+                $results[$sectionName] = $userFunc->main($this->settings, $customSearch['params']);
+            }
+        }
 
-		$this->view->assign('searchString', $searchString);
-		$this->view->assign('results', $results);
-	}
+        $this->view->assign('searchString', $searchString);
+        $this->view->assign('results', $results);
+    }
 
-	/**
-	 * Goes foward to IndexedSearch
-	 *
-	 * @param string $string The string
-	 * @return void
-	 */
-	public function searchAction($string) {
-		$params = array('search' => array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string));
-		$this->forward('search', 'Search', 'IndexedSearch', $params);
-	}
+    /**
+     * Goes foward to IndexedSearch
+     *
+     * @param string $string The string
+     * @return void
+     */
+    public function searchAction($string)
+    {
+        $params = array('search' => array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string));
+        $this->forward('search', 'Search', 'IndexedSearch', $params);
+    }
 
-	/**
-	 * Fill the Model from TypoScript values
-	 *
-	 * @param array $typoscript TypoScript settings
-	 * @param string $searchString The string
-	 * @return void
-	 */
-	protected function buildModelFromTyposcript($typoscript, $searchString) {
-		/** @var $csObj CustomSearch */
-		$csObj = $this->objectManager->get(CustomSearch::class);
-		if ($typoscript['script']) {
-			$csObj->setScript($typoscript['script']);
-		}
-		$csObj->setTable($typoscript['model'])
-			->setSearchFields(explode(',', str_replace(' ', '', $typoscript['searchFields'])))
-			->setSearchString($searchString)
-			->setMaxResults($typoscript['max_results']);
+    /**
+     * Fill the Model from TypoScript values
+     *
+     * @param array $typoscript TypoScript settings
+     * @param string $searchString The string
+     * @return void
+     */
+    protected function buildModelFromTyposcript($typoscript, $searchString)
+    {
+        /** @var $csObj CustomSearch */
+        $csObj = $this->objectManager->get(CustomSearch::class);
+        if ($typoscript['script']) {
+            $csObj->setScript($typoscript['script']);
+        }
+        $csObj->setTable($typoscript['model'])
+            ->setSearchFields(explode(',', str_replace(' ', '', $typoscript['searchFields'])))
+            ->setSearchString($searchString)
+            ->setMaxResults($typoscript['max_results']);
 
-		$this->csObj = $csObj;
-	}
+        $this->csObj = $csObj;
+    }
 
 }

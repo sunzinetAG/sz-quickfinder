@@ -16,13 +16,15 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * @package Sunzinet\ViewHelpers\Format
  */
-class UcfirstViewHelper extends AbstractViewHelper {
+class UcfirstViewHelper extends AbstractViewHelper
+{
 
-	/**
-	 * @return string The result with first letter uppercase
-	 */
-	public function render() {
-		return ucfirst($this->renderChildren());
-	}
+    /**
+     * @return string The result with first letter uppercase
+     */
+    public function render()
+    {
+        return ucfirst($this->renderChildren());
+    }
 
 }

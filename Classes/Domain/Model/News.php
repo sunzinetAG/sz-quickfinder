@@ -14,7 +14,8 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class News extends \GeorgRinger\News\Domain\Model\News {
+class News extends \GeorgRinger\News\Domain\Model\News
+{
 
 
 }
