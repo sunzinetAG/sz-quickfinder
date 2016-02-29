@@ -26,5 +26,4 @@ class UcfirstViewHelper extends AbstractViewHelper
     {
         return ucfirst($this->renderChildren());
     }
-
 }

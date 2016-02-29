@@ -127,5 +127,4 @@ class File extends CustomSearch
         $item = array_merge($item, $itemAdds);
         return $item;
     }
-
 }

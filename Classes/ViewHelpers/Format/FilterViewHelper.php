@@ -45,5 +45,4 @@ class FilterViewHelper extends AbstractViewHelper
 
         return $return;
     }
-
 }

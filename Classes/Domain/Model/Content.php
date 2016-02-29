@@ -68,5 +68,4 @@ class Content extends CustomSearch
     {
         return $this->subheader;
     }
-
 }

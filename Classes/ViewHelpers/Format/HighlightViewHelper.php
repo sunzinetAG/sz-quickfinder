@@ -45,5 +45,4 @@ class HighlightViewHelper extends AbstractViewHelper
 
         return $return;
     }
-
 }

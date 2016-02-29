@@ -139,5 +139,4 @@ class PageLanguageOverlay extends CustomSearch
 
         return $this;
     }
-
 }

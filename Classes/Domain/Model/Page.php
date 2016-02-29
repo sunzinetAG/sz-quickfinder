@@ -138,5 +138,4 @@ class Page extends CustomSearch
 
         return $this;
     }
-
 }

@@ -182,5 +182,4 @@ class CustomSearch extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         return $this->maxResults;
     }
-
 }
