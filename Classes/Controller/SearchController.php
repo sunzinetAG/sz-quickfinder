@@ -25,6 +25,7 @@ namespace Sunzinet\SzIndexedSearch\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Sunzinet\SzIndexedSearch\UserFunc;
 use Sunzinet\SzIndexedSearch\Domain\Model\CustomSearch;
 use Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -92,7 +93,7 @@ class SearchController extends ActionController
                 $results[$sectionName] = $this->searchRepository->customSearch($this->csObj, $this->settings);
             } else {
                 require_once($this->csObj->getScript());
-                $userFunc = $this->objectManager->get('sz_indexed_search_user_func');
+                $userFunc = $this->objectManager->get(UserFunc::class);
                 $results[$sectionName] = $userFunc->main($this->settings, $customSearch['params']);
             }
         }

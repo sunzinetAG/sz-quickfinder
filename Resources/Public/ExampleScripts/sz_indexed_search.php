@@ -1,4 +1,5 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\UserFunc;
 
 /**
  * Description of the phpfile 'sz_indexed_search.php'
@@ -7,8 +8,15 @@
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class sz_indexed_search_user_func
+/**
+ * Class UserFunc
+ * @package Sunzinet\SzIndexedSearch\UserFunc
+ */
+class UserFunc
 {
+    /**
+     * @var array
+     */
     protected $settings = array();
     /**
      * Construct
@@ -38,4 +46,5 @@ class sz_indexed_search_user_func
     {
 
     }
+
 }

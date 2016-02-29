@@ -1,5 +1,4 @@
 <?php
-
 namespace Sunzinet\SzIndexedSearch\Unit\Domain\Model;
 
     /***************************************************************
@@ -76,5 +75,3 @@ class SearchTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     }
 
 }
-
-?>

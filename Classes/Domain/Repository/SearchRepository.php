@@ -1,5 +1,4 @@
 <?php
-
 namespace Sunzinet\SzIndexedSearch\Domain\Repository;
 
     /***************************************************************
@@ -184,7 +183,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     protected function setType($type)
     {
-        if ($type === Page::class AND $this->sysLanguageUid !== 0) {
+        if ($type === Page::class and $this->sysLanguageUid !== 0) {
             $this->type = PageLanguageOverlay::class;
         } else {
             $this->type = $type;
@@ -213,8 +212,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     {
         switch ($this->type) {
             case 'Sunzinet\SzIndexedSearch\Domain\Model\Page':
-                array_push($this->logicalAnd,
-                    $this->query->equals('nav_hide', $this->settings['includeNavHiddenPages']));
+                array_push($this->logicalAnd, $this->query->equals('nav_hide', $this->settings['includeNavHiddenPages']));
                 array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
                 array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
                 break;
@@ -311,7 +309,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
                 $page = $pageSelect->getPage($breadcrumb['uid'], $this->sysLanguageUid);
             }
             $pageTitle = $page['tx_realurl_pathsegment'] ? ucfirst($page['tx_realurl_pathsegment']) : ucfirst($page['title']);
-            if (!empty($page) AND $page['nav_hide'] != '1' AND $page['tx_realurl_exclude'] != '1') {
+            if (!empty($page) and $page['nav_hide'] != '1' and $page['tx_realurl_exclude'] != '1') {
                 if ($i > 0) {
                     $result .= ' ' . $this->settings['breadcrumb_seperator'] . ' ';
                 }

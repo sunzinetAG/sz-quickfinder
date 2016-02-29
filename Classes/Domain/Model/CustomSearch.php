@@ -26,7 +26,7 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
      ***************************************************************/
 
 /**
- * Class Content
+ * Class CustomSearch
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */

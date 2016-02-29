@@ -1,5 +1,4 @@
 <?php
-
 namespace Sunzinet\SzIndexedSearch\Unit\Controller;
 
     /***************************************************************
@@ -76,5 +75,3 @@ class SearchControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
     }
 
 }
-
-?>
