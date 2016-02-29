@@ -135,5 +135,4 @@ class SearchController extends ActionController
 
         $this->csObj = $csObj;
     }
-
 }
