@@ -1,4 +1,6 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\ViewHelpers\Format;
+
 /**
  * Description of the class 'HighlightViewHelper.php'
  *
@@ -7,31 +9,40 @@
  * @license http://www.gnu.org/licenses/gpl.html
  * GNU General Public License, version 3 or later
  */
-class Tx_SzIndexedSearch_ViewHelpers_Format_FilterViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-	/**
-	 * @return string only the word, which includes the given searchstring
-	 */
-	public function render() {
-		$searchStringArr = t3lib_div::_GP('tx_szindexedsearch_pi1');
-		$searchString = urldecode($searchStringArr['searchString']);
+/**
+ * Class FilterViewHelper
+ *
+ * @package Sunzinet\ViewHelpers\Format
+ */
+class FilterViewHelper extends AbstractViewHelper
+{
 
-		$return = htmlspecialchars_decode($this->renderChildren());
-		$occurrences = substr_count(strtolower($return), strtolower($searchString));
+    /**
+     * @return string only the word, which includes the given searchstring
+     */
+    public function render()
+    {
+        $searchStringArr = GeneralUtility::_GP('tx_szindexedsearch_pi1');
+        $searchString = urldecode($searchStringArr['searchString']);
 
-		$match = array();
+        $return = htmlspecialchars_decode($this->renderChildren());
+        $occurrences = substr_count(strtolower($return), strtolower($searchString));
 
-		for ($i = 0; $i < $occurrences; $i++) {
-			$match[$i] = stripos($return, $searchString, $i);
-			$match[$i] = substr($return, $match[$i], strlen($searchString));
+        $match = array();
 
-			$returnArr = explode(',', $return);
+        for ($i = 0; $i < $occurrences; $i++) {
+            $match[$i] = stripos($return, $searchString, $i);
+            $match[$i] = substr($return, $match[$i], strlen($searchString));
 
-			$return = array_values(preg_grep('/' . $match[$i] . '/', $returnArr));
-			$return = trim($return[0]);
-		}
+            $returnArr = explode(',', $return);
 
-		return $return;
-	}
+            $return = array_values(preg_grep('/' . $match[$i] . '/', $returnArr));
+            $return = trim($return[0]);
+        }
 
+        return $return;
+    }
 }

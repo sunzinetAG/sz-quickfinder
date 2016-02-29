@@ -1,4 +1,6 @@
 <?php
+namespace Sunzinet\SzIndexedSearch\ViewHelpers\Format;
+
 /**
  * Description of the class 'HighlightViewHelper.php'
  *
@@ -7,31 +9,40 @@
  * @license http://www.gnu.org/licenses/gpl.html
  * GNU General Public License, version 3 or later
  */
-class Tx_SzIndexedSearch_ViewHelpers_Format_HighlightViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-	/**
-	 * @return string The result with highlighted String
-	 */
-	public function render() {
-		$searchStringArr = t3lib_div::_GP('tx_szindexedsearch_pi1');
-		$searchString = urldecode($searchStringArr['searchString']);
+/**
+ * Class HighlightViewHelper
+ *
+ * @package Sunzinet\ViewHelpers\Format
+ */
+class HighlightViewHelper extends AbstractViewHelper
+{
 
-		$return = htmlspecialchars_decode($this->renderChildren());
-		$occurrences = substr_count(strtolower($return), strtolower($searchString));
+    /**
+     * @return string The result with highlighted String
+     */
+    public function render()
+    {
+        $searchStringArr = GeneralUtility::_GP('tx_szindexedsearch_pi1');
+        $searchString = urldecode($searchStringArr['searchString']);
 
-		$match = array();
+        $return = htmlspecialchars_decode($this->renderChildren());
+        $occurrences = substr_count(strtolower($return), strtolower($searchString));
 
-		for ($i = 0; $i < $occurrences; $i++) {
-			$match[$i] = stripos($return, $searchString, $i);
-			$match[$i] = substr($return, $match[$i], strlen($searchString));
-			$return = str_replace($match[$i], '[#]' . $match[$i] . '[@]', $return);
-		}
+        $match = array();
 
-		$return = str_replace('[#]', '<strong>', $return);
-		$return = str_replace('[@]', '</strong>', $return);
+        for ($i = 0; $i < $occurrences; $i++) {
+            $match[$i] = stripos($return, $searchString, $i);
+            $match[$i] = substr($return, $match[$i], strlen($searchString));
+            $return = str_replace($match[$i], '[#]' . $match[$i] . '[@]', $return);
+        }
+
+        $return = str_replace('[#]', '<strong>', $return);
+        $return = str_replace('[@]', '</strong>', $return);
 
 
-		return $return;
-	}
-
+        return $return;
+    }
 }

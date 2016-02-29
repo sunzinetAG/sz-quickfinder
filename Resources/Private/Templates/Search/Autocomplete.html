@@ -1,21 +1,27 @@
-{namespace sz=Tx_SzIndexedSearch_ViewHelpers}
+{namespace sz=Sunzinet\SzIndexedSearch\ViewHelpers}
 
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:section name="main">
 
-	<f:translate key="tx_szindexedsearch_domain_model_search_quick">Quick search</f:translate>
+	<f:translate key="search-quick">Quick search</f:translate>
 
 	<div class="results-drop">
 		<f:for each="{results}" as="result" key="sectionName">
 			<f:if condition="{result}">
-				<h2>{sectionName -> sz:format.ucfirst()}</h2>
-				<f:render partial="result{sectionName -> sz:format.ucfirst()}" arguments="{results : result}" />
+				<div class="{sectionName}-results">
+					<strong class="results-headline">{sectionName -> sz:format.ucfirst()}</strong>
+					<ul class="results-list">
+						<f:render partial="result{sectionName -> sz:format.ucfirst()}" arguments="{results : result}"/>
+					</ul>
+				</div>
 			</f:if>
 		</f:for>
 	</div>
 	<div class="search-holder">
-		<button type="submit" class="btn-search"><f:translate key="tx_szindexedsearch_domain_model_search_all">Search all</f:translate></button>
+		<button type="submit" class="btn-search">
+			<f:translate key="search-all">Search all</f:translate>
+		</button>
 	</div>
 
 </f:section>

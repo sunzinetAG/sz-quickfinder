@@ -1,14 +1,22 @@
 <?php
+
 if (!defined('TYPO3_MODE')) {
-	die ('Access denied.');
+    die ('Access denied.');
 }
 
-Tx_Extbase_Utility_Extension::registerPlugin(
-	$_EXTKEY,
-	'Pi1',
-	'Indexed Search Autocomplete'
-);
+$boot = function ($extensionKey) {
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+        $extensionKey,
+        'Pi1',
+        'Indexed Search Autocomplete'
+    );
 
-t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Indexed Search Autocomplete');
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+        $extensionKey,
+        'Configuration/TypoScript',
+        'Indexed Search Autocomplete'
+    );
+};
 
-?>
+$boot($_EXTKEY);
+unset($boot);

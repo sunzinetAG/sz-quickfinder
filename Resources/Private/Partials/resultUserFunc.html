@@ -1,7 +1,9 @@
-{namespace sz=Tx_SzIndexedSearch_ViewHelpers}
+{namespace sz=Sunzinet\SzIndexedSearch\ViewHelpers}
 
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:for each="{results}" as="result">
-	<p>{result.uid}</p>
+	<li>
+		Uid {result.uid}
+	</li>
 </f:for>

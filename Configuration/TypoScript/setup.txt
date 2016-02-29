@@ -3,21 +3,26 @@ plugin.tx_szindexedsearch {
 		templateRootPaths {
 			100 = {$plugin.tx_szindexedsearch.view.templateRootPath}
 		}
+
 		partialRootPaths {
 			100 = {$plugin.tx_szindexedsearch.view.partialRootPath}
 		}
+
 		layoutRootPaths {
 			100 = {$plugin.tx_szindexedsearch.view.layoutRootPath}
 		}
 	}
+
 	persistence {
 		//diese Seiten werden durchsucht (Kommagetrennt)
 		storagePid = {$plugin.tx_szindexedsearch.persistence.storagePid}
 	}
+
 	features {
 		# uncomment the following line to enable the new Property Mapper.
 		#rewrittenPropertyMapper = 1
 	}
+
 	settings {
 		homePageUid = 2
 		searchPid = 140
@@ -30,35 +35,37 @@ plugin.tx_szindexedsearch {
 
 		customEnableFields {
 			file {
-					# commaseperated list of tablefields within the sys_file_reference-table
+				# commaseperated list of tablefields within the sys_file_reference-table
 				fieldname = media
 			}
 		}
 
 		customSearch {
 			page {
-				table = Tx_SzIndexedSearch_Domain_Model_Page
+				model = Sunzinet\SzIndexedSearch\Domain\Model\Page
 				searchFields = title, keywords
 			}
+
 			news {
-				table = tx_news_domain_model_news
+				model = \GeorgRinger\News\Domain\Model\News
 				searchFields = title
 			}
+
 			#More examples:
 #			documents {
-#				table = Tx_SzIndexedSearch_Domain_Model_File
+#				model = Sunzinet\SzIndexedSearch\Domain\Model\File
 #				searchFields = title
 #			}
 #			user {
-#				table = Tx_SzIndexedSearch_Domain_Model_User
+#				model = Sunzinet\SzIndexedSearch\Domain\Model\User
 #				searchFields = name
 #			}
 #			content {
-#				table = Tx_SzIndexedSearch_Domain_Model_Content
+#				model = Sunzinet\SzIndexedSearch\Domain\Model\Content
 #				searchFields = header
 #			}
 #			userFunc {
-#				script = /typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
+#				script = typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
 #				params {
 #					searchFields = title
 #				}
@@ -78,7 +85,12 @@ plugin.tx_szindexedsearch {
 			height: auto;
 		}
 
-		.tx-indexedsearch-searchbox-results .ajax-loader {
+		.tx-indexedsearch-searchbox-results .results-list .result-breadcrumb {
+			display: block;
+			font-size: 12px;
+		}
+
+			.tx-indexedsearch-searchbox-results .ajax-loader {
 			width: 32px;
 			height: 32px;
 			margin: 40px auto;
@@ -90,27 +102,37 @@ plugin.tx_szindexedsearch {
 config.tx_extbase {
 	persistence {
 		classes {
-			Tx_SzIndexedSearch_Domain_Model_Page {
+			Sunzinet\SzIndexedSearch\Domain\Model\Page {
 				mapping {
 					tableName = pages
 				}
 			}
-			Tx_SzIndexedSearch_Domain_Model_PageLanguageOverlay {
+
+			Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay {
 				mapping {
 					tableName = pages_language_overlay
 				}
 			}
-			Tx_SzIndexedSearch_Domain_Model_File {
+
+			\GeorgRinger\News\Domain\Model\News {
+				mapping {
+					tableName = tx_news_domain_model_news
+				}
+			}
+
+			Sunzinet\SzIndexedSearch\Domain\Model\File {
 				mapping {
 					tableName = sys_file_reference
 				}
 			}
-			Tx_SzIndexedSearch_Domain_Model_User {
+
+			Sunzinet\SzIndexedSearch\Domain\Model\User {
 				mapping {
 					tableName = fe_users
 				}
 			}
-			Tx_SzIndexedSearch_Domain_Model_Content {
+
+			Sunzinet\SzIndexedSearch\Domain\Model\Content {
 				mapping {
 					tableName = tt_content
 				}
@@ -125,9 +147,11 @@ ajaxRequest {
 	config.disableAllHeaderCode = 1
 	10 = USER
 	10 {
-		userFunc = tx_extbase_core_bootstrap->run
-		pluginName = Pi1
+		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+		vendorName = Sunzinet
 		extensionName = SzIndexedSearch
+		pluginName = Pi1
+
 		switchableControllerActions {
 			Search {
 				1 = autocomplete
@@ -151,19 +175,20 @@ lib.tx_szindexedsearch = COA
 lib.tx_szindexedsearch {
 	10 = USER
 	10 {
-		userFunc = tx_extbase_core_bootstrap->run
-		pluginName = Pi1
+		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+		vendorName = Sunzinet
 		extensionName = SzIndexedSearch
+		pluginName = Pi1
+
 		switchableControllerActions {
 			Search {
 				1 = index
 				2 = search
 			}
 		}
-
-		settings =< plugin.tx_szindexedsearch.settings
-		persistence =< plugin.tx_szindexedsearch.persistence
-		view =< plugin.tx_szindexedsearch.view
 	}
 
+	settings =< plugin.tx_szindexedsearch.settings
+	persistence =< plugin.tx_szindexedsearch.persistence
+	view =< plugin.tx_szindexedsearch.view
 }
