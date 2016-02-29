@@ -27,7 +27,7 @@ namespace Sunzinet\SzIndexedSearch\Unit\Controller;
  ***************************************************************/
 
 /**
- * Test case for class Tx_Sz_indexed_search_Controller_SearchController.
+ * Test case for class SearchController.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors

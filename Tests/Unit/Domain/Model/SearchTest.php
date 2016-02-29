@@ -27,7 +27,7 @@ namespace Sunzinet\SzIndexedSearch\Unit\Domain\Model;
  ***************************************************************/
 
 /**
- * Test case for class Tx_SzIndexedSearch_Domain_Model_Search.
+ * Test case for class Search.
  *
  * @version $Id$
  * @copyright Copyright belongs to the respective authors
