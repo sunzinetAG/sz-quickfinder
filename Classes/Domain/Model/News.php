@@ -17,5 +17,4 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
 class News extends \GeorgRinger\News\Domain\Model\News
 {
 
-
 }

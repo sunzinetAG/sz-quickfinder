@@ -1,4 +1,5 @@
 <?php
+
 namespace Sunzinet\SzIndexedSearch\Domain\Repository;
 
     /***************************************************************
