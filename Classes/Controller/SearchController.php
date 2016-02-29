@@ -89,12 +89,10 @@ class SearchController extends ActionController
         foreach ($customSearchArray as $sectionName => $customSearch) {
             $this->buildModelFromTyposcript($customSearch, $searchString);
 
-            DebuggerUtility::var_dump($this->csObj);
             if (!$this->csObj->getScript()) {
                 $results[$sectionName] = $this->searchRepository->customSearch($this->csObj, $this->settings);
             } else {
                 require_once(PATH_site.$this->csObj->getScript());
-                DebuggerUtility::var_dump(PATH_site.$this->csObj->getScript());
                 $userFunc = $this->objectManager->get(ExampleScripts::class);
                 $results[$sectionName] = $userFunc->main($this->settings, $customSearch['params']);
             }
