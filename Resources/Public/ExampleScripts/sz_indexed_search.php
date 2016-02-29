@@ -9,15 +9,16 @@ namespace Sunzinet\SzIndexedSearch\UserFunc;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 /**
- * Class UserFunc
+ * Class ExampleScripts
  * @package Sunzinet\SzIndexedSearch\UserFunc
  */
-class UserFunc
+class ExampleScripts
 {
     /**
      * @var array
      */
     protected $settings = array();
+
     /**
      * Construct
      */
