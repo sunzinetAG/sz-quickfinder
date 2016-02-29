@@ -1,17 +1,23 @@
-{namespace sz=Tx_SzIndexedSearch_ViewHelpers}
+{namespace sz=Sunzinet\SzIndexedSearch\ViewHelpers}
 
-<f:layout name="Default" />
+<f:layout name="Default"/>
 
 <f:for each="{results}" as="result">
-	<f:if condition="{result.changeUidToPid}">
-		<f:then>
-			<f:link.page pageUid="{result.uid}"><sz:format.highlight>{result.title}</sz:format.highlight></f:link.page><br>
-			{result.breadcrumb}<br>
-		</f:then>
-		<f:else>
-			<f:link.page pageUid="{result.pid}"><sz:format.highlight>{result.title}</sz:format.highlight></f:link.page><br>
-			{result.breadcrumb}<br>
-		</f:else>
-	</f:if>
+	<li>
+		<f:if condition="{result.changeUidToPid}">
+			<f:then>
+				<f:link.page pageUid="{result.uid}">
+					<sz:format.highlight>{result.title}</sz:format.highlight>
+					<span class="result-breadcrumb">{result.breadcrumb}</span>
+				</f:link.page>
+			</f:then>
+			<f:else>
+				<f:link.page pageUid="{result.pid}">
+					<sz:format.highlight>{result.title}</sz:format.highlight>
+					<span class="result-breadcrumb">{result.breadcrumb}</span>
+				</f:link.page>
+			</f:else>
+		</f:if>
+	</li>
 </f:for>
 
