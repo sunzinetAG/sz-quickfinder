@@ -247,8 +247,11 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $searchString = $GLOBALS['TYPO3_DB']->escapeStrForLike($searchString, 'pages');
         $searchString = $GLOBALS['TYPO3_DB']->quoteStr($searchString, 'pages');
         if ($this->settings['reg_search_exp']) {
-            $searchString = str_replace('|', $searchString,
-                $GLOBALS['TYPO3_DB']->quoteStr($this->settings['reg_search_exp'], 'pages'));
+            $searchString = str_replace(
+                '|',
+                $searchString,
+                $GLOBALS['TYPO3_DB']->quoteStr($this->settings['reg_search_exp'], 'pages')
+            );
         } else {
             $searchString = '%' . $searchString . '%';
         }

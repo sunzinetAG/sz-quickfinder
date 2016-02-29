@@ -11,7 +11,9 @@ $boot = function ($extensionKey) {
         'Indexed Search Autocomplete'
     );
 
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($extensionKey, 'Configuration/TypoScript',
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+        $extensionKey,
+        'Configuration/TypoScript',
         'Indexed Search Autocomplete');
 };
 
