@@ -47,7 +47,7 @@ plugin.tx_szindexedsearch {
 			}
 
 			news {
-				model = Sunzinet\SzIndexedSearch\Domain\Model\News
+				model = \GeorgRinger\News\Domain\Model\News
 				searchFields = title
 			}
 
@@ -114,7 +114,7 @@ config.tx_extbase {
 				}
 			}
 
-			Sunzinet\SzIndexedSearch\Domain\Model\News {
+			\GeorgRinger\News\Domain\Model\News {
 				mapping {
 					tableName = tx_news_domain_model_news
 				}
