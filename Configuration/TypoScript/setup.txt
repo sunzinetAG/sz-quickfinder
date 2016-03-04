@@ -26,6 +26,7 @@ plugin.tx_szindexedsearch {
 	settings {
 		homePageUid = 2
 		searchPid = 140
+		newsDetailPid = 28
 
 		includeNavHiddenPages = 0
 
@@ -85,12 +86,23 @@ plugin.tx_szindexedsearch {
 			height: auto;
 		}
 
-		.tx-indexedsearch-searchbox-results .results-list .result-breadcrumb {
+		.tx-indexedsearch-searchbox-results .tx-sz-indexed-search .results-drop > .results {
+			border-top: 1px solid #ccc;
+			padding: 10px 0;
+			margin: 10px 0;
+		}
+
+		.tx-indexedsearch-searchbox-results .tx-sz-indexed-search .results-drop > .results:last-child {
+			border-bottom: 1px solid #ccc;
+			margin-bottom: 25px;
+		}
+
+			.tx-indexedsearch-searchbox-results .results-list .result-breadcrumb {
 			display: block;
 			font-size: 12px;
 		}
 
-			.tx-indexedsearch-searchbox-results .ajax-loader {
+		.tx-indexedsearch-searchbox-results .ajax-loader {
 			width: 32px;
 			height: 32px;
 			margin: 40px auto;
