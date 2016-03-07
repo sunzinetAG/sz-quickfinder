@@ -24,6 +24,7 @@ namespace Sunzinet\SzIndexedSearch\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Sunzinet\SzIndexedSearch\Settings\TyposcriptSettings;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -40,15 +41,6 @@ class SearchController extends ActionController {
 	 * @inject
 	 */
 	protected $searchRepository;
-
-	/**
-	 * languageProvider
-	 *
-	 * @var \Sunzinet\SzIndexedSearch\Provider\LanguageProvider
-	 * @deprecated
-	 * @inject
-	 */
-	protected $languageProvider;
 
 	/**
 	 * Only show the SearchForm
@@ -71,18 +63,14 @@ class SearchController extends ActionController {
 		$results = array();
 
 		foreach ($customSearchArray as $sectionName => $customSearch) {
-			/** @var \Sunzinet\SzIndexedSearch\Settings\TyposcriptSettings $settings */
-			$settings = $this->objectManager->get(\Sunzinet\SzIndexedSearch\Settings\TyposcriptSettings::class);
-			$settings->initSettings(array_merge($this->settings['global'], $customSearch));
+			/** @var TyposcriptSettings $settings */
+			$settings = $this->objectManager->get(TyposcriptSettings::class, array_merge($this->settings['global'], $customSearch));
 			$settings->setProperty('searchString', $searchString);
 
-			//$languageUid = $this->languageProvider->getLanguageUid();
-			//$this->languageProvider->setLanguage('de');
-
 			$this->searchRepository->prepareCustomSearch($settings);
+			$results[$sectionName] = $this->searchRepository->executeCustomSearch();
 
-			die();
-			$results[$sectionName] = $this->searchRepository->customSearch($settings);
+			$this->searchRepository->reset();
 		}
 
 		$this->view->assign('searchString', $searchString);

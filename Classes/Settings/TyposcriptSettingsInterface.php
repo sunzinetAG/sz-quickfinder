@@ -3,7 +3,7 @@ namespace Sunzinet\SzIndexedSearch\Settings;
 /**
  * Description of the interface 'TyposcriptSettingsInterface.php'
  *
- * @author Dennis Römmich <dennis@roemmich.eu>
+ * @author Dennis Rï¿½mmich <dennis@roemmich.eu>
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -16,11 +16,11 @@ namespace Sunzinet\SzIndexedSearch\Settings;
 interface TyposcriptSettingsInterface {
 
 	/**
-	 * getModel
+	 * getClass
 	 *
 	 * @return string
 	 */
-	public function getModel();
+	public function getClass();
 
 	/**
 	 * getRegEx
@@ -35,13 +35,6 @@ interface TyposcriptSettingsInterface {
 	 * @return int
 	 */
 	public function getMaxResults();
-
-	/**
-	 * getBreadcrumbSeparator
-	 *
-	 * @return string
-	 */
-	public function getBreadcrumbSeparator();
 
 	/**
 	 * getIncludeNavHiddenPages
@@ -63,6 +56,13 @@ interface TyposcriptSettingsInterface {
 	 * @return string
 	 */
 	public function getSearchString();
+
+	/**
+	 * getOrderBy
+	 *
+	 * @return string
+	 */
+	public function getOrderBy();
 
 	/**
 	 * setProperty

@@ -15,130 +15,15 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class PageLanguageOverlay extends CustomSearch {
-
-	/**
-	 * title
-	 *
-	 * @var string
-	 */
-	protected $title;
-
-	/**
-	 * url
-	 *
-	 * @var string
-	 */
-	protected $url;
-
-	/**
-	 * subtitle
-	 *
-	 * @var string
-	 */
-	protected $subtitle;
-
-	/**
-	 * keywords
-	 *
-	 * @var string
-	 */
-	protected $keywords;
-
-	/**
-	 * author
-	 *
-	 * @var string
-	 */
-	protected $author;
-
-	/**
-	 * changeUidToPid
-	 *
-	 * @var bool
-	 */
-	public $changeUidToPid = FALSE;
-
-	/**
-	 * breadcrumb
-	 *
-	 * @var string
-	 */
-	protected $breadcrumb;
+class PageLanguageOverlay extends Page {
 
 	/**
 	 * getPageId
 	 *
 	 * @return int
 	 */
-	public function getPageId() {
+	public function getPid() {
 		return (int)$this->pid;
-	}
-
-	/**
-	 * Returns the title
-	 *
-	 * @return string $title
-	 */
-	public function getTitle() {
-		return $this->title;
-	}
-
-	/**
-	 * Returns the url
-	 *
-	 * @return string $url
-	 */
-	public function getUrl() {
-		return $this->url;
-	}
-
-	/**
-	 * Returns the subtitle
-	 *
-	 * @return string $subtitle
-	 */
-	public function getSubtitle() {
-		return $this->subtitle;
-	}
-
-	/**
-	 * Returns the keywords
-	 *
-	 * @return string $keywords
-	 */
-	public function getKeywords() {
-		return $this->keywords;
-	}
-
-	/**
-	 * Returns the author
-	 *
-	 * @return string $author
-	 */
-	public function getAuthor() {
-		return $this->author;
-	}
-
-	/**
-	 * Returns the breadcrumb
-	 *
-	 * @return string $breadcrumb
-	 */
-	public function getBreadcrumb() {
-		return $this->breadcrumb;
-	}
-
-	/**
-	 * Sets the breadcrumb
-	 *
-	 * @param string $breadcrumb
-	 * @return $this
-	 */
-	public function setBreadcrumb($breadcrumb) {
-		$this->breadcrumb = $breadcrumb;
-
-		return $this;
 	}
 
 }

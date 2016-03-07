@@ -4,7 +4,7 @@ namespace Sunzinet\SzIndexedSearch\Tests\ViewHelpers\Format;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
+ *  (c) 2014 Dennis Rï¿½mmich <dennis.roemmich@sunzinet.com>, sunzinet AG
  *
  *  All rights reserved
  *
@@ -37,7 +37,7 @@ use TYPO3\CMS\Fluid\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
  * @package Sunzinet\ViewHelpers\Format
  * @subpackage Indexed Search Extend
  *
- * @author Dennis Römmich <dennis.roemmich@sunzinet.com>
+ * @author Dennis RÃ¶mmich <dennis.roemmich@sunzinet.com>
  */
 class UcfirstViewHelperTest extends ViewHelperBaseTestcase {
 

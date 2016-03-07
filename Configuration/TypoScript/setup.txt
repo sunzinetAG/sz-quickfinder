@@ -21,38 +21,38 @@ plugin.tx_szindexedsearch {
 	settings {
 		homePageUid = 2
 		searchPid = 140
+		newsPid = 28
 
 		global {
 			regEx = %|%
 			maxResults = 3
-			breadcrumbSeparator = /
-			includeNavHiddenPages = 0
+			includeNavHiddenPages = false
+			orderBy = uid
+			ascending = true
 		}
 
 		customSearch {
 			page {
-				model = Sunzinet\SzIndexedSearch\Domain\Model\Page
+				class = Sunzinet\SzIndexedSearch\Domain\Model\Page
 				searchFields = title, keywords
-				regEx = |%
-#				orderings
 			}
 			news {
-				model = Sunzinet\SzIndexedSearch\Domain\Model\News
+				class = Sunzinet\SzIndexedSearch\Domain\Model\News
 				searchFields = title
 			}
 			#More examples:
-			documents {
-				model = Sunzinet\SzIndexedSearch\Domain\Model\File
-				searchFields = title
-			}
-			user {
-				model = Sunzinet\SzIndexedSearch\Domain\Model\User
-				searchFields = name
-			}
-			content {
-				model = Sunzinet\SzIndexedSearch\Domain\Model\Content
-				searchFields = header
-			}
+#			documents {
+#				class = Sunzinet\SzIndexedSearch\Domain\Model\File
+#				searchFields = title
+#			}
+#			user {
+#				class = Sunzinet\SzIndexedSearch\Domain\Model\User
+#				searchFields = username
+#			}
+#			content {
+#				class = Sunzinet\SzIndexedSearch\Domain\Model\Content
+#				searchFields = header
+#			}
 #			userFunc {
 #				script = /typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
 #				params {
@@ -126,7 +126,7 @@ ajaxRequest {
 	config.disableAllHeaderCode = 1
 	10 = USER
 	10 {
-		userFunc = \TYPO3\CMS\Extbase\Core\Bootstrap->run
+		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
 		pluginName = Pi1
 		extensionName = SzIndexedSearch
 		vendorName = Sunzinet
@@ -153,7 +153,7 @@ lib.tx_szindexedsearch = COA
 lib.tx_szindexedsearch {
 	10 = USER
 	10 {
-		userFunc = \TYPO3\CMS\Extbase\Core\Bootstrap->run
+		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
 		pluginName = Pi1
 		extensionName = SzIndexedSearch
 		vendorName = Sunzinet

@@ -4,10 +4,12 @@ namespace Sunzinet\SzIndexedSearch\Settings;
 /**
  * Description of the class 'TyposcriptSettings.php'
  *
- * @author Dennis Römmich <dennis@roemmich.eu>
+ * @author Dennis Rï¿½mmich <dennis@roemmich.eu>
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
+use Sunzinet\SzIndexedSearch\Utility\SanitizeUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class TyposcriptSettings
@@ -19,9 +21,9 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 	/**
 	 * model
 	 *
-	 * @var string $model
+	 * @var string $class
 	 */
-	protected $model = '';
+	protected $class = '';
 
 	/**
 	 * regEx
@@ -36,13 +38,6 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 	 * @var int $maxResults
 	 */
 	protected $maxResults = 3;
-
-	/**
-	 * breadcrumbSeparator
-	 *
-	 * @var string $breadcrumbSeparator
-	 */
-	protected $breadcrumbSeparator = '/';
 
 	/**
 	 * includeNavHiddenPages
@@ -63,30 +58,55 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 	/**
 	 * searchString
 	 *
-	 * @var string $searchString
+	 * @var SanitizeUtility $searchString
 	 */
 	protected $searchString = '';
 
 	/**
-	 * initSettings
+	 * orderBy
+	 *
+	 * @var string $orderBy
+	 */
+	protected $orderBy = 'uid';
+
+	/**
+	 * ascending
+	 *
+	 * @var bool $ascending
+	 */
+	protected $ascending = TRUE;
+
+	/**
+	 * TyposcriptSettings constructor.
 	 *
 	 * @param array $settings
 	 * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
-	 * @return void
 	 */
-	public function initSettings(array $settings) {
+	public function __construct(array $settings) {
 		foreach ($settings as $propertyName => $value) {
 			$this->setProperty($propertyName, $value);
 		}
 	}
 
 	/**
-	 * getModel
+	 * getClass
 	 *
 	 * @return string
 	 */
-	public function getModel() {
-		return $this->model;
+	public function getClass() {
+		return $this->class;
+	}
+
+	/**
+	 * setModel
+	 *
+	 * @param string $class
+	 * @return $this
+	 */
+	public function setClass($class) {
+		$this->class = $class;
+
+		return $this;
 	}
 
 	/**
@@ -99,6 +119,18 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 	}
 
 	/**
+	 * setRegEx
+	 *
+	 * @param string $regEx
+	 * @return $this
+	 */
+	public function setRegEx($regEx) {
+		$this->regEx = $regEx;
+
+		return $this;
+	}
+
+	/**
 	 * getMaxResults
 	 *
 	 * @return int
@@ -108,12 +140,15 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 	}
 
 	/**
-	 * getBreadcrumbSeparator
+	 * setMaxResults
 	 *
-	 * @return string
+	 * @param int $maxResults
+	 * @return $this
 	 */
-	public function getBreadcrumbSeparator() {
-		return $this->breadcrumbSeparator;
+	public function setMaxResults($maxResults) {
+		$this->maxResults = $maxResults;
+
+		return $this;
 	}
 
 	/**
@@ -126,12 +161,36 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 	}
 
 	/**
+	 * setIncludeNavHiddenPages
+	 *
+	 * @param int $includeNavHiddenPages
+	 * @return $this
+	 */
+	public function setIncludeNavHiddenPages($includeNavHiddenPages) {
+		$this->includeNavHiddenPages = $includeNavHiddenPages;
+
+		return $this;
+	}
+
+	/**
 	 * getSearchfields
 	 *
 	 * @return array
 	 */
-	public function getSearchfields() {
+	public function getSearchFields() {
 		return $this->searchFields;
+	}
+
+	/**
+	 * setSearchFields
+	 *
+	 * @param [] $searchFields
+	 * @return $this
+	 */
+	public function setSearchFields($searchFields) {
+		$this->searchFields = $searchFields;
+
+		return $this;
 	}
 
 	/**
@@ -144,10 +203,66 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 	}
 
 	/**
+	 * setSearchString
+	 *
+	 * @param SanitizeUtility $searchString
+	 * @return $this
+	 */
+	public function setSearchString($searchString) {
+		$this->searchString = GeneralUtility::makeInstance(SanitizeUtility::class, $searchString);
+
+		return $this;
+	}
+
+	/**
+	 * getOrderBy
+	 *
+	 * @return string
+	 */
+	public function getOrderBy() {
+		return $this->orderBy;
+	}
+
+	/**
+	 * setOrderBy
+	 *
+	 * @param string $orderBy
+	 * @return $this
+	 */
+	public function setOrderBy($orderBy) {
+		$this->orderBy = $orderBy;
+
+		return $this;
+	}
+
+	/**
+	 * getAscending
+	 *
+	 * @return boolean
+	 */
+	public function getAscending() {
+		return $this->ascending;
+	}
+
+	/**
+	 * setAscending
+	 *
+	 * @param boolean $ascending
+	 * @return $this
+	 */
+	public function setAscending($ascending) {
+		$this->ascending = $ascending;
+
+		return $this;
+	}
+
+
+	/**
 	 * setProperty
 	 *
 	 * @param string $propertyName
 	 * @param mixed $value
+	 * @throws \TYPO3\CMS\Extbase\Property\Exception\BadMethodCallException
 	 * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
 	 * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
 	 * @return void
@@ -159,8 +274,16 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 				1442413257
 			);
 		}
+		$method = 'set' . ucfirst($propertyName);
 		$value = self::convert(gettype($this->{$propertyName}), $value);
-		$this->{$propertyName} = $value;
+		if (!method_exists($this, $method)) {
+			throw new \BadMethodCallException(
+				'Method ' . $method . ' does not Exist.',
+				1456819227
+			);
+		}
+
+		call_user_func(array($this, 'set' . ucfirst($propertyName)), $value);
 	}
 
 	/**
@@ -188,9 +311,9 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 			case 'integer':
 				return (int)$var;
 			case 'boolean':
-				return (bool)$var;
+				return filter_var($var, FILTER_VALIDATE_BOOLEAN);
 			case 'array':
-				return (array)explode(',', $var);
+				return array_map('trim', explode(',', $var));
 			default:
 				throw new \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException(
 					'Unsupportet type',
@@ -199,6 +322,5 @@ class TyposcriptSettings implements TyposcriptSettingsInterface {
 		}
 
 	}
-
 }
 

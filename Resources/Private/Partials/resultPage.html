@@ -1,17 +1,7 @@
-{namespace sz=Sunzinet\SzIndexedSearch\ViewHelpers}
-
 <f:layout name="Default" />
 
 <f:for each="{results}" as="result">
-	<f:if condition="{result.changeUidToPid}">
-		<f:then>
-			<f:link.page pageUid="{result.uid}"><sz:format.highlight>{result.title}</sz:format.highlight></f:link.page><br>
-			{result.breadcrumb}<br>
-		</f:then>
-		<f:else>
-			<f:link.page pageUid="{result.pid}"><sz:format.highlight>{result.title}</sz:format.highlight></f:link.page><br>
-			{result.breadcrumb}<br>
-		</f:else>
-	</f:if>
+	<f:render partial="Result/title" arguments="{pageUid: result.uid, title: result.title}" />
+	<f:render partial="Result/Breadcrumb" arguments="{rootline: result.rootline}" />
 </f:for>
 

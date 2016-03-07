@@ -4,7 +4,7 @@ namespace Sunzinet\SzIndexedSearch\Utility;
 /**
  * Description of the class 'SanitizeUtility.php'
  *
- * @author Dennis Römmich <dennis@roemmich.eu>
+ * @author Dennis RÃ¶mmich <dennis@roemmich.eu>
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -37,20 +37,21 @@ class SanitizeUtility implements SanitizeInterface {
 	 * @return $this
 	 */
 	public function __construct($string) {
-		return $this->sanitize($string);
+		$this->string = $string;
+		$this->sanitize();
 	}
 
 	/**
 	 * quoteStr
 	 *
-	 * @param string $string
 	 * @return $this
 	 */
-	public function sanitize($string) {
-		$this->isSanitized = TRUE;
+	public function sanitize() {
+		$this->string = urldecode($this->string);
+		$this->string = $GLOBALS['TYPO3_DB']->escapeStrForLike($this->string, 'pages');
+		$this->string = $GLOBALS['TYPO3_DB']->quoteStr($this->string, 'pages');
 
-		$string = $GLOBALS['TYPO3_DB']->escapeStrForLike($string, 'pages');
-		$this->string = $GLOBALS['TYPO3_DB']->quoteStr($string, 'pages');
+		$this->isSanitized = TRUE;
 
 		return $this;
 	}
@@ -62,6 +63,15 @@ class SanitizeUtility implements SanitizeInterface {
 	 */
 	public function sanitized() {
 		return $this->isSanitized;
+	}
+
+	/**
+	 * __toString
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->string;
 	}
 
 }

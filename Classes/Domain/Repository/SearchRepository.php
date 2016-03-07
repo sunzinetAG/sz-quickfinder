@@ -24,16 +24,14 @@ namespace Sunzinet\SzIndexedSearch\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use Sunzinet\SzIndexedSearch\Domain\Model\CustomSearch;
 use Sunzinet\SzIndexedSearch\Domain\Model\File;
 use Sunzinet\SzIndexedSearch\Domain\Model\Page;
 use Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay;
 use Sunzinet\SzIndexedSearch\Settings\TyposcriptSettings;
-use Sunzinet\SzIndexedSearch\Utility\SanitizeUtility;
+use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
-use TYPO3\CMS\Extbase\Persistence\Generic\QueryResult;
-use TYPO3\CMS\Frontend\Page\PageRepository;
+use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Class SearchRepository
@@ -45,40 +43,40 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	/**
 	 * Type of the Model
 	 *
-	 * @var object
+	 * @var string
 	 */
-	public $type;
+	public $className;
 
 	/**
 	 * logicalAnd
 	 *
 	 * @var array
 	 */
-	protected $logicalAnd = array();
+	protected $logicalAnd = [];
 
 	/**
 	 * logicalOr
 	 *
 	 * @var array
 	 */
-	protected $logicalOr = array();
+	protected $logicalOr = [];
 
 	/**
 	 * constraints
 	 *
 	 * @var array
 	 */
-	protected $constraints = array();
+	protected $constraints = [];
 
 	/**
-	 * @var Query
+	 * @var Query $query
 	 */
 	protected $query;
 
 	/**
 	 * TypoScript settings
 	 *
-	 * @var array
+	 * @var TyposcriptSettings $settings
 	 */
 	protected $settings;
 
@@ -91,38 +89,38 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	protected $objectManager;
 
 	/**
-	 * Enable Breadcrumbs for given Types
-	 *
-	 * @var array
-	 */
-	protected $showBreadcrumbInSeachresult = array(
-		Page::class,
-		PageLanguageOverlay::class,
-		File::class
-	);
-
-	/**
-	 * @var int $sysLanguageUid
-	 */
-	protected $sysLanguageUid;
-
-	/**
-	 * @var int $maxResults
-	 */
-	protected $maxResults = FALSE;
-
-	/**
 	 * Sets the type of the Model
 	 *
-	 * @param string $type
+	 * @param string $className
 	 * @return void
 	 */
-	protected function setType($type) {
-		if ($type === Page::class AND $this->sysLanguageUid !== 0) {
-			$this->type = PageLanguageOverlay::class;
+	protected function setClassName($className) {
+		if ($className === Page::class AND intval(GeneralUtility::_GP('L')) !== 0) {
+			$this->className = PageLanguageOverlay::class;
 		} else {
-			$this->type = $type;
+			$this->className = $className;
 		}
+	}
+
+	/**
+	 * setQuerySettings
+	 *
+	 * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+	 * @return void
+	 */
+	protected function setQuerySettings() {
+		$defaultOrdering = QueryInterface::ORDER_ASCENDING;
+		if ($this->settings->getAscending() === FALSE) {
+			$defaultOrdering = QueryInterface::ORDER_DESCENDING;
+		}
+		$this->query->setOrderings([$this->settings->getOrderBy() => $defaultOrdering]);
+		$this->query->getQuerySettings();
+
+		// @Todo: Language not working correctly yet
+		$this->query->getQuerySettings()
+			->setLanguageUid(intval(GeneralUtility::_GP('L')))
+			->setRespectStoragePage(FALSE)
+			->setRespectSysLanguage(TRUE);
 	}
 
 	/**
@@ -132,93 +130,31 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 * @return void
 	 */
 	public function prepareCustomSearch(TyposcriptSettings $settings) {
-		$this->query = $this->persistenceManager->createQueryForType($settings->getModel());
+		$this->settings = $settings;
+		$this->setClassName($this->settings->getClass());
+		$this->query = $this->persistenceManager->createQueryForType($this->className);
 
-		$searchString = $settings->getSearchString();
-		\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($settings->getSearchString(), __FILE__ . ': ' . __LINE__);
+		$this->setQuerySettings();
+		$this->setSearchFields();
+		$this->setCustomEnableFields($this->query->getQuerySettings()->getStoragePageIds());
 
-		foreach ($settings->getSearchfields() as $propertyName) {
-			$this->constraints[] = $this->query->like(
-				$propertyName,
-				$this->escapeSearchExp($searchString)
-			);
-		}
-
-		$this->query->setLimit($settings->getMaxResults());
-		$this->customSearch($settings);
-	}
-
-	/**
-	 * Prepares the query for execution
-	 *
-	 * @return void
-	 */
-	protected function prepareQuery() {
 		$this->query->matching(
 			$this->query->logicalAnd(
 				$this->query->logicalAnd($this->logicalAnd),
 				$this->query->logicalOr($this->logicalOr)
 			)
 		);
+
+		$this->query->setLimit($settings->getMaxResults());
 	}
 
 	/**
-	 * Builds the custom Search
+	 * executeCustomSearch
 	 *
-	 * @param TyposcriptSettings $settings
-	 * @return array|QueryResult
+	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function customSearch(TyposcriptSettings $settings) {
-		/** @var $languageProvider \Sunzinet\SzIndexedSearch\Provider\LanguageProvider */
-		$languageProvider = $this->objectManager->get(\Sunzinet\SzIndexedSearch\Provider\LanguageProvider::class);
-		$languageProvider->setLanguage('en');
-		$this->settings = $settings;
-		$this->sysLanguageUid = $languageProvider->getLanguageUid();
-		$this->sysLanguageUid = $this->query->getQuerySettings()->getLanguageUid();
-
-
-
-
-		$this->query->getQuerySettings()
-				->setRespectStoragePage(FALSE)
-				->setRespectSysLanguage(TRUE);
-
-
-
-
-		$this->constraints = array();
-
-		foreach ($settings->getSearchFields() as $propertyName) {
-			$this->constraints[] = $this->query->like(
-				$propertyName,
-				$this->escapeSearchExp($settings->getSearchString(), $this->settings)
-			);
-		}
-
-
-
-
-
-
-		$this->getCustomEnableFields($this->query->getQuerySettings()->getStoragePageIds());
-		$this->prepareQuery();
-
-		if (!$settings->getSearchString()->sanitized()) {
-			die();
-		}
+	public function executeCustomSearch() {
 		$results = $this->query->execute();
-
-		\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($results, __FILE__ . ': ' . __LINE__);
-		foreach ($results as $result) {
-			if (in_array($this->type, $this->showBreadcrumbInSeachresult)) {
-				($result->changeUidToPid)
-						? $result->setBreadcrumb($this->getBreadcrumb($result->getUid()))
-						: $result->setBreadcrumb($this->getBreadcrumb($result->getPid()));
-			}
-		}
-
-		$this->logicalAnd = array();
-		$this->logicalOr = array();
 
 		return $results;
 	}
@@ -229,14 +165,16 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	 * @param array $storagePids
 	 * @return void
 	 */
-	protected function getCustomEnableFields($storagePids) {
-		switch ($this->type) {
-			case 'Sunzinet\SzIndexedSearch\Domain\Model\Page':
-				array_push($this->logicalAnd, $this->query->equals('nav_hide', $this->settings['includeNavHiddenPages']));
+	protected function setCustomEnableFields($storagePids) {
+		switch ($this->className) {
+			case Page::class:
+				if ($this->settings->getIncludeNavHiddenPages() === FALSE) {
+					array_push($this->logicalAnd, $this->query->equals('nav_hide', $this->settings->getIncludeNavHiddenPages()));
+				}
 				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
 				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
 				break;
-			case 'Sunzinet\SzIndexedSearch\Domain\Model\File':
+			case File::class:
 				array_push($this->logicalAnd, $this->query->equals('fieldname', 'media'));
 				break;
 			default:
@@ -247,20 +185,6 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 		}
 
 		array_push($this->logicalAnd, $this->query->logicalOr($this->constraints));
-	}
-
-	/**
-	 * Prepare string with given reqExp
-	 *
-	 * @param $searchString
-	 * @return mixed|string
-	 */
-	protected function escapeSearchExp($searchString) {
-		$searchString = urldecode($searchString);
-		$searchString = $GLOBALS['TYPO3_DB']->escapeStrForLike($searchString, 'pages');
-		$searchString = $GLOBALS['TYPO3_DB']->quoteStr($searchString, 'pages');
-
-		return $searchString;
 	}
 
 	/**
@@ -276,8 +200,8 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 			return $pidList;
 		}
 
-		/** @var $queryGenerator \t3lib_queryGenerator */
-		$queryGenerator = $this->objectManager->get('t3lib_queryGenerator');
+		/** @var $queryGenerator QueryGenerator */
+		$queryGenerator = $this->objectManager->get(QueryGenerator::class);
 		$recursiveStoragePids = $pidList;
 		$storagePids = GeneralUtility::intExplode(',', $pidList);
 		foreach ($storagePids as $startPid) {
@@ -293,38 +217,50 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 	}
 
 	/**
-	 * Builds breadcrumbs
+	 * setSearchFields
 	 *
-	 * @param int $pid Page Id
-	 * @return string The Breadcrumb
+	 * @throws \TYPO3\CMS\Extbase\Security\Exception
+	 * @return void
 	 */
-	protected function getBreadcrumb($pid) {
-		/** @var $pageSelect PageRepository */
-		$pageSelect = $this->objectManager->get(PageRepository::class);
-		$pageSelect->init(FALSE);
-
-		$result = '';
-		$i = 0;
-		foreach (array_reverse($pageSelect->getRootLine($pid)) as $breadcrumb) {
-			if ($this->sysLanguageUid != 0) {
-				$page = $pageSelect->getPageOverlay($breadcrumb['uid'], $this->sysLanguageUid);
-			} else {
-				$page = $pageSelect->getPage($breadcrumb['uid'], $this->sysLanguageUid);
-			}
-			if (!$page) {
-				$page = $pageSelect->getPage($breadcrumb['uid'], $this->sysLanguageUid);
-			}
-			$pageTitle = $page['tx_realurl_pathsegment'] ? ucfirst($page['tx_realurl_pathsegment']) : ucfirst($page['title']);
-			if (!empty($page) AND $page['nav_hide'] != '1' AND $page['tx_realurl_exclude'] != '1') {
-				if ($i > 0) {
-					$result .= ' ' . $this->settings['breadcrumb_seperator'] . ' ';
-				}
-				$result .= $pageTitle;
-				$i++;
-			}
+	private function setSearchFields() {
+		if (!($this->settings->getSearchString()->sanitized())) {
+			throw new \TYPO3\CMS\Extbase\Security\Exception(
+				'SearchString must be sanitized before passing to the query!!',
+				1456218496
+			);
 		}
 
-		return $result;
+		$searchString = $this->resolveSearchstring($this->settings->getSearchString());
+
+		foreach ($this->settings->getSearchFields() as $propertyName) {
+			$this->constraints[] = $this->query->like(
+				$propertyName,
+				$searchString
+			);
+		}
+	}
+
+	/**
+	 * resolveSearchstring
+	 *
+	 * @param string $searchString
+	 * @return string
+	 */
+	protected function resolveSearchstring($searchString) {
+		return str_replace('|', $searchString, $this->settings->getRegEx());
+	}
+
+	/**
+	 * destroy all properties
+	 *
+	 * @return void
+	 */
+	public function reset() {
+		$this->query = NULL;
+		$this->settings = NULL;
+		$this->logicalAnd = [];
+		$this->logicalOr = [];
+		$this->constraints = [];
 	}
 
 }

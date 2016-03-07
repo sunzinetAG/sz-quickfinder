@@ -15,46 +15,8 @@ use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class User extends FrontendUser implements SearchableInterface {
+class User extends FrontendUser {
 
-	/**
-	 * breadcrumb
-	 *
-	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
-	 * @var string $breadcrumb
-	 */
-	protected $breadcrumb;
-
-	/**
-	 * getBreadcrumb
-	 *
-	 * @return string
-	 */
-	public function getBreadcrumb() {
-		return $this->breadcrumb;
-	}
-
-	/**
-	 * setBreadcrumb
-	 *
-	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
-	 * @param string $breadcrumb
-	 * @return $this
-	 */
-	public function setBreadcrumb($breadcrumb) {
-		$this->breadcrumb = $breadcrumb;
-
-		return $this;
-	}
-
-	/**
-	 * getPageId
-	 *
-	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
-	 * @return int
-	 */
-	public function getPageId() {
-		return 1;
-	}
+	use SearchResult;
 
 }

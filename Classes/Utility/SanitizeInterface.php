@@ -4,7 +4,7 @@ namespace Sunzinet\SzIndexedSearch\Utility;
 /**
  * Description of the class 'SanitizeInterface.php'
  *
- * @author Dennis Römmich <dennis@roemmich.eu>
+ * @author Dennis Rï¿½mmich <dennis@roemmich.eu>
  * @copyright Copyright belongs to the respective authors
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
@@ -19,10 +19,9 @@ interface SanitizeInterface {
 	/**
 	 * sanitize
 	 *
-	 * @param string $str
 	 * @return mixed
 	 */
-	public function sanitize($str);
+	public function sanitize();
 
 	/**
 	 * sanitized

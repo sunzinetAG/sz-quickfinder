@@ -14,7 +14,7 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class File extends CustomSearch {
+class File extends AbstractSearch {
 
 	/**
 	 * title
@@ -36,23 +36,6 @@ class File extends CustomSearch {
 	 * @var int
 	 */
 	protected $uidForeign;
-
-	/**
-	 * breadcrumb
-	 *
-	 * @var string
-	 */
-	protected $breadcrumb;
-
-	/**
-	 * getPageId
-	 *
-	 * @Todo: Vielleicht kann dies in eine abstrakte Klasse gepackt werden
-	 * @return int
-	 */
-	public function getPageId() {
-		return 1;
-	}
 
 	/**
 	 * Returns the title
@@ -79,27 +62,6 @@ class File extends CustomSearch {
 	 */
 	public function getUidForeign() {
 		return $this->uidForeign;
-	}
-
-	/**
-	 * Returns the breadcrumb
-	 *
-	 * @return string $breadcrumb
-	 */
-	public function getBreadcrumb() {
-		return $this->breadcrumb;
-	}
-
-	/**
-	 * Sets the breadcrumb
-	 *
-	 * @param string $breadcrumb
-	 * @return $this
-	 */
-	public function setBreadcrumb($breadcrumb) {
-		$this->breadcrumb = $breadcrumb;
-
-		return $this;
 	}
 
 }
