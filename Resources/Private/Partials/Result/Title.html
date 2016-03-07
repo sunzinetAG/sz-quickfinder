@@ -1,12 +1,12 @@
 {namespace sz=Sunzinet\SzIndexedSearch\ViewHelpers}
 
 <f:if condition="{pageUid}">
-	<f:then>
-		<f:link.page pageUid="{pageUid}" section="{section}">
-			<div><sz:format.highlight>{title}</sz:format.highlight></div>
-		</f:link.page>
-	</f:then>
-	<f:else>
-		<div><sz:format.highlight>{title}</sz:format.highlight></div>
-	</f:else>
+    <f:then>
+        <f:link.page pageUid="{pageUid}" section="{section}">
+            <div><sz:format.highlight>{title}</sz:format.highlight></div>
+        </f:link.page>
+    </f:then>
+    <f:else>
+        <div><sz:format.highlight>{title}</sz:format.highlight></div>
+    </f:else>
 </f:if>

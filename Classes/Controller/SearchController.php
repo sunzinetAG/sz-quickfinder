@@ -66,8 +66,10 @@ class SearchController extends ActionController
 
         foreach ($customSearchArray as $sectionName => $customSearch) {
             /** @var TyposcriptSettings $settings */
-            $settings = $this->objectManager->get(TyposcriptSettings::class,
-                array_merge($this->settings['global'], $customSearch));
+            $settings = $this->objectManager->get(
+                TyposcriptSettings::class,
+                array_merge($this->settings['global'], $customSearch)
+            );
             $settings->setProperty('searchString', $searchString);
 
             $this->searchRepository->prepareCustomSearch($settings);

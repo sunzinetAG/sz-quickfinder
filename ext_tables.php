@@ -10,5 +10,8 @@ if (!defined('TYPO3_MODE')) {
 );
 
 $GLOBALS['TYPO3_CONF_VARS']['FE']['addRootLineFields'] .= ', nav_hide';
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript',
-    'Indexed Search Autocomplete');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    $_EXTKEY,
+    'Configuration/TypoScript',
+    'Indexed Search Autocomplete'
+);

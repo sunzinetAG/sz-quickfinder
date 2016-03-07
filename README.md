@@ -132,28 +132,29 @@ Nachfolgend eine Auflistung aller sz_indexed_search Versionen und eine grobe Bes
 #### [**2.0.0**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F2.0.0)
 
 * Aus dem TypoScript wurden folgende Einstellungen entfernt:
-	* enable_documents
-	* show_breadcrumbs_to_documents
-	* highlight_search_results
-	* additional_button
+    * enable_documents
+    * show_breadcrumbs_to_documents
+    * highlight_search_results
+    * additional_button
 
 Die entfernten Einstellungen können nun in den Templates angepasst werden
 
 * Folgende Einstellungen wurden hinzugefügt
-	* searchPid
-	* breadcrumb_seperator
+    * searchPid
+    * breadcrumb_seperator
 
 #### [**1.1.0**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F1.1.0)
 
 * Folgende Einstellungsmöglichkeiten wurden hinzugefügt:
-	* homePageUid
-	* enable_documents
-	* show_breadcrumbs_to_documents
-	* reg_search_exp
-	* max_results
-	* highlight_search_results
-	* additional_button
-	* customSearch
+    * homePageUid
+    * enable_documents
+    * show_breadcrumbs_to_documents
+    * reg_search_exp
+    * max_results
+    * highlight_search_results
+    * additional_button
+    * customSearch
+
 
 ## Bekannte Probleme:
 
