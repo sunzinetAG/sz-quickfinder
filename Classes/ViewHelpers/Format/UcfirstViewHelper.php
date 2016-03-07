@@ -18,7 +18,6 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class UcfirstViewHelper extends AbstractViewHelper
 {
-
     /**
      * Make a string's first character uppercase
      *
@@ -37,5 +36,4 @@ class UcfirstViewHelper extends AbstractViewHelper
 
         return ucfirst($string);
     }
-
 }

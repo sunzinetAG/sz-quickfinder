@@ -17,7 +17,6 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  */
 class PageLanguageOverlay extends Page
 {
-
     /**
      * getPageId
      *
@@ -27,5 +26,4 @@ class PageLanguageOverlay extends Page
     {
         return (int)$this->pid;
     }
-
 }

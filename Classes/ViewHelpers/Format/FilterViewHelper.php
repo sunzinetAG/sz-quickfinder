@@ -19,7 +19,6 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class FilterViewHelper extends AbstractViewHelper
 {
-
     /**
      * returns only the word, which includes the given searchstring
      *
@@ -47,5 +46,4 @@ class FilterViewHelper extends AbstractViewHelper
 
         return $return;
     }
-
 }

@@ -33,7 +33,6 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  * Sunzinet\SzIndexedSearch\Domain\Model; */
 interface SearchResultInterface
 {
-
     /**
      * getRootline
      *
@@ -47,6 +46,4 @@ interface SearchResultInterface
      * @return int
      */
     public function getPid();
-
 }
-

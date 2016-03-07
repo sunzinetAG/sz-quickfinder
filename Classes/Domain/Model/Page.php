@@ -16,7 +16,6 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  */
 class Page extends AbstractSearch
 {
-
     /**
      * title
      *
@@ -111,5 +110,4 @@ class Page extends AbstractSearch
     {
         return $this->author;
     }
-
 }

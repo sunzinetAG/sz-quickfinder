@@ -34,7 +34,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  */
 class SearchController extends ActionController
 {
-
     /**
      * searchRepository
      *
@@ -92,5 +91,4 @@ class SearchController extends ActionController
         $params = array('search' => array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string));
         $this->forward('search', 'Search', 'IndexedSearch', $params);
     }
-
 }

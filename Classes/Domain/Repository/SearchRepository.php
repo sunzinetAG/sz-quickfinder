@@ -40,7 +40,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  */
 class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-
     /**
      * Type of the Model
      *
@@ -97,7 +96,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     protected function setClassName($className)
     {
-        if ($className === Page::class AND intval(GeneralUtility::_GP('L')) !== 0) {
+        if ($className === Page::class and intval(GeneralUtility::_GP('L')) !== 0) {
             $this->className = PageLanguageOverlay::class;
         } else {
             $this->className = $className;
@@ -175,8 +174,10 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         switch ($this->className) {
             case Page::class:
                 if ($this->settings->getIncludeNavHiddenPages() === false) {
-                    array_push($this->logicalAnd,
-                        $this->query->equals('nav_hide', $this->settings->getIncludeNavHiddenPages()));
+                    array_push(
+                        $this->logicalAnd,
+                        $this->query->equals('nav_hide', $this->settings->getIncludeNavHiddenPages())
+                    );
                 }
                 array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
                 array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
@@ -273,5 +274,4 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
         $this->logicalOr = [];
         $this->constraints = [];
     }
-
 }

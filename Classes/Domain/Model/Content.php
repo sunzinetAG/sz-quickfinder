@@ -17,7 +17,6 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  */
 class Content extends AbstractSearch
 {
-
     /**
      * header
      *
@@ -48,5 +47,4 @@ class Content extends AbstractSearch
     {
         return $this->header;
     }
-
 }

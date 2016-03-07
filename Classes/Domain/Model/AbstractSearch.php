@@ -33,7 +33,5 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  */
 abstract class AbstractSearch extends AbstractEntity implements SearchResultInterface
 {
-
     use SearchResult;
-
 }

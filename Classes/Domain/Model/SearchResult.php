@@ -36,7 +36,6 @@ use TYPO3\CMS\Frontend\Page\PageRepository;
  * Sunzinet\SzIndexedSearch\Domain\Model; */
 trait SearchResult
 {
-
     /**
      * objectManager
      *
@@ -71,5 +70,4 @@ trait SearchResult
     {
         return $this->pid;
     }
-
 }

@@ -4,7 +4,7 @@ namespace Sunzinet\SzIndexedSearch\Tests\ViewHelpers\Format;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2014 Dennis R�mmich <dennis.roemmich@sunzinet.com>, sunzinet AG
+ *  (c) 2014 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
  *
  *  All rights reserved
  *
@@ -41,7 +41,6 @@ use TYPO3\CMS\Fluid\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
  */
 class HighlightViewHelperTest extends ViewHelperBaseTestcase
 {
-
     /**
      * viewhelper
      *
@@ -172,5 +171,4 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
 
         return $method;
     }
-
 }

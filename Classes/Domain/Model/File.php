@@ -16,7 +16,6 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  */
 class File extends AbstractSearch
 {
-
     /**
      * title
      *
@@ -67,5 +66,4 @@ class File extends AbstractSearch
     {
         return $this->uidForeign;
     }
-
 }

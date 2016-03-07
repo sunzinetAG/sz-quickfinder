@@ -17,7 +17,5 @@ use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
  */
 class User extends FrontendUser
 {
-
     use SearchResult;
-
 }

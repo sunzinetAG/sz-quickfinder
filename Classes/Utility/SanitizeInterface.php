@@ -4,7 +4,7 @@ namespace Sunzinet\SzIndexedSearch\Utility;
     /**
      * Description of the class 'SanitizeInterface.php'
      *
-     * @author Dennis R�mmich <dennis@roemmich.eu>
+     * @author Dennis Römmich <dennis@roemmich.eu>
      * @copyright Copyright belongs to the respective authors
      * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
      */
@@ -16,7 +16,6 @@ namespace Sunzinet\SzIndexedSearch\Utility;
  */
 interface SanitizeInterface
 {
-
     /**
      * sanitize
      *
@@ -30,5 +29,4 @@ interface SanitizeInterface
      * @return bool
      */
     public function sanitized();
-
 }

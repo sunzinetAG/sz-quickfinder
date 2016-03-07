@@ -16,7 +16,6 @@ namespace Sunzinet\SzIndexedSearch\Utility;
  */
 class SanitizeUtility implements SanitizeInterface
 {
-
     /**
      * isSanitized
      *
@@ -35,7 +34,6 @@ class SanitizeUtility implements SanitizeInterface
      * __construct
      *
      * @param string $string
-     * @return $this
      */
     public function __construct($string)
     {
@@ -78,5 +76,4 @@ class SanitizeUtility implements SanitizeInterface
     {
         return $this->string;
     }
-
 }
