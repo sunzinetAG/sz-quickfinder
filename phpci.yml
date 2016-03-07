@@ -16,6 +16,7 @@ test:
     prefer_dist: true
 
   PhpLoc:
+    path: "Classes"
 
   php_unit:
     config:
