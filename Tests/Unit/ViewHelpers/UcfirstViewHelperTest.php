@@ -57,7 +57,7 @@ class UcfirstViewHelperTest extends ViewHelperBaseTestcase
     {
         parent::setUp();
         $this->viewHelper = $this->getMockBuilder(UcfirstViewHelper::class)
-            ->setMethods(array('renderChildren'))
+            ->setMethods(['renderChildren'])
             ->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }

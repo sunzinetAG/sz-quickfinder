@@ -47,7 +47,7 @@ class HighlightViewHelper extends AbstractViewHelper
         $return = htmlspecialchars_decode($this->renderChildren());
         $occurrences = substr_count(strtolower($return), strtolower($this->searchString));
 
-        $match = array();
+        $match = [];
 
         for ($i = 0; $i < $occurrences; $i++) {
             $match[$i] = stripos($return, $this->getSearchString(), $i);

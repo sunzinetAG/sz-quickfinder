@@ -64,7 +64,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
     {
         parent::setUp();
         $this->viewHelper = $this->getMockBuilder(HighlightViewHelper::class)
-            ->setMethods(array('renderChildren'))
+            ->setMethods(['renderChildren'])
             ->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
@@ -111,7 +111,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
         $method = $this->getProtectedMethod('setSearchString');
 
         $this->setExpectedException('InvalidArgumentException');
-        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array($stdClass)));
+        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, [$stdClass]));
     }
 
     /**
@@ -126,7 +126,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
         $method = $this->getProtectedMethod('setSearchString');
 
         $this->setExpectedException('InvalidArgumentException');
-        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array($integer)));
+        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, [$integer]));
     }
 
     /**
@@ -140,7 +140,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
         $method = $this->getProtectedMethod('setSearchString');
 
         $this->setExpectedException('InvalidArgumentException');
-        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array(null)));
+        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, [null]));
     }
 
     /**
@@ -154,7 +154,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
         $method = $this->getProtectedMethod('setSearchString');
 
         $this->setExpectedException('InvalidArgumentException');
-        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array('')));
+        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, ['']));
     }
 
     /**

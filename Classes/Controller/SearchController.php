@@ -62,7 +62,7 @@ class SearchController extends ActionController
     {
         $customSearchArray = $this->settings['customSearch'];
 
-		$results = array();
+        $results = [];
 
         foreach ($customSearchArray as $sectionName => $customSearch) {
             /** @var TyposcriptSettings $settings */
@@ -78,9 +78,9 @@ class SearchController extends ActionController
             $this->searchRepository->reset();
         }
 
-		$this->view->assign('searchString', $searchString);
-		$this->view->assign('results', $results);
-	}
+        $this->view->assign('searchString', $searchString);
+        $this->view->assign('results', $results);
+    }
 
     /**
      * Goes forward to IndexedSearch
@@ -90,7 +90,7 @@ class SearchController extends ActionController
      */
     public function searchAction($string)
     {
-        $params = array('search' => array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string));
+        $params = ['search' => ['searchWords' => $string, 'searchParams' => $string, 'sword' => $string]];
         $this->forward('search', 'Search', 'IndexedSearch', $params);
     }
 }

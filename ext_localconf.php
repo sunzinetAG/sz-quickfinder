@@ -7,13 +7,9 @@ $boot = function ($extensionKey) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Sunzinet.' . $extensionKey,
         'Pi1',
-        array(
-            'Search' => 'index, search, autocomplete',
-        ),
+        ['Search' => 'index, search, autocomplete'],
         // non-cacheable actions
-        array(
-            'Search' => 'autocomplete',
-        )
+        ['Search' => 'autocomplete']
     );
 };
 

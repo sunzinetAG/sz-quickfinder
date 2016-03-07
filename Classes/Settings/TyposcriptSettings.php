@@ -51,9 +51,7 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
      *
      * @var array $searchFields
      */
-    protected $searchFields = array(
-        'title'
-    );
+    protected $searchFields = ['title'];
 
     /**
      * searchString
@@ -301,7 +299,7 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
             );
         }
 
-        call_user_func(array($this, 'set' . ucfirst($propertyName)), $value);
+        call_user_func([$this, 'set' . ucfirst($propertyName)], $value);
     }
 
     /**

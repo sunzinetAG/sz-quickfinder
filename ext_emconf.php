@@ -10,7 +10,7 @@
  * # "version" and "dependencies" must not be touched!
  * ########################################################################**/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Indexed Search Extend',
     'description' => 'Adds autocomplete to indexed search',
     'category' => 'plugin',
@@ -28,19 +28,19 @@ $EM_CONF[$_EXTKEY] = array(
     'clearCacheOnLoad' => 0,
     'lockType' => '',
     'version' => '3.0.0',
-    'constraints' => array(
-        'depends' => array(
+    'constraints' => [
+        'depends' => [
             'extbase' => '1.3',
             'fluid' => '1.3',
             'typo3' => '6.2.0-7.6.99',
-        ),
-        'conflicts' => array(),
-        'suggests' => array(),
-    ),
-    'autoload' => array(
-        'psr-4' => array('Sunzinet\\SzIndexedSearch\\' => 'Classes')
-    ),
-    'autoload-dev' => array(
-        'psr-4' => array('Sunzinet\\SzIndexedSearch\\Unit\\' => 'Tests')
-    )
-);
+        ],
+        'conflicts' => [],
+        'suggests' => [],
+    ],
+    'autoload' => [
+        'psr-4' => ['Sunzinet\\SzIndexedSearch\\' => 'Classes']
+    ],
+    'autoload-dev' => [
+        'psr-4' => ['Sunzinet\\SzIndexedSearch\\Unit\\' => 'Tests']
+    ]
+];
