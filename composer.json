@@ -1,0 +1,27 @@
+{
+  "name": "Sunzinet/SzIndexedSearch",
+  "description": "SzIndexedSearch - Autocomplete Plugin der sunzinet AG",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dennis Römmich",
+      "email": "dr@sunzinet.com"
+    }
+  ],
+  "require-dev": {
+    "typo3/cms": "~7.6.0",
+    "phpunit/phpunit": "~5.2.0"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Sunzinet\\SzIndexedSearch\\": "Classes",
+      "TYPO3\\CMS\\Core\\Tests\\": "typo3_src/typo3/sysext/core/Tests/",
+      "TYPO3\\CMS\\Core\\Core\\": "typo3_src/typo3/sysext/core/Classes/Core/",
+      "TYPO3\\CMS\\Fluid\\Tests\\Unit\\ViewHelpers\\": "typo3_src/typo3/sysext/fluid/Tests/Unit/ViewHelpers/",
+      "TYPO3\\CMS\\Core\\": "typo3_src/typo3/sysext/core/Classes/",
+      "TYPO3\\CMS\\Fluid\\": "typo3_src/typo3/sysext/fluid/Classes/",
+      "TYPO3\\CMS\\Extbase\\Mvc\\": "typo3_src/typo3/sysext/extbase/Classes/Mvc/",
+      "TYPO3\\CMS\\Extbase\\": "typo3_src/typo3/sysext/extbase/Classes/"
+    }
+  }
+}

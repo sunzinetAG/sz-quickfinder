@@ -9,6 +9,11 @@ setup:
 test:
   PhpLoc:
 
+  php_unit:
+      config:
+          - "Tests/phpunit.xml"
+      path: "Tests"
+
   php_mess_detector:
     allowed_warnings: -1
 

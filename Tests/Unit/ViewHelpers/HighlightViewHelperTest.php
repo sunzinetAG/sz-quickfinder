@@ -63,10 +63,9 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(HighlightViewHelper::class)
-            ->setMethods(['renderChildren'])
-            ->getMock();
+        $this->viewHelper = $this->getMock($this->buildAccessibleProxy(HighlightViewHelper::class), array('renderChildren'));
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
+        $this->viewHelper->initializeArguments();
     }
 
     /**
