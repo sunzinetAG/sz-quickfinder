@@ -15,8 +15,9 @@ use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class User extends FrontendUser {
+class User extends FrontendUser
+{
 
-	use SearchResult;
+    use SearchResult;
 
 }

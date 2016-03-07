@@ -16,311 +16,332 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @package Sunzinet\SzIndexedSearch\Settings
  */
-class TyposcriptSettings implements TyposcriptSettingsInterface {
+class TyposcriptSettings implements TyposcriptSettingsInterface
+{
 
-	/**
-	 * model
-	 *
-	 * @var string $class
-	 */
-	protected $class = '';
+    /**
+     * model
+     *
+     * @var string $class
+     */
+    protected $class = '';
 
-	/**
-	 * regEx
-	 *
-	 * @var string $regEx
-	 */
-	protected $regEx = '%|%';
+    /**
+     * regEx
+     *
+     * @var string $regEx
+     */
+    protected $regEx = '%|%';
 
-	/**
-	 * maxResults
-	 *
-	 * @var int $maxResults
-	 */
-	protected $maxResults = 3;
+    /**
+     * maxResults
+     *
+     * @var int $maxResults
+     */
+    protected $maxResults = 3;
 
-	/**
-	 * includeNavHiddenPages
-	 *
-	 * @var bool $includeNavHiddenPages
-	 */
-	protected $includeNavHiddenPages = FALSE;
+    /**
+     * includeNavHiddenPages
+     *
+     * @var bool $includeNavHiddenPages
+     */
+    protected $includeNavHiddenPages = false;
 
-	/**
-	 * searchFields
-	 *
-	 * @var array $searchFields
-	 */
-	protected $searchFields = array(
-		'title'
-	);
+    /**
+     * searchFields
+     *
+     * @var array $searchFields
+     */
+    protected $searchFields = array(
+        'title'
+    );
 
-	/**
-	 * searchString
-	 *
-	 * @var SanitizeUtility $searchString
-	 */
-	protected $searchString = '';
+    /**
+     * searchString
+     *
+     * @var SanitizeUtility $searchString
+     */
+    protected $searchString = '';
 
-	/**
-	 * orderBy
-	 *
-	 * @var string $orderBy
-	 */
-	protected $orderBy = 'uid';
+    /**
+     * orderBy
+     *
+     * @var string $orderBy
+     */
+    protected $orderBy = 'uid';
 
-	/**
-	 * ascending
-	 *
-	 * @var bool $ascending
-	 */
-	protected $ascending = TRUE;
+    /**
+     * ascending
+     *
+     * @var bool $ascending
+     */
+    protected $ascending = true;
 
-	/**
-	 * TyposcriptSettings constructor.
-	 *
-	 * @param array $settings
-	 * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
-	 */
-	public function __construct(array $settings) {
-		foreach ($settings as $propertyName => $value) {
-			$this->setProperty($propertyName, $value);
-		}
-	}
+    /**
+     * TyposcriptSettings constructor.
+     *
+     * @param array $settings
+     * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
+     */
+    public function __construct(array $settings)
+    {
+        foreach ($settings as $propertyName => $value) {
+            $this->setProperty($propertyName, $value);
+        }
+    }
 
-	/**
-	 * getClass
-	 *
-	 * @return string
-	 */
-	public function getClass() {
-		return $this->class;
-	}
+    /**
+     * getClass
+     *
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
 
-	/**
-	 * setModel
-	 *
-	 * @param string $class
-	 * @return $this
-	 */
-	public function setClass($class) {
-		$this->class = $class;
+    /**
+     * setModel
+     *
+     * @param string $class
+     * @return $this
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * getRegEx
-	 *
-	 * @return string
-	 */
-	public function getRegEx() {
-		return $this->regEx;
-	}
+    /**
+     * getRegEx
+     *
+     * @return string
+     */
+    public function getRegEx()
+    {
+        return $this->regEx;
+    }
 
-	/**
-	 * setRegEx
-	 *
-	 * @param string $regEx
-	 * @return $this
-	 */
-	public function setRegEx($regEx) {
-		$this->regEx = $regEx;
+    /**
+     * setRegEx
+     *
+     * @param string $regEx
+     * @return $this
+     */
+    public function setRegEx($regEx)
+    {
+        $this->regEx = $regEx;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * getMaxResults
-	 *
-	 * @return int
-	 */
-	public function getMaxResults() {
-		return $this->maxResults;
-	}
+    /**
+     * getMaxResults
+     *
+     * @return int
+     */
+    public function getMaxResults()
+    {
+        return $this->maxResults;
+    }
 
-	/**
-	 * setMaxResults
-	 *
-	 * @param int $maxResults
-	 * @return $this
-	 */
-	public function setMaxResults($maxResults) {
-		$this->maxResults = $maxResults;
+    /**
+     * setMaxResults
+     *
+     * @param int $maxResults
+     * @return $this
+     */
+    public function setMaxResults($maxResults)
+    {
+        $this->maxResults = $maxResults;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * getIncludeNavHiddenPages
-	 *
-	 * @return int
-	 */
-	public function getIncludeNavHiddenPages() {
-		return $this->includeNavHiddenPages;
-	}
+    /**
+     * getIncludeNavHiddenPages
+     *
+     * @return int
+     */
+    public function getIncludeNavHiddenPages()
+    {
+        return $this->includeNavHiddenPages;
+    }
 
-	/**
-	 * setIncludeNavHiddenPages
-	 *
-	 * @param int $includeNavHiddenPages
-	 * @return $this
-	 */
-	public function setIncludeNavHiddenPages($includeNavHiddenPages) {
-		$this->includeNavHiddenPages = $includeNavHiddenPages;
+    /**
+     * setIncludeNavHiddenPages
+     *
+     * @param int $includeNavHiddenPages
+     * @return $this
+     */
+    public function setIncludeNavHiddenPages($includeNavHiddenPages)
+    {
+        $this->includeNavHiddenPages = $includeNavHiddenPages;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * getSearchfields
-	 *
-	 * @return array
-	 */
-	public function getSearchFields() {
-		return $this->searchFields;
-	}
+    /**
+     * getSearchfields
+     *
+     * @return array
+     */
+    public function getSearchFields()
+    {
+        return $this->searchFields;
+    }
 
-	/**
-	 * setSearchFields
-	 *
-	 * @param [] $searchFields
-	 * @return $this
-	 */
-	public function setSearchFields($searchFields) {
-		$this->searchFields = $searchFields;
+    /**
+     * setSearchFields
+     *
+     * @param [] $searchFields
+     * @return $this
+     */
+    public function setSearchFields($searchFields)
+    {
+        $this->searchFields = $searchFields;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * getSearchString
-	 *
-	 * @return string
-	 */
-	public function getSearchString() {
-		return $this->searchString;
-	}
+    /**
+     * getSearchString
+     *
+     * @return string
+     */
+    public function getSearchString()
+    {
+        return $this->searchString;
+    }
 
-	/**
-	 * setSearchString
-	 *
-	 * @param SanitizeUtility $searchString
-	 * @return $this
-	 */
-	public function setSearchString($searchString) {
-		$this->searchString = GeneralUtility::makeInstance(SanitizeUtility::class, $searchString);
+    /**
+     * setSearchString
+     *
+     * @param SanitizeUtility $searchString
+     * @return $this
+     */
+    public function setSearchString($searchString)
+    {
+        $this->searchString = GeneralUtility::makeInstance(SanitizeUtility::class, $searchString);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * getOrderBy
-	 *
-	 * @return string
-	 */
-	public function getOrderBy() {
-		return $this->orderBy;
-	}
+    /**
+     * getOrderBy
+     *
+     * @return string
+     */
+    public function getOrderBy()
+    {
+        return $this->orderBy;
+    }
 
-	/**
-	 * setOrderBy
-	 *
-	 * @param string $orderBy
-	 * @return $this
-	 */
-	public function setOrderBy($orderBy) {
-		$this->orderBy = $orderBy;
+    /**
+     * setOrderBy
+     *
+     * @param string $orderBy
+     * @return $this
+     */
+    public function setOrderBy($orderBy)
+    {
+        $this->orderBy = $orderBy;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * getAscending
-	 *
-	 * @return boolean
-	 */
-	public function getAscending() {
-		return $this->ascending;
-	}
+    /**
+     * getAscending
+     *
+     * @return boolean
+     */
+    public function getAscending()
+    {
+        return $this->ascending;
+    }
 
-	/**
-	 * setAscending
-	 *
-	 * @param boolean $ascending
-	 * @return $this
-	 */
-	public function setAscending($ascending) {
-		$this->ascending = $ascending;
+    /**
+     * setAscending
+     *
+     * @param boolean $ascending
+     * @return $this
+     */
+    public function setAscending($ascending)
+    {
+        $this->ascending = $ascending;
 
-		return $this;
-	}
+        return $this;
+    }
 
 
-	/**
-	 * setProperty
-	 *
-	 * @param string $propertyName
-	 * @param mixed $value
-	 * @throws \TYPO3\CMS\Extbase\Property\Exception\BadMethodCallException
-	 * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
-	 * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
-	 * @return void
-	 */
-	public function setProperty($propertyName, $value) {
-		if (!$this->hasProperty($propertyName)) {
-			throw new \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException(
-				'Property ' . $propertyName . ' does not Exist.',
-				1442413257
-			);
-		}
-		$method = 'set' . ucfirst($propertyName);
-		$value = self::convert(gettype($this->{$propertyName}), $value);
-		if (!method_exists($this, $method)) {
-			throw new \BadMethodCallException(
-				'Method ' . $method . ' does not Exist.',
-				1456819227
-			);
-		}
+    /**
+     * setProperty
+     *
+     * @param string $propertyName
+     * @param mixed $value
+     * @throws \TYPO3\CMS\Extbase\Property\Exception\BadMethodCallException
+     * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
+     * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
+     * @return void
+     */
+    public function setProperty($propertyName, $value)
+    {
+        if (!$this->hasProperty($propertyName)) {
+            throw new \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException(
+                'Property ' . $propertyName . ' does not Exist.',
+                1442413257
+            );
+        }
+        $method = 'set' . ucfirst($propertyName);
+        $value = self::convert(gettype($this->{$propertyName}), $value);
+        if (!method_exists($this, $method)) {
+            throw new \BadMethodCallException(
+                'Method ' . $method . ' does not Exist.',
+                1456819227
+            );
+        }
 
-		call_user_func(array($this, 'set' . ucfirst($propertyName)), $value);
-	}
+        call_user_func(array($this, 'set' . ucfirst($propertyName)), $value);
+    }
 
-	/**
-	 * hasProperty
-	 *
-	 * @param string $propertyName
-	 * @return bool
-	 */
-	protected function hasProperty($propertyName) {
-		return property_exists(self::class, $propertyName);
-	}
+    /**
+     * hasProperty
+     *
+     * @param string $propertyName
+     * @return bool
+     */
+    protected function hasProperty($propertyName)
+    {
+        return property_exists(self::class, $propertyName);
+    }
 
-	/**
-	 * convert
-	 *
-	 * @param mixed $type
-	 * @param mixed $var
-	 * @return array|bool|int|string
-	 * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
-	 */
-	protected static function convert($type, $var) {
-		switch ($type) {
-			case 'string':
-				return (string)$var;
-			case 'integer':
-				return (int)$var;
-			case 'boolean':
-				return filter_var($var, FILTER_VALIDATE_BOOLEAN);
-			case 'array':
-				return array_map('trim', explode(',', $var));
-			default:
-				throw new \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException(
-					'Unsupportet type',
-					1442418939
-				);
-		}
+    /**
+     * convert
+     *
+     * @param mixed $type
+     * @param mixed $var
+     * @return array|bool|int|string
+     * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
+     */
+    protected static function convert($type, $var)
+    {
+        switch ($type) {
+            case 'string':
+                return (string)$var;
+            case 'integer':
+                return (int)$var;
+            case 'boolean':
+                return filter_var($var, FILTER_VALIDATE_BOOLEAN);
+            case 'array':
+                return array_map('trim', explode(',', $var));
+            default:
+                throw new \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException(
+                    'Unsupportet type',
+                    1442418939
+                );
+        }
 
-	}
+    }
 }
 

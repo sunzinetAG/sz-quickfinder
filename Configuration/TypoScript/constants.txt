@@ -7,6 +7,7 @@ plugin.tx_szindexedsearch {
 		# cat=plugin.tx_szindexedsearch/file; type=string; label=Path to template layouts (FE)
 		layoutRootPath = EXT:sz_indexed_search/Resources/Private/Layouts/
 	}
+
 	persistence {
 		# cat=plugin.tx_szindexedsearch//a; type=string; label=Default storage PID
 		//diese Seiten werden durchsucht (Kommagetrennt)

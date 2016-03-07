@@ -32,60 +32,65 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  *
  * @package Sunzinet\SzIndexedSearch\Controller
  */
-class SearchController extends ActionController {
+class SearchController extends ActionController
+{
 
-	/**
-	 * searchRepository
-	 *
-	 * @var \Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository
-	 * @inject
-	 */
-	protected $searchRepository;
+    /**
+     * searchRepository
+     *
+     * @var \Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository
+     * @inject
+     */
+    protected $searchRepository;
 
-	/**
-	 * Only show the SearchForm
-	 *
-	 * @return void
-	 */
-	public function indexAction() {
-		$this->view->assign('searchPid', $this->settings['searchPid']);
-	}
+    /**
+     * Only show the SearchForm
+     *
+     * @return void
+     */
+    public function indexAction()
+    {
+        $this->view->assign('searchPid', $this->settings['searchPid']);
+    }
 
-	/**
-	 * autocomplete action
-	 *
-	 * @param string $searchString The string
-	 * @return void
-	 */
-	public function autocompleteAction($searchString) {
-		$customSearchArray = $this->settings['customSearch'];
+    /**
+     * autocomplete action
+     *
+     * @param string $searchString The string
+     * @return void
+     */
+    public function autocompleteAction($searchString)
+    {
+        $customSearchArray = $this->settings['customSearch'];
 
-		$results = array();
+        $results = array();
 
-		foreach ($customSearchArray as $sectionName => $customSearch) {
-			/** @var TyposcriptSettings $settings */
-			$settings = $this->objectManager->get(TyposcriptSettings::class, array_merge($this->settings['global'], $customSearch));
-			$settings->setProperty('searchString', $searchString);
+        foreach ($customSearchArray as $sectionName => $customSearch) {
+            /** @var TyposcriptSettings $settings */
+            $settings = $this->objectManager->get(TyposcriptSettings::class,
+                array_merge($this->settings['global'], $customSearch));
+            $settings->setProperty('searchString', $searchString);
 
-			$this->searchRepository->prepareCustomSearch($settings);
-			$results[$sectionName] = $this->searchRepository->executeCustomSearch();
+            $this->searchRepository->prepareCustomSearch($settings);
+            $results[$sectionName] = $this->searchRepository->executeCustomSearch();
 
-			$this->searchRepository->reset();
-		}
+            $this->searchRepository->reset();
+        }
 
-		$this->view->assign('searchString', $searchString);
-		$this->view->assign('results', $results);
-	}
+        $this->view->assign('searchString', $searchString);
+        $this->view->assign('results', $results);
+    }
 
-	/**
-	 * Goes forward to IndexedSearch
-	 *
-	 * @param string $string The string
-	 * @return void
-	 */
-	public function searchAction($string) {
-		$params = array('search' => array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string));
-		$this->forward('search', 'Search', 'IndexedSearch', $params);
-	}
+    /**
+     * Goes forward to IndexedSearch
+     *
+     * @param string $string The string
+     * @return void
+     */
+    public function searchAction($string)
+    {
+        $params = array('search' => array('searchWords' => $string, 'searchParams' => $string, 'sword' => $string));
+        $this->forward('search', 'Search', 'IndexedSearch', $params);
+    }
 
 }

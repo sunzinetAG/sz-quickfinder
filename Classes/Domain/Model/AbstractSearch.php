@@ -31,8 +31,9 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-abstract class AbstractSearch extends AbstractEntity implements SearchResultInterface {
+abstract class AbstractSearch extends AbstractEntity implements SearchResultInterface
+{
 
-	use SearchResult;
+    use SearchResult;
 
 }

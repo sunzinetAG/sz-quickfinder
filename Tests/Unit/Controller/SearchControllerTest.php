@@ -4,7 +4,7 @@
  *  Copyright notice
  *
  *  (c) 2015 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
- *  			
+ *
  *  All rights reserved
  *
  *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -37,6 +37,7 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
  *
  * @author Dennis Römmich <dennis.roemmich@sunzinet.com>
  */
-class Tx_Sz_indexed_search_Controller_SearchControllerTest extends UnitTestCase {
+class Tx_Sz_indexed_search_Controller_SearchControllerTest extends UnitTestCase
+{
 
 }

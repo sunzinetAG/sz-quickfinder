@@ -3,21 +3,26 @@ plugin.tx_szindexedsearch {
 		templateRootPaths {
 			100 = {$plugin.tx_szindexedsearch.view.templateRootPath}
 		}
+
 		partialRootPaths {
 			100 = {$plugin.tx_szindexedsearch.view.partialRootPath}
 		}
+
 		layoutRootPaths {
 			100 = {$plugin.tx_szindexedsearch.view.layoutRootPath}
 		}
 	}
+
 	persistence {
 		//diese Seiten werden durchsucht (Kommagetrennt)
 		storagePid = {$plugin.tx_szindexedsearch.persistence.storagePid}
 	}
+
 	features {
 		# uncomment the following line to enable the new Property Mapper.
 		#rewrittenPropertyMapper = 1
 	}
+
 	settings {
 		homePageUid = 2
 		searchPid = 140
@@ -36,29 +41,31 @@ plugin.tx_szindexedsearch {
 				class = Sunzinet\SzIndexedSearch\Domain\Model\Page
 				searchFields = title, keywords
 			}
+
 			news {
 				class = Sunzinet\SzIndexedSearch\Domain\Model\News
 				searchFields = title
 			}
+
 			#More examples:
-#			documents {
-#				class = Sunzinet\SzIndexedSearch\Domain\Model\File
-#				searchFields = title
-#			}
-#			user {
-#				class = Sunzinet\SzIndexedSearch\Domain\Model\User
-#				searchFields = username
-#			}
-#			content {
-#				class = Sunzinet\SzIndexedSearch\Domain\Model\Content
-#				searchFields = header
-#			}
-#			userFunc {
-#				script = /typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
-#				params {
-#					searchFields = title
-#				}
-#			}
+			#            documents {
+			#                class = Sunzinet\SzIndexedSearch\Domain\Model\File
+			#                searchFields = title
+			#            }
+			#            user {
+			#                class = Sunzinet\SzIndexedSearch\Domain\Model\User
+			#                searchFields = username
+			#            }
+			#            content {
+			#                class = Sunzinet\SzIndexedSearch\Domain\Model\Content
+			#                searchFields = header
+			#            }
+			#            userFunc {
+			#                script = /typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
+			#                params {
+			#                    searchFields = title
+			#                }
+			#            }
 		}
 	}
 
@@ -91,26 +98,31 @@ config.tx_extbase {
 					tableName = pages
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay {
 				mapping {
 					tableName = pages_language_overlay
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\News {
 				mapping {
 					tableName = tx_news_domain_model_news
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\File {
 				mapping {
 					tableName = sys_file_reference
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\User {
 				mapping {
 					tableName = fe_users
 				}
 			}
+
 			Sunzinet\SzIndexedSearch\Domain\Model\Content {
 				mapping {
 					tableName = tt_content
@@ -168,5 +180,4 @@ lib.tx_szindexedsearch {
 		persistence =< plugin.tx_szindexedsearch.persistence
 		view =< plugin.tx_szindexedsearch.view
 	}
-
 }

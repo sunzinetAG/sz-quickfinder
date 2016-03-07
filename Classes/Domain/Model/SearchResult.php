@@ -1,5 +1,6 @@
 <?php
 namespace Sunzinet\SzIndexedSearch\Domain\Model;
+
 /***************************************************************
  *
  *  Copyright notice
@@ -33,39 +34,42 @@ use TYPO3\CMS\Frontend\Page\PageRepository;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  * Sunzinet\SzIndexedSearch\Domain\Model; */
-trait SearchResult {
+trait SearchResult
+{
 
-	/**
-	 * objectManager
-	 *
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
+    /**
+     * objectManager
+     *
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @inject
+     */
+    protected $objectManager;
 
-	/**
-	 * getRootline
-	 *
-	 * @return array
-	 */
-	public function getRootline(){
-		/** @var $pageSelect PageRepository */
-		$pageSelect = $this->objectManager->get(PageRepository::class);
-		$pageSelect->init(FALSE);
+    /**
+     * getRootline
+     *
+     * @return array
+     */
+    public function getRootline()
+    {
+        /** @var $pageSelect PageRepository */
+        $pageSelect = $this->objectManager->get(PageRepository::class);
+        $pageSelect->init(false);
 
-		/** @var RootlineUtility $rootline */
-		$rootline = GeneralUtility::makeInstance(RootlineUtility::class, $this->getPid());
+        /** @var RootlineUtility $rootline */
+        $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $this->getPid());
 
-		return array_reverse($rootline->get());
-	}
+        return array_reverse($rootline->get());
+    }
 
-	/**
-	 * getPageId
-	 *
-	 * @return int
-	 */
-	public function getPid() {
-		return $this->pid;
-	}
+    /**
+     * getPageId
+     *
+     * @return int
+     */
+    public function getPid()
+    {
+        return $this->pid;
+    }
 
 }

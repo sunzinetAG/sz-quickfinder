@@ -39,128 +39,138 @@ use TYPO3\CMS\Fluid\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
  *
  * @author Dennis Römmich <dennis.roemmich@sunzinet.com>
  */
-class HighlightViewHelperTest extends ViewHelperBaseTestcase {
+class HighlightViewHelperTest extends ViewHelperBaseTestcase
+{
 
-	/**
-	 * viewhelper
-	 *
-	 * @var HighlightViewHelper $viewHelper
-	 */
-	protected $viewHelper;
+    /**
+     * viewhelper
+     *
+     * @var HighlightViewHelper $viewHelper
+     */
+    protected $viewHelper;
 
-	/**
-	 * searchString
-	 *
-	 * @var string $searchString
-	 */
-	protected $searchString = 'nodes';
+    /**
+     * searchString
+     *
+     * @var string $searchString
+     */
+    protected $searchString = 'nodes';
 
-	/**
-	 * setUp
-	 *
-	 * @return void
-	 */
-	public function setUp() {
-		parent::setUp();
-		$this->viewHelper = $this->getMockBuilder(HighlightViewHelper::class)
-				->setMethods(array('renderChildren'))
-				->getMock();
-		$this->injectDependenciesIntoViewHelper($this->viewHelper);
-	}
+    /**
+     * setUp
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+        $this->viewHelper = $this->getMockBuilder(HighlightViewHelper::class)
+            ->setMethods(array('renderChildren'))
+            ->getMock();
+        $this->injectDependenciesIntoViewHelper($this->viewHelper);
+    }
 
-	/**
-	 * searchStringContainsEmptyStringByDefault
-	 *
-	 * @test
-	 * @return void
-	 */
-	public function searchStringContainsEmptyStringByDefault() {
-		$searchString = $this->readAttribute($this->viewHelper, 'searchString');
-		$this->assertSame('', $searchString);
-	}
+    /**
+     * searchStringContainsEmptyStringByDefault
+     *
+     * @test
+     * @return void
+     */
+    public function searchStringContainsEmptyStringByDefault()
+    {
+        $searchString = $this->readAttribute($this->viewHelper, 'searchString');
+        $this->assertSame('', $searchString);
+    }
 
-	/**
-	 * renderOutputsReturnsHighlightedString
-	 *
-	 * @test
-	 * @return void
-	 */
-	public function renderOutputsReturnsHighlightedString() {
-		$reflection = new \ReflectionClass($this->viewHelper);
-		$property = $reflection->getProperty('searchString');
-		$property->setAccessible(TRUE);
-		$property->setValue($this->viewHelper, 'nodes');
+    /**
+     * renderOutputsReturnsHighlightedString
+     *
+     * @test
+     * @return void
+     */
+    public function renderOutputsReturnsHighlightedString()
+    {
+        $reflection = new \ReflectionClass($this->viewHelper);
+        $property = $reflection->getProperty('searchString');
+        $property->setAccessible(true);
+        $property->setValue($this->viewHelper, 'nodes');
 
-		$this->viewHelper->expects($this->once())->method('renderChildren')->will($this->returnValue('child nodes'));
+        $this->viewHelper->expects($this->once())->method('renderChildren')->will($this->returnValue('child nodes'));
 
-		$this->assertSame('child <strong>nodes</strong>', $this->viewHelper->render());
-	}
+        $this->assertSame('child <strong>nodes</strong>', $this->viewHelper->render());
+    }
 
-	/**
-	 * setObjectAsSearchStringThrowsException
-	 *
-	 * @test
-	 * @return void
-	 */
-	public function setObjectAsSearchStringThrowsException() {
-		$stdClass = new \stdClass();
-		$method = $this->getProtectedMethod('setSearchString');
+    /**
+     * setObjectAsSearchStringThrowsException
+     *
+     * @test
+     * @return void
+     */
+    public function setObjectAsSearchStringThrowsException()
+    {
+        $stdClass = new \stdClass();
+        $method = $this->getProtectedMethod('setSearchString');
 
-		$this->setExpectedException('InvalidArgumentException');
-		$this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array($stdClass)));
-	}
+        $this->setExpectedException('InvalidArgumentException');
+        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array($stdClass)));
+    }
 
-	/**
-	 * setIntegerAsSearchStringThrowsException
-	 *
-	 * @test
-	 * @return void
-	 */
-	public function setIntegerAsSearchStringThrowsException() {
-		$integer = intval(5);
-		$method = $this->getProtectedMethod('setSearchString');
+    /**
+     * setIntegerAsSearchStringThrowsException
+     *
+     * @test
+     * @return void
+     */
+    public function setIntegerAsSearchStringThrowsException()
+    {
+        $integer = intval(5);
+        $method = $this->getProtectedMethod('setSearchString');
 
-		$this->setExpectedException('InvalidArgumentException');
-		$this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array($integer)));
-	}
+        $this->setExpectedException('InvalidArgumentException');
+        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array($integer)));
+    }
 
-	/**
-	 * setNullAsSearchStringThrowsException
-	 *
-	 * @test
-	 * @return void
-	 */
-	public function setNullAsSearchStringThrowsException() {
-		$method = $this->getProtectedMethod('setSearchString');
+    /**
+     * setNullAsSearchStringThrowsException
+     *
+     * @test
+     * @return void
+     */
+    public function setNullAsSearchStringThrowsException()
+    {
+        $method = $this->getProtectedMethod('setSearchString');
 
-		$this->setExpectedException('InvalidArgumentException');
-		$this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array(NULL)));
-	}
+        $this->setExpectedException('InvalidArgumentException');
+        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array(null)));
+    }
 
-	/**
-	 * setNullAsSearchStringThrowsException
-	 *
-	 * @test
-	 * @return void
-	 */
-	public function setEmptyStringAsSearchStringThrowsException() {
-		$method = $this->getProtectedMethod('setSearchString');
+    /**
+     * setNullAsSearchStringThrowsException
+     *
+     * @test
+     * @return void
+     */
+    public function setEmptyStringAsSearchStringThrowsException()
+    {
+        $method = $this->getProtectedMethod('setSearchString');
 
-		$this->setExpectedException('InvalidArgumentException');
-		$this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array('')));
-	}
+        $this->setExpectedException('InvalidArgumentException');
+        $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, array('')));
+    }
 
-	/**
-	 * getProtectedMethod
-	 *
-	 * @param string $name
-	 * @return \ReflectionMethod
-	 */
-	protected function getProtectedMethod($name = '') {
-		$class = new \ReflectionClass(HighlightViewHelper::class);
-		$method = $class->getMethod($name);
-		$method->setAccessible(TRUE);
-		return $method;
-	}
+    /**
+     * getProtectedMethod
+     *
+     * @param string $name
+     * @return \ReflectionMethod
+     */
+    protected function getProtectedMethod($name = '')
+    {
+        $class = new \ReflectionClass(HighlightViewHelper::class);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+
+        return $method;
+    }
 
 }

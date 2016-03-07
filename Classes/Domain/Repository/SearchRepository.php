@@ -38,229 +38,240 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Repository
  */
-class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
+class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+{
 
-	/**
-	 * Type of the Model
-	 *
-	 * @var string
-	 */
-	public $className;
+    /**
+     * Type of the Model
+     *
+     * @var string
+     */
+    public $className;
 
-	/**
-	 * logicalAnd
-	 *
-	 * @var array
-	 */
-	protected $logicalAnd = [];
+    /**
+     * logicalAnd
+     *
+     * @var array
+     */
+    protected $logicalAnd = [];
 
-	/**
-	 * logicalOr
-	 *
-	 * @var array
-	 */
-	protected $logicalOr = [];
+    /**
+     * logicalOr
+     *
+     * @var array
+     */
+    protected $logicalOr = [];
 
-	/**
-	 * constraints
-	 *
-	 * @var array
-	 */
-	protected $constraints = [];
+    /**
+     * constraints
+     *
+     * @var array
+     */
+    protected $constraints = [];
 
-	/**
-	 * @var Query $query
-	 */
-	protected $query;
+    /**
+     * @var Query $query
+     */
+    protected $query;
 
-	/**
-	 * TypoScript settings
-	 *
-	 * @var TyposcriptSettings $settings
-	 */
-	protected $settings;
+    /**
+     * TypoScript settings
+     *
+     * @var TyposcriptSettings $settings
+     */
+    protected $settings;
 
-	/**
-	 * objectManager
-	 *
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-	 * @inject
-	 */
-	protected $objectManager;
+    /**
+     * objectManager
+     *
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @inject
+     */
+    protected $objectManager;
 
-	/**
-	 * Sets the type of the Model
-	 *
-	 * @param string $className
-	 * @return void
-	 */
-	protected function setClassName($className) {
-		if ($className === Page::class AND intval(GeneralUtility::_GP('L')) !== 0) {
-			$this->className = PageLanguageOverlay::class;
-		} else {
-			$this->className = $className;
-		}
-	}
+    /**
+     * Sets the type of the Model
+     *
+     * @param string $className
+     * @return void
+     */
+    protected function setClassName($className)
+    {
+        if ($className === Page::class AND intval(GeneralUtility::_GP('L')) !== 0) {
+            $this->className = PageLanguageOverlay::class;
+        } else {
+            $this->className = $className;
+        }
+    }
 
-	/**
-	 * setQuerySettings
-	 *
-	 * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
-	 * @return void
-	 */
-	protected function setQuerySettings() {
-		$defaultOrdering = QueryInterface::ORDER_ASCENDING;
-		if ($this->settings->getAscending() === FALSE) {
-			$defaultOrdering = QueryInterface::ORDER_DESCENDING;
-		}
-		$this->query->setOrderings([$this->settings->getOrderBy() => $defaultOrdering]);
-		$this->query->getQuerySettings();
+    /**
+     * setQuerySettings
+     *
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @return void
+     */
+    protected function setQuerySettings()
+    {
+        $defaultOrdering = QueryInterface::ORDER_ASCENDING;
+        if ($this->settings->getAscending() === false) {
+            $defaultOrdering = QueryInterface::ORDER_DESCENDING;
+        }
+        $this->query->setOrderings([$this->settings->getOrderBy() => $defaultOrdering]);
+        $this->query->getQuerySettings();
 
-		// @Todo: Language not working correctly yet
-		$this->query->getQuerySettings()
-			->setLanguageUid(intval(GeneralUtility::_GP('L')))
-			->setRespectStoragePage(FALSE)
-			->setRespectSysLanguage(TRUE);
-	}
+        // @Todo: Language not working correctly yet
+        $this->query->getQuerySettings()
+            ->setLanguageUid(intval(GeneralUtility::_GP('L')))
+            ->setRespectStoragePage(false)
+            ->setRespectSysLanguage(true);
+    }
 
-	/**
-	 * prepareCustomSearch
-	 *
-	 * @param TyposcriptSettings $settings
-	 * @return void
-	 */
-	public function prepareCustomSearch(TyposcriptSettings $settings) {
-		$this->settings = $settings;
-		$this->setClassName($this->settings->getClass());
-		$this->query = $this->persistenceManager->createQueryForType($this->className);
+    /**
+     * prepareCustomSearch
+     *
+     * @param TyposcriptSettings $settings
+     * @return void
+     */
+    public function prepareCustomSearch(TyposcriptSettings $settings)
+    {
+        $this->settings = $settings;
+        $this->setClassName($this->settings->getClass());
+        $this->query = $this->persistenceManager->createQueryForType($this->className);
 
-		$this->setQuerySettings();
-		$this->setSearchFields();
-		$this->setCustomEnableFields($this->query->getQuerySettings()->getStoragePageIds());
+        $this->setQuerySettings();
+        $this->setSearchFields();
+        $this->setCustomEnableFields($this->query->getQuerySettings()->getStoragePageIds());
 
-		$this->query->matching(
-			$this->query->logicalAnd(
-				$this->query->logicalAnd($this->logicalAnd),
-				$this->query->logicalOr($this->logicalOr)
-			)
-		);
+        $this->query->matching(
+            $this->query->logicalAnd(
+                $this->query->logicalAnd($this->logicalAnd),
+                $this->query->logicalOr($this->logicalOr)
+            )
+        );
 
-		$this->query->setLimit($settings->getMaxResults());
-	}
+        $this->query->setLimit($settings->getMaxResults());
+    }
 
-	/**
-	 * executeCustomSearch
-	 *
-	 * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-	 */
-	public function executeCustomSearch() {
-		$results = $this->query->execute();
+    /**
+     * executeCustomSearch
+     *
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function executeCustomSearch()
+    {
+        $results = $this->query->execute();
 
-		return $results;
-	}
+        return $results;
+    }
 
-	/**
-	 * Fills logicalAnd and logicalOr for the Query
-	 *
-	 * @param array $storagePids
-	 * @return void
-	 */
-	protected function setCustomEnableFields($storagePids) {
-		switch ($this->className) {
-			case Page::class:
-				if ($this->settings->getIncludeNavHiddenPages() === FALSE) {
-					array_push($this->logicalAnd, $this->query->equals('nav_hide', $this->settings->getIncludeNavHiddenPages()));
-				}
-				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
-				array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
-				break;
-			case File::class:
-				array_push($this->logicalAnd, $this->query->equals('fieldname', 'media'));
-				break;
-			default:
-		}
+    /**
+     * Fills logicalAnd and logicalOr for the Query
+     *
+     * @param array $storagePids
+     * @return void
+     */
+    protected function setCustomEnableFields($storagePids)
+    {
+        switch ($this->className) {
+            case Page::class:
+                if ($this->settings->getIncludeNavHiddenPages() === false) {
+                    array_push($this->logicalAnd,
+                        $this->query->equals('nav_hide', $this->settings->getIncludeNavHiddenPages()));
+                }
+                array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
+                array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
+                break;
+            case File::class:
+                array_push($this->logicalAnd, $this->query->equals('fieldname', 'media'));
+                break;
+            default:
+        }
 
-		foreach ($storagePids as $storagePid) {
-			array_push($this->logicalOr, $this->query->in('pid', $this->extendPidListByChildren($storagePid, 6)));
-		}
+        foreach ($storagePids as $storagePid) {
+            array_push($this->logicalOr, $this->query->in('pid', $this->extendPidListByChildren($storagePid, 6)));
+        }
 
-		array_push($this->logicalAnd, $this->query->logicalOr($this->constraints));
-	}
+        array_push($this->logicalAnd, $this->query->logicalOr($this->constraints));
+    }
 
-	/**
-	 * Find all ids from given ids and level
-	 *
-	 * @param string $pidList comma separated list of ids
-	 * @param integer $recursive recursive levels
-	 * @return string comma separated list of ids
-	 */
-	protected function extendPidListByChildren($pidList = '', $recursive = 0) {
-		$recursive = (int)$recursive;
-		if ($recursive <= 0) {
-			return $pidList;
-		}
+    /**
+     * Find all ids from given ids and level
+     *
+     * @param string $pidList comma separated list of ids
+     * @param integer $recursive recursive levels
+     * @return string comma separated list of ids
+     */
+    protected function extendPidListByChildren($pidList = '', $recursive = 0)
+    {
+        $recursive = (int)$recursive;
+        if ($recursive <= 0) {
+            return $pidList;
+        }
 
-		/** @var $queryGenerator QueryGenerator */
-		$queryGenerator = $this->objectManager->get(QueryGenerator::class);
-		$recursiveStoragePids = $pidList;
-		$storagePids = GeneralUtility::intExplode(',', $pidList);
-		foreach ($storagePids as $startPid) {
-			$pids = $queryGenerator->getTreeList($startPid, $recursive, 0, 'hidden=0 AND deleted=0');
-			if (strlen($pids) > 0) {
-				$recursiveStoragePids .= ',' . $pids;
-			}
-		}
+        /** @var $queryGenerator QueryGenerator */
+        $queryGenerator = $this->objectManager->get(QueryGenerator::class);
+        $recursiveStoragePids = $pidList;
+        $storagePids = GeneralUtility::intExplode(',', $pidList);
+        foreach ($storagePids as $startPid) {
+            $pids = $queryGenerator->getTreeList($startPid, $recursive, 0, 'hidden=0 AND deleted=0');
+            if (strlen($pids) > 0) {
+                $recursiveStoragePids .= ',' . $pids;
+            }
+        }
 
-		$return = explode(',', $recursiveStoragePids);
+        $return = explode(',', $recursiveStoragePids);
 
-		return $return;
-	}
+        return $return;
+    }
 
-	/**
-	 * setSearchFields
-	 *
-	 * @throws \TYPO3\CMS\Extbase\Security\Exception
-	 * @return void
-	 */
-	private function setSearchFields() {
-		if (!($this->settings->getSearchString()->sanitized())) {
-			throw new \TYPO3\CMS\Extbase\Security\Exception(
-				'SearchString must be sanitized before passing to the query!!',
-				1456218496
-			);
-		}
+    /**
+     * setSearchFields
+     *
+     * @throws \TYPO3\CMS\Extbase\Security\Exception
+     * @return void
+     */
+    private function setSearchFields()
+    {
+        if (!($this->settings->getSearchString()->sanitized())) {
+            throw new \TYPO3\CMS\Extbase\Security\Exception(
+                'SearchString must be sanitized before passing to the query!!',
+                1456218496
+            );
+        }
 
-		$searchString = $this->resolveSearchstring($this->settings->getSearchString());
+        $searchString = $this->resolveSearchstring($this->settings->getSearchString());
 
-		foreach ($this->settings->getSearchFields() as $propertyName) {
-			$this->constraints[] = $this->query->like(
-				$propertyName,
-				$searchString
-			);
-		}
-	}
+        foreach ($this->settings->getSearchFields() as $propertyName) {
+            $this->constraints[] = $this->query->like(
+                $propertyName,
+                $searchString
+            );
+        }
+    }
 
-	/**
-	 * resolveSearchstring
-	 *
-	 * @param string $searchString
-	 * @return string
-	 */
-	protected function resolveSearchstring($searchString) {
-		return str_replace('|', $searchString, $this->settings->getRegEx());
-	}
+    /**
+     * resolveSearchstring
+     *
+     * @param string $searchString
+     * @return string
+     */
+    protected function resolveSearchstring($searchString)
+    {
+        return str_replace('|', $searchString, $this->settings->getRegEx());
+    }
 
-	/**
-	 * destroy all properties
-	 *
-	 * @return void
-	 */
-	public function reset() {
-		$this->query = NULL;
-		$this->settings = NULL;
-		$this->logicalAnd = [];
-		$this->logicalOr = [];
-		$this->constraints = [];
-	}
+    /**
+     * destroy all properties
+     *
+     * @return void
+     */
+    public function reset()
+    {
+        $this->query = null;
+        $this->settings = null;
+        $this->logicalAnd = [];
+        $this->logicalOr = [];
+        $this->constraints = [];
+    }
 
 }
