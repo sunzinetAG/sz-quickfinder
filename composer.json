@@ -10,7 +10,7 @@
   ],
   "require-dev": {
     "typo3/cms": "~7.6.0",
-    "phpunit/phpunit": "~5.2.0"
+    "phpunit/phpunit": "~4.8.0"
   },
   "autoload-dev": {
     "psr-4": {
