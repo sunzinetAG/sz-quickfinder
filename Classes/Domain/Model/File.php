@@ -14,17 +14,8 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class File extends CustomSearch
+class File extends AbstractSearch
 {
-
-    /**
-     * fileCollectionRepository
-     *
-     * @var \TYPO3\CMS\Core\Resource\FileCollectionRepository
-     * @inject
-     */
-    protected $fileCollectionRepository;
-
     /**
      * title
      *
@@ -45,13 +36,6 @@ class File extends CustomSearch
      * @var int
      */
     protected $uidForeign;
-
-    /**
-     * breadcrumb
-     *
-     * @var string
-     */
-    protected $breadcrumb;
 
     /**
      * Returns the title
@@ -81,50 +65,5 @@ class File extends CustomSearch
     public function getUidForeign()
     {
         return $this->uidForeign;
-    }
-
-    /**
-     * Returns the breadcrumb
-     *
-     * @return string $breadcrumb
-     */
-    public function getBreadcrumb()
-    {
-        return $this->breadcrumb;
-    }
-
-    /**
-     * Sets the breadcrumb
-     *
-     * @param string $breadcrumb
-     * @return File
-     */
-    public function setBreadcrumb($breadcrumb)
-    {
-        $this->breadcrumb = $breadcrumb;
-
-        return $this;
-    }
-
-    /**
-     * @return array <\TYPO3\CMS\Core\Resource\File>
-     */
-    public function getItem()
-    {
-        $uid = $this->getUidLocal();
-        $obj = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->getFileObject($uid);
-        $item = $obj->toArray();
-
-        $itemAdds = array(
-            'breadcrumb' => $this->getBreadcrumb(),
-            'description' => $this->getDescription(),
-            'title' => $this->getTitle(),
-            'uid' => $this->getUid(),
-            'uidLocal' => $this->getUidLocal(),
-            'uidForeign' => $this->getUidForeign(),
-        );
-
-        $item = array_merge($item, $itemAdds);
-        return $item;
     }
 }

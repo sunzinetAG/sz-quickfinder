@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('TYPO3_MODE')) {
     die ('Access denied.');
 }
@@ -10,7 +9,11 @@ $TCA['tx_szindexedsearch_domain_model_search'] = array(
         'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden',
     ),
     'types' => array(
-        '1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+        '1' => array(
+            'showitem' =>
+                'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1,
+                --div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'
+        ),
     ),
     'palettes' => array(
         '1' => array('showitem' => ''),
@@ -39,7 +42,9 @@ $TCA['tx_szindexedsearch_domain_model_search'] = array(
                     array('', 0),
                 ),
                 'foreign_table' => 'tx_szindexedsearch_domain_model_search',
-                'foreign_table_where' => 'AND tx_szindexedsearch_domain_model_search.pid=###CURRENT_PID### AND tx_szindexedsearch_domain_model_search.sys_language_uid IN (-1,0)',
+                'foreign_table_where' =>
+                    'AND tx_szindexedsearch_domain_model_search.pid=###CURRENT_PID###
+                    AND tx_szindexedsearch_domain_model_search.sys_language_uid IN (-1,0)',
             ),
         ),
         'l10n_diffsource' => array(

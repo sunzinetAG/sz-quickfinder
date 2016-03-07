@@ -2,7 +2,7 @@
 namespace Sunzinet\SzIndexedSearch\ViewHelpers\Format;
 
 /**
- * Description of the class 'UcfirstViewHelper.php'
+ * Make a string's first character uppercase
  *
  * @author Dennis Römmich <dennis@roemmich.eu>
  * @copyright Copyright belongs to the respective authors
@@ -18,12 +18,22 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class UcfirstViewHelper extends AbstractViewHelper
 {
-
     /**
-     * @return string The result with first letter uppercase
+     * Make a string's first character uppercase
+     *
+     * @return string
      */
     public function render()
     {
-        return ucfirst($this->renderChildren());
+        $string = $this->renderChildren();
+        if (!is_string($string)) {
+            throw new \InvalidArgumentException('Parameter $searchString must be of type string', 1440585046);
+        }
+
+        if ($string === '') {
+            throw new \InvalidArgumentException('Given String must not be Empty', 1440581637);
+        }
+
+        return ucfirst($string);
     }
 }

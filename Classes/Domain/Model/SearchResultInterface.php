@@ -2,9 +2,10 @@
 namespace Sunzinet\SzIndexedSearch\Domain\Model;
 
     /***************************************************************
+     *
      *  Copyright notice
      *
-     *  (c) 2014 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
+     *  (c) 2016 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
      *
      *  All rights reserved
      *
@@ -26,11 +27,23 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
      ***************************************************************/
 
 /**
- * Class CustomSearch
+ * Interface SearchResultInterface
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
- */
-class Search extends CustomSearch
+ * Sunzinet\SzIndexedSearch\Domain\Model; */
+interface SearchResultInterface
 {
+    /**
+     * getRootline
+     *
+     * @return array
+     */
+    public function getRootline();
 
+    /**
+     * getPageId
+     *
+     * @return int
+     */
+    public function getPid();
 }

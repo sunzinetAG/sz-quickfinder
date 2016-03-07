@@ -1,8 +1,5 @@
 <f:layout name="Default"/>
 
 <f:for each="{results}" as="result">
-	<li>
-		Uid {result.uid}: {result.name}
-	</li>
+    <f:render partial="Result/title" arguments="{title: result.username}"/>
 </f:for>
-

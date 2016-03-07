@@ -15,9 +15,8 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class Content extends CustomSearch
+class Content extends AbstractSearch
 {
-
     /**
      * header
      *

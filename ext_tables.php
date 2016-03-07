@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('TYPO3_MODE')) {
     die ('Access denied.');
 }
@@ -16,6 +15,8 @@ $boot = function ($extensionKey) {
         'Configuration/TypoScript',
         'Indexed Search Autocomplete'
     );
+
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['addRootLineFields'] .= ', nav_hide';
 };
 
 $boot($_EXTKEY);

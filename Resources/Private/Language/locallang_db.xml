@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3locallang>
-	<meta type="array">
-		<type>database</type>
-		<description>Language labels for database tables/fields belonging to extension 'sz_indexed_search'</description>
-	</meta>
-	<data type="array">
-		<languageKey index="default" type="array">
+    <meta type="array">
+        <type>database</type>
+        <description>Language labels for database tables/fields belonging to extension 'sz_indexed_search'</description>
+    </meta>
+    <data type="array">
+        <languageKey index="default" type="array">
 
-			<label index="tx_szindexedsearch_domain_model_search">Search</label>
+            <label index="tx_szindexedsearch_domain_model_search">Search</label>
 
-		</languageKey>
-	</data>
+        </languageKey>
+    </data>
 </T3locallang>

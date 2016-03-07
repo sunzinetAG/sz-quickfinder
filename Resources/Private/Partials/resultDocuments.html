@@ -1,13 +1,7 @@
-{namespace sz=Sunzinet\SzIndexedSearch\ViewHelpers}
-
 <f:layout name="Default"/>
 
 <f:for each="{results}" as="result">
-	<li>
-		<f:link.page pageUid="{result.pid}">
-			<sz:format.highlight>{result.title}</sz:format.highlight>
-			<span class="result-breadcrumb">{result.breadcrumb}</span>
-		</f:link.page>
-	</li>
+    <f:render partial="Result/title"
+              arguments="{pageUid: result.pid, title: result.title, section: result.uidForeign}"/>
+    <f:render partial="Result/Breadcrumb" arguments="{rootline: result.rootline}"/>
 </f:for>
-

@@ -19,9 +19,10 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  */
 class FilterViewHelper extends AbstractViewHelper
 {
-
     /**
-     * @return string only the word, which includes the given searchstring
+     * returns only the word, which includes the given searchstring
+     *
+     * @return string
      */
     public function render()
     {

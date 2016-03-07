@@ -1,206 +1,184 @@
 plugin.tx_szindexedsearch {
-	view {
-		templateRootPaths {
-			100 = {$plugin.tx_szindexedsearch.view.templateRootPath}
-		}
+    view {
+        templateRootPaths {
+            100 = {$plugin.tx_szindexedsearch.view.templateRootPath}
+        }
 
-		partialRootPaths {
-			100 = {$plugin.tx_szindexedsearch.view.partialRootPath}
-		}
+        partialRootPaths {
+            100 = {$plugin.tx_szindexedsearch.view.partialRootPath}
+        }
 
-		layoutRootPaths {
-			100 = {$plugin.tx_szindexedsearch.view.layoutRootPath}
-		}
-	}
+        layoutRootPaths {
+            100 = {$plugin.tx_szindexedsearch.view.layoutRootPath}
+        }
+    }
 
-	persistence {
-		//diese Seiten werden durchsucht (Kommagetrennt)
-		storagePid = {$plugin.tx_szindexedsearch.persistence.storagePid}
-	}
+    persistence {
+        //diese Seiten werden durchsucht (Kommagetrennt)
+        storagePid = {$plugin.tx_szindexedsearch.persistence.storagePid}
+    }
 
-	features {
-		# uncomment the following line to enable the new Property Mapper.
-		#rewrittenPropertyMapper = 1
-	}
+    features {
+        # uncomment the following line to enable the new Property Mapper.
+        #rewrittenPropertyMapper = 1
+    }
 
-	settings {
-		homePageUid = {$plugin.tx_szindexedsearch.pageIds.homePageUid}
-		searchPid = {$plugin.tx_szindexedsearch.pageIds.searchPid}
-		newsDetailPid = {$plugin.tx_szindexedsearch.pageIds.newsDetailPid}
+    settings {
+        homePageUid = 2
+        searchPid = 140
+        newsPid = 28
 
-		includeNavHiddenPages = 0
+        global {
+            regEx = %|%
+            maxResults = 3
+            includeNavHiddenPages = false
+            orderBy = uid
+            ascending = true
+        }
 
-		reg_search_exp = %|%
-		max_results = 3
-		breadcrumb_seperator = /
+        customSearch {
+            page {
+                class = Sunzinet\SzIndexedSearch\Domain\Model\Page
+                searchFields = title, keywords
+            }
 
-		customEnableFields {
-			file {
-				# commaseperated list of tablefields within the sys_file_reference-table
-				fieldname = media
-			}
-		}
+            news {
+                class = Sunzinet\SzIndexedSearch\Domain\Model\News
+                searchFields = title
+            }
 
-		customSearch {
-			page {
-				model = Sunzinet\SzIndexedSearch\Domain\Model\Page
-				searchFields = title, keywords
-			}
+            #More examples:
+#            documents {
+#                class = Sunzinet\SzIndexedSearch\Domain\Model\File
+#                searchFields = title
+#            }
+#            user {
+#                class = Sunzinet\SzIndexedSearch\Domain\Model\User
+#                searchFields = username
+#            }
+#            content {
+#                class = Sunzinet\SzIndexedSearch\Domain\Model\Content
+#                searchFields = header
+#            }
+#            @Todo
+#            userFunc {
+#                script = /typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
+#                params {
+#                    searchFields = title
+#                }
+#            }
+        }
+    }
 
-			news {
-				model = \GeorgRinger\News\Domain\Model\News
-				searchFields = title
-			}
+    _CSS_DEFAULT_STYLE (
+        .tx-indexedsearch-searchbox-results {
+            display: none;
+            position: absolute;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background: #fff;
+            z-index: 9999;
+            width: 240px;
+            height: auto;
+        }
 
-			#More examples:
-#			documents {
-#				model = Sunzinet\SzIndexedSearch\Domain\Model\File
-#				searchFields = title
-#			}
-#			user {
-#				model = Sunzinet\SzIndexedSearch\Domain\Model\User
-#				searchFields = name
-#			}
-#			content {
-#				model = Sunzinet\SzIndexedSearch\Domain\Model\Content
-#				searchFields = header
-#			}
-#			userFunc {
-#				script = typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
-#				params {
-#					searchFields = title
-#				}
-#			}
-		}
-	}
-
-	_CSS_DEFAULT_STYLE (
-		.tx-indexedsearch-searchbox-results {
-			display: none;
-			position: absolute;
-			padding: 20px;
-			border: 1px solid #ccc;
-			background: #fff;
-			z-index: 9999;
-			width: 240px;
-			height: auto;
-		}
-
-		.tx-indexedsearch-searchbox-results .tx-sz-indexed-search .results-drop > .results {
-			border-top: 1px solid #ccc;
-			padding: 10px 0;
-			margin: 10px 0;
-		}
-
-		.tx-indexedsearch-searchbox-results .tx-sz-indexed-search .results-drop > .results:last-child {
-			border-bottom: 1px solid #ccc;
-			margin-bottom: 25px;
-		}
-
-			.tx-indexedsearch-searchbox-results .results-list .result-breadcrumb {
-			display: block;
-			font-size: 12px;
-		}
-
-		.tx-indexedsearch-searchbox-results .ajax-loader {
-			width: 32px;
-			height: 32px;
-			margin: 40px auto;
-			background: url(/typo3conf/ext/sz_indexed_search/Resources/Public/Icons/ajax-loader.gif);
-		}
-	)
+        .tx-indexedsearch-searchbox-results .ajax-loader {
+            width: 32px;
+            height: 32px;
+            margin: 40px auto;
+            background: url(/typo3conf/ext/sz_indexed_search/Resources/Public/Icons/ajax-loader.gif);
+        }
+    )
 }
 
 config.tx_extbase {
-	persistence {
-		classes {
-			Sunzinet\SzIndexedSearch\Domain\Model\Page {
-				mapping {
-					tableName = pages
-				}
-			}
+    persistence {
+        classes {
+            Sunzinet\SzIndexedSearch\Domain\Model\Page {
+                mapping {
+                    tableName = pages
+                }
+            }
 
-			Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay {
-				mapping {
-					tableName = pages_language_overlay
-				}
-			}
+            Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay {
+                mapping {
+                    tableName = pages_language_overlay
+                }
+            }
 
-			\GeorgRinger\News\Domain\Model\News {
-				mapping {
-					tableName = tx_news_domain_model_news
-				}
-			}
+            Sunzinet\SzIndexedSearch\Domain\Model\News {
+                mapping {
+                    tableName = tx_news_domain_model_news
+                }
+            }
 
-			Sunzinet\SzIndexedSearch\Domain\Model\File {
-				mapping {
-					tableName = sys_file_reference
-				}
-			}
+            Sunzinet\SzIndexedSearch\Domain\Model\File {
+                mapping {
+                    tableName = sys_file_reference
+                }
+            }
 
-			Sunzinet\SzIndexedSearch\Domain\Model\User {
-				mapping {
-					tableName = fe_users
-				}
-			}
+            Sunzinet\SzIndexedSearch\Domain\Model\User {
+                mapping {
+                    tableName = fe_users
+                }
+            }
 
-			Sunzinet\SzIndexedSearch\Domain\Model\Content {
-				mapping {
-					tableName = tt_content
-				}
-			}
-		}
-	}
+            Sunzinet\SzIndexedSearch\Domain\Model\Content {
+                mapping {
+                    tableName = tt_content
+                }
+            }
+        }
+    }
 }
 
 ajaxRequest = PAGE
 ajaxRequest {
-	typeNum = 1402582595
-	config.disableAllHeaderCode = 1
-	10 = USER
-	10 {
-		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-		vendorName = Sunzinet
-		extensionName = SzIndexedSearch
-		pluginName = Pi1
+    typeNum = 1402582595
+    config.disableAllHeaderCode = 1
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        pluginName = Pi1
+        extensionName = SzIndexedSearch
+        vendorName = Sunzinet
+        switchableControllerActions {
+            Search {
+                1 = autocomplete
+                2 = search
+            }
+        }
+    }
 
-		switchableControllerActions {
-			Search {
-				1 = autocomplete
-				2 = search
-			}
-		}
-	}
-
-	view =< plugin.tx_szindexedsearch.view
-	persistence =< plugin.sz_indexed_search.persistence
-	settings =< plugin.sz_indexed_search.settings
+    view =< plugin.tx_szindexedsearch.view
+    persistence =< plugin.sz_indexed_search.persistence
+    settings =< plugin.sz_indexed_search.settings
 }
 
 page {
-	includeJS {
-		sz_indexed_search = EXT:sz_indexed_search/Resources/Public/Js/main.js
-	}
+    includeJS {
+        sz_indexed_search = EXT:sz_indexed_search/Resources/Public/Js/SzIndexedSearch.min.js
+    }
 }
 
 lib.tx_szindexedsearch = COA
 lib.tx_szindexedsearch {
-	10 = USER
-	10 {
-		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-		vendorName = Sunzinet
-		extensionName = SzIndexedSearch
-		pluginName = Pi1
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        pluginName = Pi1
+        extensionName = SzIndexedSearch
+        vendorName = Sunzinet
+        switchableControllerActions {
+            Search {
+                1 = index
+                2 = search
+            }
+        }
 
-		switchableControllerActions {
-			Search {
-				1 = index
-				2 = search
-			}
-		}
-	}
-
-	settings =< plugin.tx_szindexedsearch.settings
-	persistence =< plugin.tx_szindexedsearch.persistence
-	view =< plugin.tx_szindexedsearch.view
+        settings =< plugin.tx_szindexedsearch.settings
+        persistence =< plugin.tx_szindexedsearch.persistence
+        view =< plugin.tx_szindexedsearch.view
+    }
 }

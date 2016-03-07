@@ -14,9 +14,8 @@ namespace Sunzinet\SzIndexedSearch\Domain\Model;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Model
  */
-class Page extends CustomSearch
+class Page extends AbstractSearch
 {
-
     /**
      * title
      *
@@ -53,18 +52,14 @@ class Page extends CustomSearch
     protected $author;
 
     /**
-     * breadcrumb
+     * getPageId Must return the uid in this case
      *
-     * @var string
+     * @return int
      */
-    protected $breadcrumb;
-
-    /**
-     * changeUidToPid
-     *
-     * @var bool
-     */
-    public $changeUidToPid = true;
+    public function getPid()
+    {
+        return (int)$this->uid;
+    }
 
     /**
      * Returns the title
@@ -114,28 +109,5 @@ class Page extends CustomSearch
     public function getAuthor()
     {
         return $this->author;
-    }
-
-    /**
-     * Returns the breadcrumb
-     *
-     * @return string $breadcrumb
-     */
-    public function getBreadcrumb()
-    {
-        return $this->breadcrumb;
-    }
-
-    /**
-     * Sets the breadcrumb
-     *
-     * @param string $breadcrumb
-     * @return Page
-     */
-    public function setBreadcrumb($breadcrumb)
-    {
-        $this->breadcrumb = $breadcrumb;
-
-        return $this;
     }
 }
