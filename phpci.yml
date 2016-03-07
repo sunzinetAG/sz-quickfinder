@@ -7,6 +7,10 @@ setup:
     - "/var/www/vhosts/deployment.sunzinet.com/htdocs/set_build_state.sh %PROJECT% %BUILD% %COMMIT% INPROGRESS %PROJECT_TITLE% %BUILD_URI%"
 
 test:
+  composer:
+    action: "install"
+    prefer_dist: true
+
   PhpLoc:
 
   php_unit:
