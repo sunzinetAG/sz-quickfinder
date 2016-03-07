@@ -30,6 +30,9 @@ test:
     allowed_warnings: -1
 
   php_docblock_checker:
+    path:
+      - "Classes"
+      - "Tests"
 
 success:
   shell:
