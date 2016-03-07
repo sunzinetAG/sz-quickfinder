@@ -1,6 +1,10 @@
 build_settings:
   ignore:
     - "*/ext_emconf.php"
+    - "*/index.php"
+    - "*/typo3"
+    - "*/typo3_src"
+    - "*/vendor"
 
 setup:
   shell:
@@ -19,17 +23,9 @@ test:
     path: "Tests"
 
   php_mess_detector:
-    ignore:
-      - 'vendor'
-      - 'typo3'
-      - 'typo3_src'
     allowed_warnings: -1
 
   php_code_sniffer:
-    ignore:
-      - 'vendor'
-      - 'typo3'
-      - 'typo3_src'
     standard: "PSR2"
     allowed_warnings: -1
 
