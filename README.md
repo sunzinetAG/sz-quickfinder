@@ -159,3 +159,9 @@ Die entfernten Einstellungen können nun in den Templates angepasst werden
 ## Bekannte Probleme:
 
 * Keine Probleme bekannt
+
+## PHPUnit Tests:
+```
+composer install
+./vendor/bin/phpunit -c Tests/phpunit.xml
+```
