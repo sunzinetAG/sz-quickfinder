@@ -7,9 +7,10 @@
 	var timer = null;
 
 	var initAutocomplete = function () {
-		var $searchbox = $('.tx-indexedsearch-searchbox-sword');
+		var $layoutWrapper = $('.tx-sz-indexed-search');
+		var $searchbox = $layoutWrapper.find('.tx-indexedsearch-searchbox-sword');
 		$searchbox.attr('autocomplete', 'off');
-		var container = $('.tx-indexedsearch-searchbox-results');
+		var container =  $layoutWrapper.find('.tx-indexedsearch-searchbox-results');
 		$searchbox.bind('click keyup', function (e) {
 			var $this = jQuery(this);
 			var L = $('body').attr('data-languid');
