@@ -1,0 +1,21 @@
+<phpunit
+	backupGlobals="true"
+	backupStaticAttributes="false"
+	colors="true"
+	bootstrap="bootstrap.php"
+	convertErrorsToExceptions="true"
+	convertWarningsToExceptions="true"
+	forceCoversAnnotation="false"
+	processIsolation="false"
+	stopOnError="false"
+	stopOnFailure="false"
+	stopOnIncomplete="false"
+	stopOnSkipped="false"
+	verbose="false"
+>
+	<testsuites>
+		<testsuite name="Viewhelper tests">
+			<directory>Unit/ViewHelpers</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
