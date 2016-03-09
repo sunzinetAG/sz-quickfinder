@@ -158,7 +158,7 @@ Die entfernten Einstellungen können nun in den Templates angepasst werden
 
 ## Bekannte Probleme:
 
-* Keine Probleme bekannt
+* Auf Detailseiten (z.B. news) wird das Autocomplete nicht korrekt ausgeführt. Workaround: In der LocalConfiguration.php $GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError'] = 0 setzen
 
 ## PHPUnit Tests:
 ```
