@@ -19,7 +19,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class TyposcriptSettings implements TyposcriptSettingsInterface
 {
     /**
-     * model
+     * class
      *
      * @var string $class
      */
