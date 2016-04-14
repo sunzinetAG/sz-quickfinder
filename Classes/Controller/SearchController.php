@@ -82,7 +82,9 @@ class Tx_SzIndexedSearch_Controller_SearchController extends Tx_Extbase_MVC_Cont
 				$results[$sectionName] = $this->searchRepository->customSearch($this->csObj, $this->settings);
 			} else {
 				require_once($this->csObj->getScript());
-				$userFunc = $this->objectManager->get('sz_indexed_search_user_func');
+				$className = basename($this->csObj->getScript());
+				$className = preg_replace('/\\.[^.\\s]{3,4}$/', '', $className);
+				$userFunc = $this->objectManager->get($className);
 				$results[$sectionName] = $userFunc->main($this->settings, $customSearch['params']);
 			}
 		}
