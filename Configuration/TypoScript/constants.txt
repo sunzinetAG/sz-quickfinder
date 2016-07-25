@@ -13,4 +13,11 @@ plugin.tx_szindexedsearch {
         //diese Seiten werden durchsucht (Kommagetrennt)
         storagePid = 1, 4
     }
+    settings {
+        pageIds {
+            homePageUid = 2
+            searchPid = 140
+            newsPid = 28
+        }
+    }
 }
