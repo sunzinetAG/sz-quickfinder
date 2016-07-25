@@ -10,7 +10,7 @@ Nachfolgend eine Auflistung aller sz_indexed_search Versionen und eine grobe Bes
 
 ## [**2.2.2**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F2.2.2) - 2015-09-18
 
-* 
+* Tests
 
 ## [**2.2.1**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F2.2.1) - 2015-04-22
 

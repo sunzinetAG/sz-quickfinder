@@ -7,7 +7,7 @@
     <data type="array">
         <languageKey index="default" type="array">
 
-            <label index="tx_szindexedsearch_domain_model_search">Search</label>
+            <label index="search">Search</label>
 
         </languageKey>
     </data>
