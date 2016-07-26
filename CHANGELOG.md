@@ -1,8 +1,14 @@
 # Change Log
 
-Die aktuelle Version ist: [**3.0.0**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F3.0.0) 
+Die aktuelle Version ist: [**3.0.1**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F3.0.1) 
 
 Nachfolgend eine Auflistung aller sz_indexed_search Versionen und eine grobe Beschreibung der Änderungen. Die letzte Version steht hierbei immer ganz oben.
+
+## [**3.0.1**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F3.0.1) - 2016-07-26
+
+* Eigene Scripts werden nun wieder unterstützt
+* Überflüssigen Code entfernt
+* Ajax URL war in manchen Umgebungen falsch angegeben
 
 ## [**3.0.0**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F3.0.0) - 2016-03-07
 
