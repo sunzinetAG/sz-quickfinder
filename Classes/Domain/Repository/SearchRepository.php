@@ -27,7 +27,8 @@ namespace Sunzinet\SzIndexedSearch\Domain\Repository;
 use Sunzinet\SzIndexedSearch\Domain\Model\File;
 use Sunzinet\SzIndexedSearch\Domain\Model\Page;
 use Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay;
-use Sunzinet\SzIndexedSearch\Settings\TyposcriptSettings;
+use Sunzinet\SzIndexedSearch\SearchInterface;
+use Sunzinet\SzIndexedSearch\Settings\TyposcriptSettingsInterface;
 use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
@@ -38,7 +39,7 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
  *
  * @package Sunzinet\SzIndexedSearch\Domain\Repository
  */
-class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository implements SearchInterface
 {
     /**
      * Type of the Model
@@ -76,7 +77,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * TypoScript settings
      *
-     * @var TyposcriptSettings $settings
+     * @var TyposcriptSettingsInterface $settings
      */
     protected $settings;
 
@@ -128,10 +129,10 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
     /**
      * prepareCustomSearch
      *
-     * @param TyposcriptSettings $settings
+     * @param TyposcriptSettingsInterface $settings
      * @return void
      */
-    public function prepareCustomSearch(TyposcriptSettings $settings)
+    public function injectSettings(TyposcriptSettingsInterface $settings)
     {
         $this->settings = $settings;
         $this->setClassName($this->settings->getClass());
