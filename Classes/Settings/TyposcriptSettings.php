@@ -75,6 +75,20 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
     protected $ascending = true;
 
     /**
+     * script
+     *
+     * @var string $script
+     */
+    protected $script = '';
+
+    /**
+     * params
+     *
+     * @var array $params
+     */
+    protected $params = [];
+
+    /**
      * TyposcriptSettings constructor.
      *
      * @param array $settings
@@ -271,13 +285,49 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getScript()
+    {
+        return $this->script;
+    }
+
+    /**
+     * @param string $script
+     * @return $this
+     */
+    public function setScript($script)
+    {
+        $this->script = $script;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParams()
+    {
+        return $this->params;
+    }
+
+    /**
+     * @param array $params
+     * @return $this
+     */
+    public function setParams($params)
+    {
+        $this->params = $params;
+
+        return $this;
+    }
 
     /**
      * setProperty
      *
      * @param string $propertyName
      * @param mixed $value
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\BadMethodCallException
      * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
      * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
      * @return void
@@ -286,7 +336,7 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
     {
         if (!$this->hasProperty($propertyName)) {
             throw new \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException(
-                'Property ' . $propertyName . ' does not Exist.',
+                'Property ' . $propertyName . ' does not Exist in ' . __CLASS__,
                 1442413257
             );
         }
@@ -294,12 +344,12 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
         $value = self::convert(gettype($this->{$propertyName}), $value);
         if (!method_exists($this, $method)) {
             throw new \BadMethodCallException(
-                'Method ' . $method . ' does not Exist.',
+                'Method ' . $method . ' does not Exist in ' . __CLASS__,
                 1456819227
             );
         }
 
-        call_user_func([$this, 'set' . ucfirst($propertyName)], $value);
+        call_user_func([$this, $method], $value);
     }
 
     /**
@@ -331,10 +381,13 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
             case 'boolean':
                 return filter_var($var, FILTER_VALIDATE_BOOLEAN);
             case 'array':
+                if (is_array($var)) {
+                    return $var;
+                }
                 return array_map('trim', explode(',', $var));
             default:
                 throw new \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException(
-                    'Unsupportet type',
+                    'Unsupported type',
                     1442418939
                 );
         }

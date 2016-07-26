@@ -24,6 +24,7 @@ namespace Sunzinet\SzIndexedSearch\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Sunzinet\SzIndexedSearch\SearchInterface;
 use Sunzinet\SzIndexedSearch\Settings\TyposcriptSettings;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -72,10 +73,24 @@ class SearchController extends ActionController
             );
             $settings->setProperty('searchString', $searchString);
 
-            $this->searchRepository->prepareCustomSearch($settings);
-            $results[$sectionName] = $this->searchRepository->executeCustomSearch();
+            /** @var SearchInterface $search */
+            $search = $this->searchRepository;
 
-            $this->searchRepository->reset();
+            if ($settings->getScript()) {
+                $search = $this->objectManager->get($settings->getScript());
+            }
+
+            if (!($search instanceof SearchInterface)) {
+                throw new \UnexpectedValueException(
+                    get_class($search) . ' must implement interface ' . SearchInterface::class,
+                    1469445839
+                );
+            }
+
+            $search->injectSettings($settings);
+            $results[$sectionName] = $search->executeCustomSearch();
+
+            $search->reset();
         }
 
         $this->view->assign('searchString', $searchString);

@@ -66,6 +66,20 @@ interface TyposcriptSettingsInterface
     public function getOrderBy();
 
     /**
+     * getScript
+     *
+     * @return string
+     */
+    public function getScript();
+
+    /**
+     * getParams
+     *
+     * @return array
+     */
+    public function getParams();
+
+    /**
      * setProperty
      *
      * @param string $propertyName
