@@ -50,7 +50,8 @@ plugin.tx_szindexedsearch {
             #More examples:
 #            documents {
 #                class = Sunzinet\SzIndexedSearch\Domain\Model\File
-#                searchFields = title
+#                searchFields = title, description
+#                allowedFieldnames = media, fal_media
 #            }
 #            user {
 #                class = Sunzinet\SzIndexedSearch\Domain\Model\User
