@@ -52,6 +52,13 @@ interface TyposcriptSettingsInterface
     public function getSearchfields();
 
     /**
+     * getAllowedFieldnames
+     *
+     * @return string
+     */
+    public function getAllowedFieldnames();
+
+    /**
      * getSearchString
      *
      * @return string

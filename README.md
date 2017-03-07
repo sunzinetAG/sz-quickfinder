@@ -73,6 +73,7 @@ page {
 ## Bekannte Probleme:
 
 * Auf Detailseiten (z.B. news) wird das Autocomplete nicht korrekt ausgeführt. Workaround: In der LocalConfiguration.php $GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError'] = 0 setzen
+* Es werden bei der Eingabe relativ viele Datenbankabfragen gestartet. Dies kann durch Caching verhindert werden.
 
 ## PHPUnit Tests:
 ```

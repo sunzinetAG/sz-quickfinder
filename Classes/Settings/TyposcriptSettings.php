@@ -54,6 +54,13 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
     protected $searchFields = ['title'];
 
     /**
+     * allowedFieldnames needed for document search
+     *
+     * @var array $allowedFieldnames
+     */
+    protected $allowedFieldnames = ['media'];
+
+    /**
      * searchString
      *
      * @var SanitizeUtility $searchString
@@ -212,6 +219,29 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
     public function setSearchFields($searchFields)
     {
         $this->searchFields = $searchFields;
+
+        return $this;
+    }
+
+    /**
+     * getAllowedFieldnames
+     *
+     * @return array
+     */
+    public function getAllowedFieldnames()
+    {
+        return $this->allowedFieldnames;
+    }
+
+    /**
+     * setSearchFields
+     *
+     * @param [] $searchFields
+     * @return $this
+     */
+    public function setAllowedFieldnames($allowedFieldnames)
+    {
+        $this->allowedFieldnames = $allowedFieldnames;
 
         return $this;
     }

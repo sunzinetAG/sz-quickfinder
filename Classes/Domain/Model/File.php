@@ -38,6 +38,21 @@ class File extends AbstractSearch
     protected $uidForeign;
 
     /**
+     * tablenames
+     *
+     * @var string
+     */
+    protected $tablenames;
+
+    /**
+     * fieldname
+     *
+     * @var string
+     */
+    protected $fieldname;
+
+
+    /**
      * Returns the title
      *
      * @return string $title
@@ -65,5 +80,37 @@ class File extends AbstractSearch
     public function getUidForeign()
     {
         return $this->uidForeign;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTablenames()
+    {
+        return $this->tablenames;
+    }
+
+    /**
+     * @param string $tablenames
+     */
+    public function setTablenames($tablenames)
+    {
+        $this->tablenames = $tablenames;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFieldname()
+    {
+        return $this->fieldname;
+    }
+
+    /**
+     * @param string $fieldname
+     */
+    public function setFieldname($fieldname)
+    {
+        $this->fieldname = $fieldname;
     }
 }
