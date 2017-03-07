@@ -184,7 +184,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
                 array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
                 break;
             case File::class:
-                array_push($this->logicalAnd, $this->query->equals('fieldname', 'media'));
+                array_push($this->logicalAnd, $this->query->in('fieldname', $this->settings->getAllowedFieldnames()));
                 break;
             default:
         }
