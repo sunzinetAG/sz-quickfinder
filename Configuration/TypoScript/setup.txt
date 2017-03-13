@@ -1,32 +1,27 @@
 plugin.tx_szindexedsearch {
     view {
         templateRootPaths {
-            100 = {$plugin.tx_szindexedsearch.view.templateRootPath}
+            100 = EXT:sz_indexed_search/Resources/Private/Templates/
         }
-
         partialRootPaths {
-            100 = {$plugin.tx_szindexedsearch.view.partialRootPath}
+            100 = EXT:sz_indexed_search/Resources/Private/Partials/
         }
-
         layoutRootPaths {
-            100 = {$plugin.tx_szindexedsearch.view.layoutRootPath}
+            100 = EXT:sz_indexed_search/Resources/Private/Layouts/
         }
     }
-
     persistence {
         //diese Seiten werden durchsucht (Kommagetrennt)
-        storagePid = {$plugin.tx_szindexedsearch.persistence.storagePid}
+        storagePid = 1, 4
     }
-
     features {
         # uncomment the following line to enable the new Property Mapper.
         #rewrittenPropertyMapper = 1
     }
-
     settings {
-        homePageUid = {$plugin.tx_szindexedsearch.settings.pageIds.homePageUid}
-        searchPid = {$plugin.tx_szindexedsearch.settings.pageIds.searchPid}
-        newsPid = {$plugin.tx_szindexedsearch.settings.pageIds.newsPid}
+        homePageUid = 2
+        searchPid = 140
+        newsPid = 28
 
         global {
             regEx = %|%
@@ -41,12 +36,10 @@ plugin.tx_szindexedsearch {
                 class = Sunzinet\SzIndexedSearch\Domain\Model\Page
                 searchFields = title, keywords
             }
-
             news {
                 class = Sunzinet\SzIndexedSearch\Domain\Model\News
                 searchFields = title
             }
-
             #More examples:
 #            documents {
 #                class = Sunzinet\SzIndexedSearch\Domain\Model\File
@@ -100,31 +93,26 @@ config.tx_extbase {
                     tableName = pages
                 }
             }
-
             Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay {
                 mapping {
                     tableName = pages_language_overlay
                 }
             }
-
             Sunzinet\SzIndexedSearch\Domain\Model\News {
                 mapping {
                     tableName = tx_news_domain_model_news
                 }
             }
-
             Sunzinet\SzIndexedSearch\Domain\Model\File {
                 mapping {
                     tableName = sys_file_reference
                 }
             }
-
             Sunzinet\SzIndexedSearch\Domain\Model\User {
                 mapping {
                     tableName = fe_users
                 }
             }
-
             Sunzinet\SzIndexedSearch\Domain\Model\Content {
                 mapping {
                     tableName = tt_content
@@ -138,6 +126,7 @@ ajaxRequest = PAGE
 ajaxRequest {
     typeNum = 1402582595
     config.disableAllHeaderCode = 1
+
     10 = USER
     10 {
         userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
