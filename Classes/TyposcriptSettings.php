@@ -1,20 +1,11 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Settings;
-
-    /**
-     * Description of the interface 'TyposcriptSettingsInterface.php'
-     *
-     * @author Dennis Römmich <dennis@roemmich.eu>
-     * @copyright Copyright belongs to the respective authors
-     * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
-     */
+namespace Sunzinet\SzQuickfinder;
 
 /**
- * Interface TyposcriptSettingsInterface
- *
- * @package Sunzinet\SzIndexedSearch\Provider
+ * Interface TyposcriptSettings
+ * @package Sunzinet\SzQuickfinder
  */
-interface TyposcriptSettingsInterface
+interface TyposcriptSettings
 {
     /**
      * getClass
@@ -85,6 +76,11 @@ interface TyposcriptSettingsInterface
      * @return array
      */
     public function getParams();
+
+    /**
+     * @return boolean
+     */
+    public function getAscending();
 
     /**
      * setProperty

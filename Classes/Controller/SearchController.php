@@ -1,44 +1,23 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Controller;
+namespace Sunzinet\SzQuickfinder\Controller;
 
-/***************************************************************
- *  Copyright notice
- *
- *  (c) 2015 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-use Sunzinet\SzIndexedSearch\SearchInterface;
-use Sunzinet\SzIndexedSearch\Settings\TyposcriptSettings;
+use Sunzinet\SzQuickfinder\Search;
+use Sunzinet\SzQuickfinder\Searchable;
+use Sunzinet\SzQuickfinder\SearchResult;
+use Sunzinet\SzQuickfinder\Settings\TyposcriptSettings;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * Class SearchController
  *
- * @package Sunzinet\SzIndexedSearch\Controller
+ * @package Sunzinet\SzQuickfinder\Controller
  */
 class SearchController extends ActionController
 {
     /**
      * searchRepository
      *
-     * @var \Sunzinet\SzIndexedSearch\Domain\Repository\SearchRepository
+     * @var \Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository
      * @inject
      */
     protected $searchRepository;
@@ -66,6 +45,13 @@ class SearchController extends ActionController
         $results = [];
 
         foreach ($customSearchArray as $sectionName => $customSearch) {
+            $search = $this->objectManager->get($customSearch['class']);
+            if (!($search instanceof SearchResult)) {
+                throw new \UnexpectedValueException(
+                    get_class($search) . ' must implement interface ' . SearchResult::class,
+                    1497260885905
+                );
+            }
             /** @var TyposcriptSettings $settings */
             $settings = $this->objectManager->get(
                 TyposcriptSettings::class,
@@ -73,28 +59,50 @@ class SearchController extends ActionController
             );
             $settings->setProperty('searchString', $searchString);
 
-            /** @var SearchInterface $search */
-            $search = $this->searchRepository;
+            $search->injectSettings($settings);
+            $repository = $this->getRepository($customSearch);
 
-            if ($settings->getScript()) {
-                $search = $this->objectManager->get($settings->getScript());
-            }
-
-            if (!($search instanceof SearchInterface)) {
+            if (!($search instanceof Search)) {
                 throw new \UnexpectedValueException(
-                    get_class($search) . ' must implement interface ' . SearchInterface::class,
+                    get_class($repository) . ' must implement interface ' . Search::class,
                     1469445839
                 );
             }
 
-            $search->injectSettings($settings);
-            $results[$sectionName] = $search->executeCustomSearch();
-
-            $search->reset();
+            $repository->initClass($search);
+            $results[$sectionName] = $repository->executeCustomSearch();
+            $repository->reset();
         }
 
         $this->view->assign('searchString', $searchString);
         $this->view->assign('results', $results);
+    }
+
+    /**
+     * @param array $customSearch
+     * @return Searchable
+     */
+    protected function getRepository($customSearch)
+    {
+        /** @var Searchable $repository */
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder'][$customSearch['class']]['repository'])) {
+            $repository = $this->objectManager->get(
+                $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder'][$customSearch['class']]['repository']
+            );
+        } else {
+            $repository = $this->objectManager->get(
+                $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder']['default']['repository']
+            );
+        }
+
+        if (!($repository instanceof Searchable)) {
+            throw new \UnexpectedValueException(
+                get_class($repository) . ' must implement interface ' . Searchable::class,
+                1469445839
+            );
+        }
+
+        return $repository;
     }
 
     /**

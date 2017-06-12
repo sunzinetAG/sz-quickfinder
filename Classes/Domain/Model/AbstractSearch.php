@@ -1,37 +1,37 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Domain\Model;
+namespace Sunzinet\SzQuickfinder\Domain\Model;
 
-/***************************************************************
- *  Copyright notice
- *
- *  (c) 2014 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+use Sunzinet\SzQuickfinder\Search;
+use Sunzinet\SzQuickfinder\SearchResult as SearchResultInterface;
+use Sunzinet\SzQuickfinder\TyposcriptSettings;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 /**
  * Class CustomSearch
- *
- * @package Sunzinet\SzIndexedSearch\Domain\Model
+ * @package Sunzinet\SzQuickfinder\Domain\Model
  */
-abstract class AbstractSearch extends AbstractEntity implements SearchResultInterface
+abstract class AbstractSearch extends AbstractEntity implements SearchResultInterface, Search
 {
     use SearchResult;
+
+    /**
+     * @var TyposcriptSettings $settings
+     */
+    protected $settings;
+
+    /**
+     * @param TyposcriptSettings $settings
+     */
+    public function injectSettings(TyposcriptSettings $settings)
+    {
+        $this->settings = $settings;
+    }
+
+    /**
+     * @return TyposcriptSettings
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
 }

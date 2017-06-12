@@ -1,7 +1,6 @@
 <f:layout name="Default"/>
 
 <f:for each="{results}" as="result">
-    <f:render partial="Result/title"
-              arguments="{pageUid: result.pid, title: result.title, section: result.uidForeign}"/>
+    <f:render partial="Result/Title" arguments="{pageUid: result.pid, title: result.title, section: result.uidForeign}"/>
     <f:render partial="Result/Breadcrumb" arguments="{rootline: result.rootline}"/>
 </f:for>

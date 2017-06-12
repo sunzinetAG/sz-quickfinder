@@ -1,21 +1,22 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Domain\Model;
-
-/**
- * Description of the phpfile 'User.php'
- *
- * @author Dennis Römmich <dennis@roemmich.eu>
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- */
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 /**
  * Class User
- *
- * @package Sunzinet\SzIndexedSearch\Domain\Model
+ * @package Sunzinet\SzQuickfinder\Domain\Model
  */
-class User extends FrontendUser
+class User extends AbstractSearch
 {
-    use SearchResult;
+    /**
+     * @var string $username
+     */
+    protected $username;
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
 }

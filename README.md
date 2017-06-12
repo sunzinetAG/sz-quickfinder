@@ -1,35 +1,17 @@
-# Dokumentation - sz_indexed_search
+# Documentation - sz_quickfinder
 
 ## Installation
 
-1. Extension installieren und Datenbank updaten
+1. Extension installieren
 2. Typoscript einbinden
 3. Extension einem Marker zuweisen und im Template einbinden. Beispiel:
 
 ```PHP
-//typo3conf/ext/typo3sz_assets/Configuration/TypoScript/Default/Setup/contents/elements.ts
+example.ts:
 lib.contents {
-  pageSearch =< lib.tx_szindexedsearch
+  pageSearch =< lib.tx_szquickfinder
 }
 ```
-
-## Einschränkungen
-
-### Abhängigkeiten:
-
-Folgende Extensions müssen installiert sein, damit sz_indexed_search fehlerfrei funktioniert:
-
-* extbase v1.3
-* fluid v1.3
-* typo3 v6.2
-
-### Konflikte:
-
-* Keine Konflikte bekannt
-
-### Empfohlen:
-
-* Keine besonderen Voraussetzungen
 
 ## Einstellungen:
 
@@ -50,7 +32,7 @@ Alle Einstellungen können pro 'customSearch' überschrieben werden.
 
 ## Wichtiger Hinweis:
 
-Damit die Mehrsprachigkeit funktioniert, muss im TypoScript dem Body-Tag ein data-Attribut "data-languid" hinzugefügt werden, das die sys_language_uid beinhaltet: Beispiel aus typo3sz:
+Damit die Mehrsprachigkeit funktioniert, muss im TypoScript dem Body-Tag ein data-Attribut "data-languid" hinzugefügt werden, das die sys_language_uid beinhaltet: Beispiel:
 
 ```PHP
 page {
@@ -73,7 +55,6 @@ page {
 ## Bekannte Probleme:
 
 * Auf Detailseiten (z.B. news) wird das Autocomplete nicht korrekt ausgeführt. Workaround: In der LocalConfiguration.php $GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError'] = 0 setzen
-* Es werden bei der Eingabe relativ viele Datenbankabfragen gestartet. Dies kann durch Caching verhindert werden.
 
 ## PHPUnit Tests:
 ```

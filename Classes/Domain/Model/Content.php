@@ -1,40 +1,26 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Domain\Model;
-
-    /**
-     * Description of the phpfile 'User.php'
-     *
-     * @author Dennis Römmich <dennis@roemmich.eu>
-     * @copyright Copyright belongs to the respective authors
-     * @license http://www.gnu.org/licenses/gpl.html
-     * GNU General Public License, version 3 or later
-     */
+namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 /**
  * Class Content
- *
- * @package Sunzinet\SzIndexedSearch\Domain\Model
+ * @package Sunzinet\SzQuickfinder\Domain\Model
  */
 class Content extends AbstractSearch
 {
+    use SearchResult;
+
     /**
-     * header
-     *
-     * @var string
+     * @var string $header
      */
     protected $header;
 
     /**
-     * bodytext
-     *
-     * @var string
+     * @var string $bodytext
      */
     protected $bodytext;
 
     /**
-     * subheader
-     *
-     * @var string
+     * @var string $subheader
      */
     protected $subheader;
 

@@ -1,34 +1,12 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Domain\Repository;
+namespace Sunzinet\SzQuickfinder\Domain\Repository;
 
-/***************************************************************
- *  Copyright notice
- *
- *  (c) 2014 Dennis Römmich <dennis.roemmich@sunzinet.com>, sunzinet AG
- *
- *  All rights reserved
- *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
- *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
-use Sunzinet\SzIndexedSearch\Domain\Model\File;
-use Sunzinet\SzIndexedSearch\Domain\Model\Page;
-use Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay;
-use Sunzinet\SzIndexedSearch\SearchInterface;
-use Sunzinet\SzIndexedSearch\Settings\TyposcriptSettingsInterface;
+use Sunzinet\SzQuickfinder\Domain\Model\File;
+use Sunzinet\SzQuickfinder\Domain\Model\Page;
+use Sunzinet\SzQuickfinder\Domain\Model\PageLanguageOverlay;
+use Sunzinet\SzQuickfinder\Search;
+use Sunzinet\SzQuickfinder\Searchable;
+use Sunzinet\SzQuickfinder\Settings\TyposcriptSettings;
 use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
@@ -36,10 +14,9 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Class SearchRepository
- *
- * @package Sunzinet\SzIndexedSearch\Domain\Repository
+ * @package Sunzinet\SzQuickfinder\Domain\Repository
  */
-class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository implements SearchInterface
+class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository implements Searchable
 {
     /**
      * Type of the Model
@@ -47,6 +24,11 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
      * @var string
      */
     public $className;
+
+    /**
+     * @var Search $class
+     */
+    protected $class;
 
     /**
      * logicalAnd
@@ -75,13 +57,6 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     protected $query;
 
     /**
-     * TypoScript settings
-     *
-     * @var TyposcriptSettingsInterface $settings
-     */
-    protected $settings;
-
-    /**
      * objectManager
      *
      * @var \TYPO3\CMS\Extbase\Object\ObjectManager
@@ -92,15 +67,16 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     /**
      * Sets the type of the Model
      *
-     * @param string $className
+     * @param Search $class
      * @return void
      */
-    protected function setClassName($className)
+    public function initClass(Search $class)
     {
-        if ($className === Page::class and intval(GeneralUtility::_GP('L')) !== 0) {
+        $this->class = $class;
+        if ($class->getSettings()->getClass() === Page::class and intval(GeneralUtility::_GP('L')) !== 0) {
             $this->className = PageLanguageOverlay::class;
         } else {
-            $this->className = $className;
+            $this->className = $class->getSettings()->getClass();
         }
     }
 
@@ -113,10 +89,10 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     protected function setQuerySettings()
     {
         $defaultOrdering = QueryInterface::ORDER_ASCENDING;
-        if ($this->settings->getAscending() === false) {
+        if ($this->class->getSettings()->getAscending() === false) {
             $defaultOrdering = QueryInterface::ORDER_DESCENDING;
         }
-        $this->query->setOrderings([$this->settings->getOrderBy() => $defaultOrdering]);
+        $this->query->setOrderings([$this->class->getSettings()->getOrderBy() => $defaultOrdering]);
         $this->query->getQuerySettings();
 
         // @Todo: Language not working correctly yet
@@ -129,13 +105,10 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     /**
      * prepareCustomSearch
      *
-     * @param TyposcriptSettingsInterface $settings
      * @return void
      */
-    public function injectSettings(TyposcriptSettingsInterface $settings)
+    public function initSettings()
     {
-        $this->settings = $settings;
-        $this->setClassName($this->settings->getClass());
         $this->query = $this->persistenceManager->createQueryForType($this->className);
 
         $this->setQuerySettings();
@@ -149,7 +122,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
             )
         );
 
-        $this->query->setLimit($settings->getMaxResults());
+        $this->query->setLimit($this->class->getSettings()->getMaxResults());
     }
 
     /**
@@ -159,6 +132,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
      */
     public function executeCustomSearch()
     {
+        $this->initSettings();
         $results = $this->query->execute();
 
         return $results;
@@ -174,17 +148,20 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     {
         switch ($this->className) {
             case Page::class:
-                if ($this->settings->getIncludeNavHiddenPages() === false) {
+                if ($this->class->getSettings()->getIncludeNavHiddenPages() === false) {
                     array_push(
                         $this->logicalAnd,
-                        $this->query->equals('nav_hide', $this->settings->getIncludeNavHiddenPages())
+                        $this->query->equals('nav_hide', $this->class->getSettings()->getIncludeNavHiddenPages())
                     );
                 }
                 array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 254)));
                 array_push($this->logicalAnd, $this->query->logicalNot($this->query->equals('doktype', 4)));
                 break;
             case File::class:
-                array_push($this->logicalAnd, $this->query->in('fieldname', $this->settings->getAllowedFieldnames()));
+                array_push(
+                    $this->logicalAnd,
+                    $this->query->in('fieldname', $this->class->getSettings()->getAllowedFieldnames())
+                );
                 break;
             default:
         }
@@ -234,16 +211,16 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
      */
     private function setSearchFields()
     {
-        if (!($this->settings->getSearchString()->sanitized())) {
+        if (!($this->class->getSettings()->getSearchString()->sanitized())) {
             throw new \TYPO3\CMS\Extbase\Security\Exception(
                 'SearchString must be sanitized before passing to the query!!',
                 1456218496
             );
         }
 
-        $searchString = $this->resolveSearchstring($this->settings->getSearchString());
+        $searchString = $this->resolveSearchstring($this->class->getSettings()->getSearchString());
 
-        foreach ($this->settings->getSearchFields() as $propertyName) {
+        foreach ($this->class->getSettings()->getSearchFields() as $propertyName) {
             $this->constraints[] = $this->query->like(
                 $propertyName,
                 $searchString
@@ -259,7 +236,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
      */
     protected function resolveSearchstring($searchString)
     {
-        return str_replace('|', $searchString, $this->settings->getRegEx());
+        return str_replace('|', $searchString, $this->class->getSettings()->getRegEx());
     }
 
     /**

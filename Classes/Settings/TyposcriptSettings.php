@@ -1,22 +1,14 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Settings;
+namespace Sunzinet\SzQuickfinder\Settings;
 
-/**
- * Description of the class 'TyposcriptSettings.php'
- *
- * @author Dennis Römmich <dennis@roemmich.eu>
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- */
-use Sunzinet\SzIndexedSearch\Utility\SanitizeUtility;
+use Sunzinet\SzQuickfinder\Utility\SanitizeUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class TyposcriptSettings
- *
- * @package Sunzinet\SzIndexedSearch\Settings
+ * @package Sunzinet\SzQuickfinder\Settings
  */
-class TyposcriptSettings implements TyposcriptSettingsInterface
+class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
 {
     /**
      * class
@@ -421,6 +413,5 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
                     1442418939
                 );
         }
-
     }
 }

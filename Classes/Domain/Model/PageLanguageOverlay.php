@@ -1,29 +1,139 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Domain\Model;
-
-    /**
-     * Description of the phpfile 'Pages.php'
-     *
-     * @author Dennis Römmich <dennis@roemmich.eu>
-     * @copyright Copyright belongs to the respective authors
-     * @license http://www.gnu.org/licenses/gpl.html
-     * GNU General Public License, version 3 or later
-     */
+namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 /**
  * Class PageLanguageOverlay
- *
- * @package Sunzinet\SzIndexedSearch\Domain\Model
+ * @package Sunzinet\SzQuickfinder\Domain\Model
  */
-class PageLanguageOverlay extends Page
+class PageLanguageOverlay extends AbstractSearch
 {
     /**
-     * getPageId
+     * title
      *
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * url
+     *
+     * @var string
+     */
+    protected $url;
+
+    /**
+     * subtitle
+     *
+     * @var string
+     */
+    protected $subtitle;
+
+    /**
+     * keywords
+     *
+     * @var string
+     */
+    protected $keywords;
+
+    /**
+     * author
+     *
+     * @var string
+     */
+    protected $author;
+
+    /**
+     * changeUidToPid
+     *
+     * @var bool
+     */
+    public $changeUidToPid = false;
+
+    /**
+     * breadcrumb
+     *
+     * @var string
+     */
+    protected $breadcrumb;
+
+    /**
+     * Returns the title
+     *
+     * @return string $title
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * @return int
      */
-    public function getPid()
+    public function getUid()
     {
-        return (int)$this->pid;
+        return $this->pid;
+    }
+
+    /**
+     * Returns the url
+     *
+     * @return string $url
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Returns the subtitle
+     *
+     * @return string $subtitle
+     */
+    public function getSubtitle()
+    {
+        return $this->subtitle;
+    }
+
+    /**
+     * Returns the keywords
+     *
+     * @return string $keywords
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
+     * Returns the author
+     *
+     * @return string $author
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * Returns the breadcrumb
+     *
+     * @return string $breadcrumb
+     */
+    public function getBreadcrumb()
+    {
+        return $this->breadcrumb;
+    }
+
+    /**
+     * Sets the breadcrumb
+     *
+     * @param string $breadcrumb
+     * @return PageLanguageOverlay
+     */
+    public function setBreadcrumb($breadcrumb)
+    {
+        $this->breadcrumb = $breadcrumb;
+
+        return $this;
     }
 }

@@ -1,21 +1,12 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\ViewHelpers\Format;
+namespace Sunzinet\SzQuickfinder\ViewHelpers\Format;
 
-/**
- * Description of the class 'HighlightViewHelper.php'
- *
- * @author Dennis Römmich <dennis@roemmich.eu>
- * @copyright Copyright belongs to the respective authors
- * @license http://www.gnu.org/licenses/gpl.html
- * GNU General Public License, version 3 or later
- */
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Class HighlightViewHelper
- *
- * @package Sunzinet\ViewHelpers\Format
+ * @package Sunzinet\SzQuickfinder\ViewHelpers\Format
  */
 class HighlightViewHelper extends AbstractViewHelper
 {
@@ -33,7 +24,7 @@ class HighlightViewHelper extends AbstractViewHelper
      */
     public function initialize()
     {
-        $searchStringArr = GeneralUtility::_GP('tx_szindexedsearch_pi1');
+        $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_pi1');
         $this->setSearchString(urldecode($searchStringArr['searchString']));
     }
 

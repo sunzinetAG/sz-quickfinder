@@ -1,53 +1,34 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Domain\Model;
-
-    /**
-     * Description of the phpfile 'Pages.php'
-     *
-     * @author Dennis Römmich <dennis@roemmich.eu>
-     * @copyright Copyright belongs to the respective authors
-     * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
-     */
+namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 /**
  * Class File
- *
- * @package Sunzinet\SzIndexedSearch\Domain\Model
+ * @package Sunzinet\SzQuickfinder\Domain\Model
  */
 class File extends AbstractSearch
 {
     /**
-     * title
-     *
-     * @var string
+     * @var string $title
      */
     protected $title;
 
     /**
-     * description
-     *
-     * @var string
+     * @var string $description
      */
     protected $description;
 
     /**
-     * uidForeign
-     *
-     * @var int
+     * @var int $uidForeign
      */
     protected $uidForeign;
 
     /**
-     * tablenames
-     *
-     * @var string
+     * @var string $tablenames
      */
     protected $tablenames;
 
     /**
-     * fieldname
-     *
-     * @var string
+     * @var string $fieldname
      */
     protected $fieldname;
 

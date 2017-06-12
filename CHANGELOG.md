@@ -1,8 +1,20 @@
 # Change Log
 
-Die aktuelle Version ist: [**3.0.1**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F3.0.1) 
+Die aktuelle Version ist: [**4.0.0**](https://github.com/sunzinetAG/sz_quickfinder/tree/4.0.0) 
 
-Nachfolgend eine Auflistung aller sz_indexed_search Versionen und eine grobe Beschreibung der Änderungen. Die letzte Version steht hierbei immer ganz oben.
+Nachfolgend eine Auflistung aller sz_quicksearch Versionen und eine grobe Beschreibung der Änderungen. Die letzte Version steht hierbei immer ganz oben.
+
+## [**4.0.0**](https://github.com/sunzinetAG/sz_quickfinder/tree/4.0.0) - 2017-06-12
+
+* Rename sz_indexed_search to sz_quickfinder
+* Move from internel Repository to github
+* Qodestyle
+* Several code improvements
+* New possibility to write own quicksearch provider
+
+## [**3.1.0**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F3.1.0) - 2017-03-07
+
+* Add the possibility to set the allowedFields by the typoscript-setup
 
 ## [**3.0.1**](http://stash.sunzinet.com:7990/projects/SZT3/repos/sz_indexed_search/browse?at=refs%2Ftags%2F3.0.1) - 2016-07-26
 

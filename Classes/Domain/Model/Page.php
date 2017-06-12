@@ -1,18 +1,9 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Domain\Model;
-
-    /**
-     * Description of the phpfile 'Pages.php'
-     *
-     * @author Dennis Römmich <dennis@roemmich.eu>
-     * @copyright Copyright belongs to the respective authors
-     * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
-     */
+namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 /**
  * Class Page
- *
- * @package Sunzinet\SzIndexedSearch\Domain\Model
+ * @package Sunzinet\SzQuickfinder\Domain\Model
  */
 class Page extends AbstractSearch
 {
@@ -52,14 +43,18 @@ class Page extends AbstractSearch
     protected $author;
 
     /**
-     * getPageId Must return the uid in this case
+     * breadcrumb
      *
-     * @return int
+     * @var string
      */
-    public function getPid()
-    {
-        return (int)$this->uid;
-    }
+    protected $breadcrumb;
+
+    /**
+     * changeUidToPid
+     *
+     * @var bool
+     */
+    public $changeUidToPid = true;
 
     /**
      * Returns the title
@@ -109,5 +104,28 @@ class Page extends AbstractSearch
     public function getAuthor()
     {
         return $this->author;
+    }
+
+    /**
+     * Returns the breadcrumb
+     *
+     * @return string $breadcrumb
+     */
+    public function getBreadcrumb()
+    {
+        return $this->breadcrumb;
+    }
+
+    /**
+     * Sets the breadcrumb
+     *
+     * @param string $breadcrumb
+     * @return Page
+     */
+    public function setBreadcrumb($breadcrumb)
+    {
+        $this->breadcrumb = $breadcrumb;
+
+        return $this;
     }
 }

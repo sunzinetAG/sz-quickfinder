@@ -1,22 +1,18 @@
-plugin.tx_szindexedsearch {
+plugin.tx_szquickfinder {
     view {
         templateRootPaths {
-            100 = EXT:sz_indexed_search/Resources/Private/Templates/
+            100 = EXT:sz_quickfinder/Resources/Private/Templates/
         }
         partialRootPaths {
-            100 = EXT:sz_indexed_search/Resources/Private/Partials/
+            100 = EXT:sz_quickfinder/Resources/Private/Partials/
         }
         layoutRootPaths {
-            100 = EXT:sz_indexed_search/Resources/Private/Layouts/
+            100 = EXT:sz_quickfinder/Resources/Private/Layouts/
         }
     }
     persistence {
         //diese Seiten werden durchsucht (Kommagetrennt)
-        storagePid = 1, 4
-    }
-    features {
-        # uncomment the following line to enable the new Property Mapper.
-        #rewrittenPropertyMapper = 1
+        storagePid = 1, 4, 55
     }
     settings {
         homePageUid = 2
@@ -33,39 +29,32 @@ plugin.tx_szindexedsearch {
 
         customSearch {
             page {
-                class = Sunzinet\SzIndexedSearch\Domain\Model\Page
+                class = Sunzinet\SzQuickfinder\Domain\Model\Page
                 searchFields = title, keywords
             }
-            news {
-                class = Sunzinet\SzIndexedSearch\Domain\Model\News
-                searchFields = title
-            }
             #More examples:
+#            news {
+#                class = Sunzinet\SzQuickfinder\Domain\Model\News
+#                searchFields = title
+#            }
 #            documents {
-#                class = Sunzinet\SzIndexedSearch\Domain\Model\File
+#                class = Sunzinet\SzQuickfinder\Domain\Model\File
 #                searchFields = title, description
 #                allowedFieldnames = media, fal_media
 #            }
 #            user {
-#                class = Sunzinet\SzIndexedSearch\Domain\Model\User
+#                class = Sunzinet\SzQuickfinder\Domain\Model\User
 #                searchFields = username
 #            }
 #            content {
-#                class = Sunzinet\SzIndexedSearch\Domain\Model\Content
+#                class = Sunzinet\SzQuickfinder\Domain\Model\Content
 #                searchFields = header
-#            }
-#            @Todo
-#            userFunc {
-#                script = /typo3conf/ext/sz_indexed_search/Resources/Public/ExampleScripts/sz_indexed_search.php
-#                params {
-#                    searchFields = title
-#                }
 #            }
         }
     }
 
     _CSS_DEFAULT_STYLE (
-        .tx-indexedsearch-searchbox-results {
+        .tx-quickfinder-searchbox-results {
             display: none;
             position: absolute;
             padding: 20px;
@@ -76,44 +65,44 @@ plugin.tx_szindexedsearch {
             height: auto;
         }
 
-        .tx-indexedsearch-searchbox-results .ajax-loader {
+        .tx-quickfinder-searchbox-results .ajax-loader {
             width: 32px;
             height: 32px;
             margin: 40px auto;
-            background: url(/typo3conf/ext/sz_indexed_search/Resources/Public/Icons/ajax-loader.gif);
+            background: url(/typo3conf/ext/sz_quickfinder/Resources/Public/Icons/ajax-loader.gif);
         }
     )
 }
 
-config.tx_extbase {
+plugin.tx_szquickfinder {
     persistence {
         classes {
-            Sunzinet\SzIndexedSearch\Domain\Model\Page {
+            Sunzinet\SzQuickfinder\Domain\Model\Page {
                 mapping {
                     tableName = pages
                 }
             }
-            Sunzinet\SzIndexedSearch\Domain\Model\PageLanguageOverlay {
+            Sunzinet\SzQuickfinder\Domain\Model\PageLanguageOverlay {
                 mapping {
                     tableName = pages_language_overlay
                 }
             }
-            Sunzinet\SzIndexedSearch\Domain\Model\News {
+            Sunzinet\SzQuickfinder\Domain\Model\News {
                 mapping {
                     tableName = tx_news_domain_model_news
                 }
             }
-            Sunzinet\SzIndexedSearch\Domain\Model\File {
+            Sunzinet\SzQuickfinder\Domain\Model\File {
                 mapping {
                     tableName = sys_file_reference
                 }
             }
-            Sunzinet\SzIndexedSearch\Domain\Model\User {
+            Sunzinet\SzQuickfinder\Domain\Model\User {
                 mapping {
                     tableName = fe_users
                 }
             }
-            Sunzinet\SzIndexedSearch\Domain\Model\Content {
+            Sunzinet\SzQuickfinder\Domain\Model\Content {
                 mapping {
                     tableName = tt_content
                 }
@@ -131,7 +120,7 @@ ajaxRequest {
     10 {
         userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
         pluginName = Pi1
-        extensionName = SzIndexedSearch
+        extensionName = SzQuickfinder
         vendorName = Sunzinet
         switchableControllerActions {
             Search {
@@ -141,24 +130,24 @@ ajaxRequest {
         }
     }
 
-    view =< plugin.tx_szindexedsearch.view
-    persistence =< plugin.sz_indexed_search.persistence
-    settings =< plugin.sz_indexed_search.settings
+    view =< plugin.tx_szquickfinder.view
+    persistence =< plugin.sz_quickfinder.persistence
+    settings =< plugin.sz_quickfinder.settings
 }
 
 page {
     includeJS {
-        sz_indexed_search = EXT:sz_indexed_search/Resources/Public/Js/SzIndexedSearch.min.js
+        sz_quickfinder = EXT:sz_quickfinder/Resources/Public/JavaScript/SzQuickfinder.min.js
     }
 }
 
-lib.tx_szindexedsearch = COA
-lib.tx_szindexedsearch {
+lib.tx_szquickfinder = COA
+lib.tx_szquickfinder {
     10 = USER
     10 {
         userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
         pluginName = Pi1
-        extensionName = SzIndexedSearch
+        extensionName = SzQuickfinder
         vendorName = Sunzinet
         switchableControllerActions {
             Search {
@@ -167,8 +156,8 @@ lib.tx_szindexedsearch {
             }
         }
 
-        settings =< plugin.tx_szindexedsearch.settings
-        persistence =< plugin.tx_szindexedsearch.persistence
-        view =< plugin.tx_szindexedsearch.view
+        settings =< plugin.tx_szquickfinder.settings
+        persistence =< plugin.tx_szquickfinder.persistence
+        view =< plugin.tx_szquickfinder.view
     }
 }

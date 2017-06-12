@@ -7,9 +7,9 @@
     var timer = null;
 
     var initAutocomplete = function() {
-        var $searchbox = $('.tx-indexedsearch-searchbox-sword');
+        var $searchbox = $('.tx-quickfinder-searchbox-sword');
         $searchbox.attr('autocomplete', 'off');
-        var container = $('.tx-indexedsearch-searchbox-results');
+        var container = $('.tx-quickfinder-searchbox-results');
         $searchbox.bind('click keyup', function(e) {
             var $this = jQuery(this);
             var L = $('body').attr('data-languid');
@@ -19,11 +19,11 @@
             timer = setTimeout(function() {
                 container.show();
                 if (e.type != 'click') {
-                    jQuery('.tx-indexedsearch-searchbox-results').html('<div class="ajax-loader"></div>');
+                    jQuery('.tx-quickfinder-searchbox-results').html('<div class="ajax-loader"></div>');
                 }
                 if ($this.val().length > 2) {
                     $.ajax({
-                        url: window.location.origin + window.location.pathname + '?type=' + pageType + '&L=' + L + '&tx_szindexedsearch_pi1[searchString]=' + encodeURIComponent($this.val()),
+                        url: window.location.origin + window.location.pathname + '?type=' + pageType + '&L=' + L + '&tx_szquickfinder_pi1[searchString]=' + encodeURIComponent($this.val()),
                         success: function(response) {
                             container.html(response);
                         },
@@ -38,7 +38,7 @@
             }, 300);
         });
         $(document).bind('click keyup', function(e) {
-            if (!container.is(e.target) && container.has(e.target).length === 0 && !$(e.target).hasClass('tx-indexedsearch-searchbox-sword')) {
+            if (!container.is(e.target) && container.has(e.target).length === 0 && !$(e.target).hasClass('tx-quickfinder-searchbox-sword')) {
                 container.hide();
             }
         });

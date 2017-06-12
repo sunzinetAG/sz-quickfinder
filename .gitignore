@@ -1,6 +1,5 @@
 .idea
+.Build
 node_modules
 vendor
-typo3_src
-typo3
-index.php
+composer.lock

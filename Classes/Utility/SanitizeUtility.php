@@ -1,18 +1,9 @@
 <?php
-namespace Sunzinet\SzIndexedSearch\Utility;
-
-    /**
-     * Description of the class 'SanitizeUtility.php'
-     *
-     * @author Dennis Römmich <dennis@roemmich.eu>
-     * @copyright Copyright belongs to the respective authors
-     * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
-     */
+namespace Sunzinet\SzQuickfinder\Utility;
 
 /**
- * Class GeneralUtility
- *
- * @package Sunzinet\SzIndexedSearch\Utility
+ * Class SanitizeUtility
+ * @package Sunzinet\SzQuickfinder\Utility
  */
 class SanitizeUtility implements SanitizeInterface
 {
