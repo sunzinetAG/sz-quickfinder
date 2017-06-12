@@ -12,7 +12,6 @@ $boot = function ($extensionKey) {
 
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder']['default']['repository'] =
         \Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository::class;
-
 };
 
 $boot('sz_quickfinder');
