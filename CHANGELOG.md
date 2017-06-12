@@ -1,10 +1,10 @@
 # Change Log
 
-Die aktuelle Version ist: [**4.0.0**](https://github.com/sunzinetAG/sz_quickfinder/tree/4.0.0) 
+Die aktuelle Version ist: [**4.0.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.0.0) 
 
 Nachfolgend eine Auflistung aller sz_quicksearch Versionen und eine grobe Beschreibung der Änderungen. Die letzte Version steht hierbei immer ganz oben.
 
-## [**4.0.0**](https://github.com/sunzinetAG/sz_quickfinder/tree/4.0.0) - 2017-06-12
+## [**4.0.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.0.0) - 2017-06-12
 
 * Rename sz_indexed_search to sz_quickfinder
 * Move from internel Repository to github
