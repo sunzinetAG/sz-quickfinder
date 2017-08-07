@@ -12,6 +12,9 @@ $boot = function ($extensionKey) {
 
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder']['default']['repository'] =
         \Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository::class;
+
+    // Exclude searchParameter from cHash, due to problems with pageNotFoundOnCHashError=1
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_szquickfinder_pi1[searchString]';
 };
 
 $boot('sz_quickfinder');
