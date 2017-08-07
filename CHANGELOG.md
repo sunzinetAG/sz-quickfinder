@@ -1,8 +1,12 @@
 # Change Log
 
-Die aktuelle Version ist: [**4.0.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.0.0) 
+Die aktuelle Version ist: [**4.0.1**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.0.1) 
 
 Nachfolgend eine Auflistung aller sz_quicksearch Versionen und eine grobe Beschreibung der Änderungen. Die letzte Version steht hierbei immer ganz oben.
+
+## [**4.0.1**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.0.1) - 2017-08-07
+
+* Add parameter "tx_szquickfinder_pi1[searchString]" to cacheHash exclude parameters
 
 ## [**4.0.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.0.0) - 2017-06-12
 

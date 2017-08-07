@@ -56,6 +56,8 @@ page {
 
 * Auf Detailseiten (z.B. news) wird das Autocomplete nicht korrekt ausgeführt. Workaround: In der LocalConfiguration.php $GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError'] = 0 setzen
 
+* Bei eingeschaltetem pageNotFoundOnCHashError wird auf keiner Seite die Suche ausgeführt. Hier hilft das setzen von $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'] 
+
 ## PHPUnit Tests:
 ```
 composer install
