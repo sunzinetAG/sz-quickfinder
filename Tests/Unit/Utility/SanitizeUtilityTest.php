@@ -27,6 +27,9 @@ class SanitizeUtilityTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $this->assertTrue($subject->sanitized());
     }
 
+    /**
+     * @test
+     */
     public function toStringReturnsString()
     {
         $this->assertSame('foobar', (string)$this->subject);
