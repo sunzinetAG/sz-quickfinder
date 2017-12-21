@@ -2,9 +2,13 @@
 
 ## Installation
 
-1. Extension installieren
-2. Typoscript einbinden
-3. Extension einem Marker zuweisen und im Template einbinden. Beispiel:
+1. Run
+```sh
+composer require sunzinet/sz-quickfinder
+```
+2. Activate sz-quickfinder in the Extensionmanager
+3. Include TypoScript
+4. Include sz-quickfinder in your template. Example:
 
 ```PHP
 example.ts:
@@ -13,9 +17,9 @@ lib.contents {
 }
 ```
 
-## Einstellungen:
+## Settings:
 
-|                                       | Typ                                   | Default                               |
+|                                       | Type                                  | Default                               |
 | ------------------------------------- | ------------------------------------- | ------------------------------------- | 
 | homePageUid                           | integer                               | 2                                     |
 | searchPid                             | integer                               | 140                                   |
@@ -28,11 +32,11 @@ lib.contents {
 | **customSearch**                      |                                       |                                       |
 | class                                 | string                                |                                       |
 | searchFields                          | searchFields                          |                                       |
-Alle Einstellungen können pro 'customSearch' überschrieben werden.
+All settings can be overriden in 'customSearch' section.
 
-## Wichtiger Hinweis:
+## Important notes:
 
-Damit die Mehrsprachigkeit funktioniert, muss im TypoScript dem Body-Tag ein data-Attribut "data-languid" hinzugefügt werden, das die sys_language_uid beinhaltet: Beispiel:
+It's required to give a data-attrubute to the body-tag called "data-languid" with the current sys_language_uid to make multilingualism work. Example: 
 
 ```PHP
 page {
@@ -54,7 +58,7 @@ page {
 
 ## Bekannte Probleme:
 
-* Auf Detailseiten (z.B. news) wird das Autocomplete nicht korrekt ausgeführt. Workaround: In der LocalConfiguration.php $GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError'] = 0 setzen
+* Autocomplete does not work korrect on detailpages (e.g. tx_news). Workaround: Set $GLOBALS['TYPO3_CONF_VARS']['FE']['pageNotFoundOnCHashError'] = 0 in your LocalConfiguration.php
 
 * Bei eingeschaltetem pageNotFoundOnCHashError wird auf keiner Seite die Suche ausgeführt. Hier hilft das setzen von $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'] 
 
