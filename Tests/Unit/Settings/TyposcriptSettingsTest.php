@@ -225,4 +225,9 @@ class TyposcriptSettingsTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $GLOBALS['TYPO3_DB']->method('escapeStrForLike')->willReturn('foobar');
         $GLOBALS['TYPO3_DB']->method('quoteStr')->willReturn('foobar');
     }
+
+    public function tearDown()
+    {
+        unset($GLOBALS['TYPO3_DB']);
+    }
 }
