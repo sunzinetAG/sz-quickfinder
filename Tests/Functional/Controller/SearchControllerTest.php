@@ -21,7 +21,7 @@ class SearchControllerTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
         parent::setUp();
         $this->importDataSet('ntf://Database/pages.xml');
         $this->setUpFrontendRootPage(1, [
-            'EXT:sz_quickfinder/Tests/Functional/Fixtures/page.ts',
+            'EXT:sz_quickfinder/Tests/Functional/Fixtures/TypoScript/page.ts',
             'EXT:sz_quickfinder/Configuration/TypoScript/setup.txt',
         ]);
     }
