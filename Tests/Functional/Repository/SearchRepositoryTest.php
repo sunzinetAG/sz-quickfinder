@@ -93,7 +93,7 @@ class SearchRepositoryTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
     ) {
         //@Todo: Add __toString to SanitizeInterface and Mock SanatizeInterface
         // mock searchstring
-        $searchStringMock = $this->getMock(\Sunzinet\SzQuickfinder\Utility\SanitizeUtility::class);
+        $searchStringMock = $this->getMock(\Sunzinet\SzQuickfinder\Utility\SanitizeUtility::class, [], [], '', false);
         $searchStringMock->method('sanitized')->willReturn(true);
         $searchStringMock->method('__toString')->willReturn($searchString);
 
