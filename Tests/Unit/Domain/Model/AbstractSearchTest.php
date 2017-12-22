@@ -2,7 +2,6 @@
 
 namespace Sunzinet\SzQuickfinder\Tests\Domain\Model;
 
-
 /**
  * Class AbstractSearchTest
  */
