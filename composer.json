@@ -43,7 +43,7 @@
     "psr-4": {
       "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
       "TYPO3\\CMS\\Core\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Classes/",
-      "Sunzinet\\SzQuickfinder\\Tests\\": "Tests/Unit/"
+      "Sunzinet\\SzQuickfinder\\Tests\\": ["Tests/Unit/", "Tests/Functional/"]
     }
   },
   "replace": {
@@ -53,6 +53,12 @@
   "config": {
       "vendor-dir": ".Build/vendor",
       "bin-dir": ".Build/bin"
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "mkdir -p .Build/Web/typo3conf/ext/",
+      "[ -L .Build/Web/typo3conf/ext/sz_quickfinder ] || ln -snvf ../../../../. .Build/Web/typo3conf/ext/sz_quickfinder"
+    ]
   },
   "extra": {
       "typo3/cms": {
