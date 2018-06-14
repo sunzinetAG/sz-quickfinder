@@ -65,6 +65,12 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     protected $objectManager;
 
     /**
+     * @var \TYPO3\CMS\Frontend\Page\PageRepository
+     * @inject
+     */
+    protected $pageRepository;
+
+    /**
      * Sets the type of the Model
      *
      * @Todo: Add Unittest
@@ -182,9 +188,8 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
      */
     protected function filterNotAllowed(array $storagePids)
     {
-
         foreach ($storagePids as $pkey => $pid) {
-            if (count($GLOBALS['TSFE']->sys_page->getPage($pid)) === 0) {
+            if (count($this->pageRepository->getPage($pid)) === 0) {
                 unset($storagePids[$pkey]);
             }
         }
