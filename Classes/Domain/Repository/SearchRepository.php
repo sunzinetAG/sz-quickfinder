@@ -175,6 +175,24 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     }
 
     /**
+     * Filter all pids and check if they are allowed for the fegroup
+     *
+     * @param array $storagePids
+     * @return array
+     */
+    protected function filterNotAllowed(array $storagePids)
+    {
+
+        foreach ($storagePids as $pkey => $pid) {
+            if (count($GLOBALS['TSFE']->sys_page->getPage($pid)) === 0) {
+                unset($storagePids[$pkey]);
+            }
+        }
+
+        return array_values($storagePids);
+    }
+
+    /**
      * Find all ids from given ids and level
      *
      * @param string $pidList comma separated list of ids
@@ -201,7 +219,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
 
         $return = explode(',', $recursiveStoragePids);
 
-        return $return;
+        return $this->filterNotAllowed($return);
     }
 
     /**
