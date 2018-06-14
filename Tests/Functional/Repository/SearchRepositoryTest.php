@@ -36,6 +36,12 @@ class SearchRepositoryTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
         ]);
         $objectManager = new \TYPO3\CMS\Extbase\Object\ObjectManager();
         $this->subject = $objectManager->get(SearchRepository::class);
+        $this->mockPageRepository();
+    }
+
+    private function mockPageRepository()
+    {
+        $GLOBALS['TSFE']->sys_page = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
     }
 
     /**
