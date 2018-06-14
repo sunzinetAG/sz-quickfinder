@@ -4,7 +4,7 @@
   "type": "typo3-cms-extension",
   "keywords": ["Quickfinder", "Autocomplete"],
   "homepage": "http://www.sunzinet.com/",
-  "license": "GNU",
+  "license": "GPL-3.0-or-later",
   "authors": [
     {
       "name": "Dennis Römmich",
