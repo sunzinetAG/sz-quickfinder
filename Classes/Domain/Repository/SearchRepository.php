@@ -1,4 +1,5 @@
 <?php
+
 namespace Sunzinet\SzQuickfinder\Domain\Repository;
 
 use Sunzinet\SzQuickfinder\Domain\Model\File;
@@ -116,8 +117,8 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
         $this->setSearchFields();
         $this->setCustomEnableFields($this->query->getQuerySettings()->getStoragePageIds());
 
-        $signalSlotDispatcher = GeneralUtility::makeInstance( Dispatcher::class );
-        $signalSlotDispatcher->dispatch( __CLASS__, 'afterInitSettings', array( &$this->logicalAnd, $this->className, $this->query ) );
+        $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
+        $signalSlotDispatcher->dispatch(__CLASS__, 'afterInitSettings', [&$this->logicalAnd, $this->className, $this->query]);
 
         $this->query->matching(
             $this->query->logicalAnd(
