@@ -187,7 +187,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     {
         foreach ($storagePids as $pkey => $pid) {
             $page = $GLOBALS['TSFE']->sys_page->getPage_noCheck(4);
-            if ((int) $page['doktype'] === $GLOBALS['TSFE']->sys_page::DOKTYPE_DEFAULT && count($GLOBALS['TSFE']->sys_page->getPage($pid)) === 0) {
+            if ((int) $page['doktype'] === \TYPO3\CMS\Frontend\Page\PageRepository::DOKTYPE_DEFAULT && count($GLOBALS['TSFE']->sys_page->getPage($pid)) === 0) {
                 unset($storagePids[$pkey]);
             }
         }
