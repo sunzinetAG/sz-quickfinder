@@ -168,7 +168,10 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
         }
 
         foreach ($storagePids as $storagePid) {
-            array_push($this->logicalOr, $this->query->in('pid', $this->extendPidListByChildren($storagePid, 6)));
+            $pids = $this->extendPidListByChildren($storagePid, 6);
+            if (!empty($pids)) {
+                array_push($this->logicalOr, $this->query->in('pid', $pids));
+            }
         }
 
         array_push($this->logicalAnd, $this->query->logicalOr($this->constraints));
@@ -183,7 +186,8 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     protected function filterNotAllowed(array $storagePids)
     {
         foreach ($storagePids as $pkey => $pid) {
-            if (count($GLOBALS['TSFE']->sys_page->getPage($pid)) === 0) {
+            $page = $GLOBALS['TSFE']->sys_page->getPage_noCheck(4);
+            if ((int) $page['doktype'] === $GLOBALS['TSFE']->sys_page::DOKTYPE_DEFAULT && count($GLOBALS['TSFE']->sys_page->getPage($pid)) === 0) {
                 unset($storagePids[$pkey]);
             }
         }
