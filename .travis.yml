@@ -19,7 +19,7 @@ matrix:
 sudo: false
 
 before_script:
-  - composer require typo3/cms="$TYPO3_VERSION"
+  - composer require typo3/minimal="$TYPO3_VERSION"
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
 
 script:
