@@ -68,7 +68,6 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     /**
      * Sets the type of the Model
      *
-     * @Todo: Add Unittest
      * @param Search $class
      * @return void
      */
