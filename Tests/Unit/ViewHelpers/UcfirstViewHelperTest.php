@@ -24,7 +24,7 @@ class UcfirstViewHelperTest extends \Nimut\TestingFramework\TestCase\ViewHelperB
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->createMock($this->buildAccessibleProxy(UcfirstViewHelper::class), array('renderChildren'));
+        $this->viewHelper = $this->createPartialMock($this->buildAccessibleProxy(UcfirstViewHelper::class), array('renderChildren'));
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
