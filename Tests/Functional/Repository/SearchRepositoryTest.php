@@ -10,7 +10,7 @@ use Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository;
  *
  * @package Sunzinet\SzQuickfinder\Tests\Controller
  */
-class SearchRepositoryTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
+class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTestCase
 {
     /**
      * @var array

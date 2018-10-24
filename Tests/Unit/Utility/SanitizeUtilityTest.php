@@ -5,7 +5,7 @@ namespace Sunzinet\SzQuickfinder\Tests\Utility;
 /**
  * Class SanitizeUtility
  */
-class SanitizeUtilityTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class SanitizeUtilityTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 {
     /**
      * @var \Sunzinet\SzQuickfinder\Utility\SanitizeInterface $subject
@@ -59,7 +59,7 @@ class SanitizeUtilityTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     protected function mockGlobalDatabase()
     {
-        $GLOBALS['TYPO3_DB'] = $this->getMock(\TYPO3\CMS\Core\Database\DatabaseConnection::class);
+        $GLOBALS['TYPO3_DB'] = $this->createMock(\TYPO3\CMS\Core\Database\DatabaseConnection::class);
         $GLOBALS['TYPO3_DB']->method('escapeStrForLike')->willReturn('foobar');
         $GLOBALS['TYPO3_DB']->method('quoteStr')->willReturn('foobar');
     }

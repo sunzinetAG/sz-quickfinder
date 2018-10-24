@@ -5,7 +5,7 @@ namespace Sunzinet\SzQuickfinder\Tests\Settings;
 /**
  * Class TyposcriptSettingsTest
  */
-class TyposcriptSettingsTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 {
     /**
      * @var \Sunzinet\SzQuickfinder\TyposcriptSettings $subject
@@ -22,7 +22,7 @@ class TyposcriptSettingsTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function setUnavailablePropertyThrowsException()
     {
-        $this->setExpectedException(\TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException::class);
+        $this->expectException(\TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException::class);
         $this->subject->setProperty('thisPropertyDoesNotExist', 'foobar');
     }
 
@@ -221,7 +221,7 @@ class TyposcriptSettingsTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     protected function mockGlobalDatabase()
     {
-        $GLOBALS['TYPO3_DB'] = $this->getMock(\TYPO3\CMS\Core\Database\DatabaseConnection::class);
+        $GLOBALS['TYPO3_DB'] = $this->createMock(\TYPO3\CMS\Core\Database\DatabaseConnection::class);
         $GLOBALS['TYPO3_DB']->method('escapeStrForLike')->willReturn('foobar');
         $GLOBALS['TYPO3_DB']->method('quoteStr')->willReturn('foobar');
     }

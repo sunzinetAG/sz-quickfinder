@@ -5,7 +5,7 @@ namespace Sunzinet\SzQuickfinder\Tests\Domain\Model;
 /**
  * Class AbstractSearchTest
  */
-class AbstractSearchTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class AbstractSearchTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 {
     /**
      * @var \Sunzinet\SzQuickfinder\Tests\Stub\AbstractSearch::__construct $subject
@@ -22,7 +22,7 @@ class AbstractSearchTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function injectSettings()
     {
-        $settings = $this->getMock(\Sunzinet\SzQuickfinder\TyposcriptSettings::class);
+        $settings = $this->createMock(\Sunzinet\SzQuickfinder\TyposcriptSettings::class);
         $this->subject->injectSettings($settings);
         $this->assertSame($settings, $this->subject->getSettings());
     }

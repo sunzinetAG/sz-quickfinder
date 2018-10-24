@@ -2,13 +2,12 @@
 namespace Sunzinet\SzQuickfinder\Tests\ViewHelpers\Format;
 
 use Sunzinet\SzQuickfinder\ViewHelpers\Format\HighlightViewHelper;
-use TYPO3\CMS\Fluid\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
  * Class HighlightViewHelperTest
  * @package Sunzinet\SzQuickfinder\Tests\ViewHelpers\Format
  */
-class HighlightViewHelperTest extends ViewHelperBaseTestcase
+class HighlightViewHelperTest extends \Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase
 {
     /**
      * viewhelper
@@ -32,7 +31,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getMock($this->buildAccessibleProxy(HighlightViewHelper::class), array('renderChildren'));
+        $this->viewHelper = $this->createMock($this->buildAccessibleProxy(HighlightViewHelper::class), array('renderChildren'));
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
@@ -78,7 +77,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
         $stdClass = new \stdClass();
         $method = $this->getProtectedMethod('setSearchString');
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, [$stdClass]));
     }
 
@@ -93,7 +92,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
         $integer = intval(5);
         $method = $this->getProtectedMethod('setSearchString');
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, [$integer]));
     }
 
@@ -107,7 +106,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
     {
         $method = $this->getProtectedMethod('setSearchString');
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, [null]));
     }
 
@@ -121,7 +120,7 @@ class HighlightViewHelperTest extends ViewHelperBaseTestcase
     {
         $method = $this->getProtectedMethod('setSearchString');
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->assertSame($this->getExpectedException(), $method->invokeArgs($this->viewHelper, ['']));
     }
 
