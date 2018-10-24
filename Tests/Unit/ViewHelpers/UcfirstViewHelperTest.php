@@ -2,13 +2,12 @@
 namespace Sunzinet\SzQuickfinder\Tests\ViewHelpers\Format;
 
 use Sunzinet\SzQuickfinder\ViewHelpers\Format\UcfirstViewHelper;
-use TYPO3\CMS\Fluid\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
  * Class UcfirstViewHelperTest
  * @package Sunzinet\SzQuickfinder\Tests\ViewHelpers\Format
  */
-class UcfirstViewHelperTest extends ViewHelperBaseTestcase
+class UcfirstViewHelperTest extends \Nimut\TestingFramework\TestCase\ViewHelperBaseTestcase
 {
     /**
      * viewhelper
@@ -25,7 +24,7 @@ class UcfirstViewHelperTest extends ViewHelperBaseTestcase
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getMock($this->buildAccessibleProxy(UcfirstViewHelper::class), array('renderChildren'));
+        $this->viewHelper = $this->createPartialMock($this->buildAccessibleProxy(UcfirstViewHelper::class), array('renderChildren'));
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
@@ -54,7 +53,7 @@ class UcfirstViewHelperTest extends ViewHelperBaseTestcase
         $stdClass = new \stdClass();
         $this->viewHelper->expects($this->once())->method('renderChildren')->will($this->returnValue($stdClass));
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->assertSame($this->getExpectedException(), $this->viewHelper->render());
     }
 
@@ -69,7 +68,7 @@ class UcfirstViewHelperTest extends ViewHelperBaseTestcase
         $integer = intval(5);
         $this->viewHelper->expects($this->once())->method('renderChildren')->will($this->returnValue($integer));
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->assertSame($this->getExpectedException(), $this->viewHelper->render());
     }
 
@@ -83,7 +82,7 @@ class UcfirstViewHelperTest extends ViewHelperBaseTestcase
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->will($this->returnValue(null));
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->assertSame($this->getExpectedException(), $this->viewHelper->render());
     }
 
@@ -97,7 +96,7 @@ class UcfirstViewHelperTest extends ViewHelperBaseTestcase
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->will($this->returnValue(''));
 
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException('InvalidArgumentException');
         $this->assertSame($this->getExpectedException(), $this->viewHelper->render());
     }
 }

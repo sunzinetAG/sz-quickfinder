@@ -7,7 +7,7 @@ namespace Sunzinet\SzQuickfinder\Tests\Controller;
  *
  * @package Sunzinet\SzQuickfinder\Tests\Controller
  */
-class SearchControllerTest extends \TYPO3\CMS\Core\Tests\FunctionalTestCase
+class SearchControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalTestCase
 {
     /**
      * @var array
