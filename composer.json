@@ -19,7 +19,7 @@
     "source": "https://github.com/sunzinetAG/sz_quickfinder"
   },
   "require": {
-    "php": "^7.2 || ^7.3",
+    "php": "^7.0 || 7.1 || 7.2 || ^7.3",
 
     "typo3/cms-core": "^9.5",
     "typo3/cms-backend": "^9.5",
