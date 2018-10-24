@@ -204,7 +204,7 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
         $this->assertSame(['foo', 'bar', 'foobar'], $subject->getSearchFields());
         $this->assertSame(['foobar'], $subject->getAllowedFieldnames());
 
-        $this->assertSame('foobar', (string)$subject->getSearchString());
+        $this->assertSame('Lorem', (string)$subject->getSearchString());
 
         $this->assertSame('foobar', $subject->getOrderBy());
         $this->assertSame(true, $subject->getAscending());
