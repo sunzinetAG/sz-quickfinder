@@ -108,8 +108,6 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
      */
     public function setPropertySearchString()
     {
-        $this->mockGlobalDatabase();
-
         $this->subject->setProperty('searchString', 'foobar');
         $this->assertSame('foobar', (string)$this->subject->getSearchString());
     }
@@ -185,8 +183,6 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
      */
     public function constructorArgumentsWillBeConvertedToProperties()
     {
-        $this->mockGlobalDatabase();
-
         $subject = new \Sunzinet\SzQuickfinder\Settings\TyposcriptSettings([
             'class' => 'Foo\bar',
             'regEx' => '%|%',
@@ -214,16 +210,6 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
         $this->assertSame(true, $subject->getAscending());
         $this->assertSame('/foo/bar', $subject->getScript());
         $this->assertSame(['foo', 'bar'], $subject->getParams());
-    }
-
-    /**
-     * @return void
-     */
-    protected function mockGlobalDatabase()
-    {
-        $GLOBALS['TYPO3_DB'] = $this->createMock(\TYPO3\CMS\Core\Database\DatabaseConnection::class);
-        $GLOBALS['TYPO3_DB']->method('escapeStrForLike')->willReturn('foobar');
-        $GLOBALS['TYPO3_DB']->method('quoteStr')->willReturn('foobar');
     }
 
     public function tearDown()

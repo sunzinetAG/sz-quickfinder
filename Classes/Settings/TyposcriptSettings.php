@@ -1,9 +1,6 @@
 <?php
 namespace Sunzinet\SzQuickfinder\Settings;
 
-use Sunzinet\SzQuickfinder\Utility\SanitizeUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /**
  * Class TyposcriptSettings
  * @package Sunzinet\SzQuickfinder\Settings
@@ -55,7 +52,7 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
     /**
      * searchString
      *
-     * @var SanitizeUtility $searchString
+     * @var string $searchString
      */
     protected $searchString = '';
 
@@ -251,12 +248,12 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
     /**
      * setSearchString
      *
-     * @param SanitizeUtility $searchString
+     * @param string $searchString
      * @return $this
      */
     public function setSearchString($searchString)
     {
-        $this->searchString = GeneralUtility::makeInstance(SanitizeUtility::class, $searchString);
+        $this->searchString = $searchString;
 
         return $this;
     }

@@ -237,13 +237,6 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
      */
     private function setSearchFields()
     {
-        if (!($this->class->getSettings()->getSearchString()->sanitized())) {
-            throw new \TYPO3\CMS\Extbase\Security\Exception(
-                'SearchString must be sanitized before passing to the query!!',
-                1456218496
-            );
-        }
-
         $searchString = $this->resolveSearchstring($this->class->getSettings()->getSearchString());
 
         foreach ($this->class->getSettings()->getSearchFields() as $propertyName) {
