@@ -4,6 +4,8 @@ namespace Sunzinet\SzQuickfinder\Tests\Repository;
 
 use Sunzinet\SzQuickfinder\Domain\Model\Page;
 use Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class SearchRepositoryTest
@@ -29,7 +31,9 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
         parent::setUp();
         $this->importDataSet('ntf://Database/pages.xml');
         // Nasty hack because table mapping does not work
-        $this->getDatabaseConnection()->sql_query('CREATE TABLE tx_szquickfinder_domain_model_page AS SELECT * FROM pages;');
+        $connection = GeneralUtility::makeInstance(ConnectionPool::class)
+            ->getConnectionForTable('pages');
+        $connection->executeQuery('CREATE TABLE IF NOT EXISTS tx_szquickfinder_domain_model_page AS SELECT * FROM pages;');
         $this->importDataSet(ORIGINAL_ROOT . 'typo3conf/ext/sz_quickfinder/Tests/Functional/Fixtures/Database/pages.xml');
         $this->setUpFrontendRootPage(1, [
             'EXT:sz_quickfinder/Tests/Functional/Fixtures/TypoScript/page.ts',
@@ -41,7 +45,7 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
 
     private function mockPageRepository()
     {
-        $GLOBALS['TSFE']->sys_page = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
+        $GLOBALS['TSFE']->sys_page = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
     }
 
     /**
@@ -97,23 +101,17 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
         $maxResults = 3,
         $orderBy = 'uid'
     ) {
-        //@Todo: Add __toString to SanitizeInterface and Mock SanatizeInterface
-        // mock searchstring
-        $searchStringMock = $this->getMock(\Sunzinet\SzQuickfinder\Utility\SanitizeUtility::class, [], [], '', false);
-        $searchStringMock->method('sanitized')->willReturn(true);
-        $searchStringMock->method('__toString')->willReturn($searchString);
-
         // mock settings
-        $settings = $this->getMock(\Sunzinet\SzQuickfinder\TyposcriptSettings::class);
+        $settings = $this->createMock(\Sunzinet\SzQuickfinder\TyposcriptSettings::class);
         $settings->method('getRegEx')->willReturn($regEx);
         $settings->method('getClass')->willReturn(Page::class);
-        $settings->method('getSearchString')->willReturn($searchStringMock);
+        $settings->method('getSearchString')->willReturn($searchString);
         $settings->method('getSearchFields')->willReturn($searchFields);
         $settings->method('getMaxResults')->willReturn($maxResults);
         $settings->method('getOrderBy')->willReturn($orderBy);
 
         // moc search
-        $search = $this->getMock(Page::class);
+        $search = $this->createMock(Page::class);
         $search->method('getSettings')->willReturn($settings);
 
         $this->subject->initClass($search);
