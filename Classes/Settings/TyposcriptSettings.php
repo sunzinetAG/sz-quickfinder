@@ -85,6 +85,13 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
     protected $params = [];
 
     /**
+     * blacklistPid
+     *
+     * @var array $blacklistPid
+     */
+    protected $blacklistPid = [];
+
+    /**
      * TyposcriptSettings constructor.
      *
      * @param array $settings
@@ -340,6 +347,22 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
         $this->params = $params;
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlacklistPid(): array
+    {
+        return $this->blacklistPid;
+    }
+
+    /**
+     * @param array $blacklistPid
+     */
+    public function setBlacklistPid(array $blacklistPid)
+    {
+        $this->blacklistPid = $blacklistPid;
     }
 
     /**

@@ -78,6 +78,13 @@ interface TyposcriptSettings
     public function getParams();
 
     /**
+     * getBlacklistPid
+     *
+     * @return array
+     */
+    public function getBlacklistPid();
+
+    /**
      * @return boolean
      */
     public function getAscending();

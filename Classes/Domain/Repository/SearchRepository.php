@@ -7,11 +7,11 @@ use Sunzinet\SzQuickfinder\Domain\Model\Page;
 use Sunzinet\SzQuickfinder\Domain\Model\PageLanguageOverlay;
 use Sunzinet\SzQuickfinder\Search;
 use Sunzinet\SzQuickfinder\Searchable;
-use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
+use Sunzinet\SzQuickfinder\Service\PidListService;
 
 /**
  * Class SearchRepository
@@ -60,7 +60,7 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     /**
      * objectManager
      *
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
      * @inject
      */
     protected $objectManager;
@@ -114,7 +114,8 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
 
         $this->setQuerySettings();
         $this->setSearchFields();
-        $this->setCustomEnableFields($this->query->getQuerySettings()->getStoragePageIds());
+
+        $this->setCustomEnableFields($this->query->getQuerySettings()->getStoragePageIds(), $this->class->getSettings()->getBlacklistPid());
 
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $signalSlotDispatcher->dispatch(__CLASS__, 'afterInitSettings', [&$this->logicalAnd, $this->className, $this->query]);
@@ -146,9 +147,10 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
      * Fills logicalAnd and logicalOr for the Query
      *
      * @param array $storagePids
+     * @param array $blacklistPids
      * @return void
      */
-    protected function setCustomEnableFields($storagePids)
+    protected function setCustomEnableFields($storagePids, $blacklistPids)
     {
         switch ($this->className) {
             case Page::class:
@@ -170,62 +172,15 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
             default:
         }
 
-        foreach ($storagePids as $storagePid) {
-            $pids = $this->extendPidListByChildren($storagePid, 6);
-            if (!empty($pids)) {
-                array_push($this->logicalOr, $this->query->in('pid', $pids));
-            }
+        /** @var PidListService $pidListService */
+        $pidListService = $this->objectManager->get(PidListService::class, $storagePids, $blacklistPids);
+        $whitelistlPids = $pidListService->generate($storagePids, $blacklistPids);
+
+        if (!empty($whitelistlPids)) {
+            array_push($this->logicalOr, $this->query->in('pid', $whitelistlPids));
         }
 
         array_push($this->logicalAnd, $this->query->logicalOr($this->constraints));
-    }
-
-    /**
-     * Filter all pids and check if they are allowed for the fegroup
-     *
-     * @param array $storagePids
-     * @return array
-     */
-    protected function filterNotAllowed(array $storagePids)
-    {
-        foreach ($storagePids as $pkey => $pid) {
-            $page = $GLOBALS['TSFE']->sys_page->getPage_noCheck(4);
-            if ((int) $page['doktype'] === \TYPO3\CMS\Frontend\Page\PageRepository::DOKTYPE_DEFAULT && count($GLOBALS['TSFE']->sys_page->getPage($pid)) === 0) {
-                unset($storagePids[$pkey]);
-            }
-        }
-
-        return array_values($storagePids);
-    }
-
-    /**
-     * Find all ids from given ids and level
-     *
-     * @param string $pidList comma separated list of ids
-     * @param integer $recursive recursive levels
-     * @return string comma separated list of ids
-     */
-    protected function extendPidListByChildren($pidList = '', $recursive = 0)
-    {
-        $recursive = (int)$recursive;
-        if ($recursive <= 0) {
-            return $pidList;
-        }
-
-        /** @var $queryGenerator QueryGenerator */
-        $queryGenerator = $this->objectManager->get(QueryGenerator::class);
-        $recursiveStoragePids = $pidList;
-        $storagePids = GeneralUtility::intExplode(',', $pidList);
-        foreach ($storagePids as $startPid) {
-            $pids = $queryGenerator->getTreeList($startPid, $recursive, 0, 'hidden=0 AND deleted=0');
-            if (strlen($pids) > 0) {
-                $recursiveStoragePids .= ',' . $pids;
-            }
-        }
-
-        $return = explode(',', $recursiveStoragePids);
-
-        return $this->filterNotAllowed($return);
     }
 
     /**
