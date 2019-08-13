@@ -26,19 +26,17 @@ plugin.tx_szquickfinder {
             orderBy = uid
             ascending = true
             // blacklistPid for exclude pids from quickfinder search, also available for customSearch
-            blacklistPid = 269
+            blacklistPid =
         }
 
         customSearch {
             page {
                 class = Sunzinet\SzQuickfinder\Domain\Model\Page
                 searchFields = title, keywords
-                blacklistPid = 269, 270, 188
             }
             trees {
                 class = Sunzinet\SzProducts\Domain\Model\Product
                 searchFields = tree_searchfield
-                blacklistPid = 188
             }
             #More examples:
 #            news {
