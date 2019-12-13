@@ -85,6 +85,15 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
     }
 
     /**
+     * @test
+     */
+    public function blackListPidsWontBeFound()
+    {
+        $result = $this->buildSearch('Dummy', '%|%', ['title'], 99, 'uid', [5]);
+        $this->assertSame(4, $result->count());
+    }
+
+    /**
      * Build search for tests
      *
      * @param $searchString
