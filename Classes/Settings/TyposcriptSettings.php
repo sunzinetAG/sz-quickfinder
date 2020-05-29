@@ -370,14 +370,14 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
      *
      * @param string $propertyName
      * @param mixed $value
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\Exception\NonExistentPropertyException
      * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
      * @return void
      */
     public function setProperty($propertyName, $value)
     {
         if (!$this->hasProperty($propertyName)) {
-            throw new \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException(
+            throw new \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\Exception\NonExistentPropertyException(
                 'Property ' . $propertyName . ' does not Exist in ' . __CLASS__,
                 1442413257
             );

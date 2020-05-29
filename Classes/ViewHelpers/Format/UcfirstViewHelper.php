@@ -1,7 +1,7 @@
 <?php
 namespace Sunzinet\SzQuickfinder\ViewHelpers\Format;
 
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
 /**
  * Class UcfirstViewHelper

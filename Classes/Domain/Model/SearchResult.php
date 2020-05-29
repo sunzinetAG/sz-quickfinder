@@ -41,7 +41,7 @@ trait SearchResult
      *
      * @return int
      */
-    public function getPid()
+    public function getPid(): ?int
     {
         return $this->pid;
     }

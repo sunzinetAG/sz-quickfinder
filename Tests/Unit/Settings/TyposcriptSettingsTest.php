@@ -22,7 +22,7 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
      */
     public function setUnavailablePropertyThrowsException()
     {
-        $this->expectException(\TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException::class);
+        $this->expectException(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\Exception\NonExistentPropertyException::class);
         $this->subject->setProperty('thisPropertyDoesNotExist', 'foobar');
     }
 
