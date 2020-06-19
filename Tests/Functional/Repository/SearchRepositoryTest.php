@@ -6,6 +6,7 @@ use Sunzinet\SzQuickfinder\Domain\Model\Page;
 use Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 
 /**
  * Class SearchRepositoryTest
@@ -38,7 +39,7 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
         $this->setUpFrontendRootPage(1, [
             'EXT:sz_quickfinder/Tests/Functional/Fixtures/TypoScript/page.ts',
         ]);
-        $objectManager = new \TYPO3\CMS\Extbase\Object\ObjectManager();
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->subject = $objectManager->get(SearchRepository::class);
         $this->mockPageRepository();
     }
