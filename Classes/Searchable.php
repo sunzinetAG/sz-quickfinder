@@ -1,7 +1,7 @@
 <?php
-namespace Sunzinet\SzQuickfinder;
+declare(strict_types = 1);
 
-use Sunzinet\SzQuickfinder\Settings\TyposcriptSettings;
+namespace Sunzinet\SzQuickfinder;
 
 /**
  * Interface Searchable

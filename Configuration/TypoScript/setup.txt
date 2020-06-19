@@ -25,6 +25,8 @@ plugin.tx_szquickfinder {
             includeNavHiddenPages = false
             orderBy = uid
             ascending = true
+            // blacklistPid for exclude pids from quickfinder search, also available for customSearch
+            blacklistPid =
         }
 
         customSearch {
@@ -74,6 +76,7 @@ plugin.tx_szquickfinder {
     )
 }
 
+# @deprecated: will be removed in 6.0.0
 plugin.tx_szquickfinder {
     persistence {
         classes {

@@ -32,6 +32,7 @@ lib.contents {
 | **customSearch**                      |                                       |                                       |
 | class                                 | string                                |                                       |
 | searchFields                          | searchFields                          |                                       |
+| blacklistPid                          | string                                |                                       |
 All settings can be overriden in 'customSearch' section.
 
 ## Important notes:

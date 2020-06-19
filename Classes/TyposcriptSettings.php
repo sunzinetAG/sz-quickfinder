@@ -1,4 +1,6 @@
 <?php
+declare(strict_types = 1);
+
 namespace Sunzinet\SzQuickfinder;
 
 /**
@@ -76,6 +78,13 @@ interface TyposcriptSettings
      * @return array
      */
     public function getParams();
+
+    /**
+     * getBlacklistPid
+     *
+     * @return array
+     */
+    public function getBlacklistPid();
 
     /**
      * @return boolean

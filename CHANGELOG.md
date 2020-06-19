@@ -1,5 +1,9 @@
 # Change Log
 
+## [**4.1.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.1.0) - 2019-08-13
+
+* Add functionality for blacklist pids to exclude them from whitelist pids
+
 ## [**4.0.1**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.0.1) - 2017-08-07
 
 * Add parameter "tx_szquickfinder_pi1[searchString]" to cacheHash exclude parameters

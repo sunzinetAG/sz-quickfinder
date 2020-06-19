@@ -85,6 +85,15 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
     }
 
     /**
+     * @test
+     */
+    public function blackListPidsWontBeFound()
+    {
+        $result = $this->buildSearch('Dummy', '%|%', ['title'], 99, 'uid', [5]);
+        $this->assertSame(4, $result->count());
+    }
+
+    /**
      * Build search for tests
      *
      * @param $searchString
@@ -92,6 +101,7 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
      * @param array $searchFields
      * @param int $maxResults
      * @param string $orderBy
+     * @param array $blackListPid
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
     protected function buildSearch(
@@ -99,7 +109,8 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
         $regEx = '%|%',
         $searchFields = ['title'],
         $maxResults = 3,
-        $orderBy = 'uid'
+        $orderBy = 'uid',
+        $blackListPid = [0]
     ) {
         // mock settings
         $settings = $this->createMock(\Sunzinet\SzQuickfinder\TyposcriptSettings::class);
@@ -109,6 +120,7 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
         $settings->method('getSearchFields')->willReturn($searchFields);
         $settings->method('getMaxResults')->willReturn($maxResults);
         $settings->method('getOrderBy')->willReturn($orderBy);
+        $settings->method('getBlacklistPid')->willReturn($blackListPid);
 
         // moc search
         $search = $this->createMock(Page::class);

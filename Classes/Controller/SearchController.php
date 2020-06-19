@@ -1,6 +1,9 @@
 <?php
+declare(strict_types = 1);
+
 namespace Sunzinet\SzQuickfinder\Controller;
 
+use Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository;
 use Sunzinet\SzQuickfinder\Search;
 use Sunzinet\SzQuickfinder\Searchable;
 use Sunzinet\SzQuickfinder\SearchResult;
@@ -17,10 +20,17 @@ class SearchController extends ActionController
     /**
      * searchRepository
      *
-     * @var \Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository
-     * @inject
+     * @var SearchRepository
      */
     protected $searchRepository;
+
+    /**
+     * @param SearchRepository $searchRepository
+     */
+    public function __construct(SearchRepository $searchRepository)
+    {
+        $this->searchRepository = $searchRepository;
+    }
 
     /**
      * Only show the SearchForm

@@ -22,7 +22,7 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
      */
     public function setUnavailablePropertyThrowsException()
     {
-        $this->expectException(\TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException::class);
+        $this->expectException(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\Exception\NonExistentPropertyException::class);
         $this->subject->setProperty('thisPropertyDoesNotExist', 'foobar');
     }
 
@@ -195,6 +195,7 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
             'ascending' => 'true',
             'script' => '/foo/bar',
             'params' => 'foo, bar',
+            'blacklistPid' => 1234,
         ]);
 
         $this->assertSame('Foo\bar', $subject->getClass());
@@ -210,6 +211,7 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
         $this->assertSame(true, $subject->getAscending());
         $this->assertSame('/foo/bar', $subject->getScript());
         $this->assertSame(['foo', 'bar'], $subject->getParams());
+        $this->assertSame([0 => '1234'], $subject->getBlacklistPid());
     }
 
     public function tearDown()

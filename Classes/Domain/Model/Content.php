@@ -1,4 +1,6 @@
 <?php
+declare(strict_types = 1);
+
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 /**
@@ -7,8 +9,6 @@ namespace Sunzinet\SzQuickfinder\Domain\Model;
  */
 class Content extends AbstractSearch
 {
-    use SearchResult;
-
     /**
      * @var string $header
      */

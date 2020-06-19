@@ -1,4 +1,6 @@
 <?php
+declare(strict_types = 1);
+
 namespace Sunzinet\SzQuickfinder\Settings;
 
 /**
@@ -83,6 +85,13 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
      * @var array $params
      */
     protected $params = [];
+
+    /**
+     * blacklistPid
+     *
+     * @var array $blacklistPid
+     */
+    protected $blacklistPid = [];
 
     /**
      * TyposcriptSettings constructor.
@@ -343,18 +352,34 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
     }
 
     /**
+     * @return array
+     */
+    public function getBlacklistPid(): array
+    {
+        return $this->blacklistPid;
+    }
+
+    /**
+     * @param array $blacklistPid
+     */
+    public function setBlacklistPid(array $blacklistPid)
+    {
+        $this->blacklistPid = $blacklistPid;
+    }
+
+    /**
      * setProperty
      *
      * @param string $propertyName
      * @param mixed $value
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\Exception\NonExistentPropertyException
      * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
      * @return void
      */
     public function setProperty($propertyName, $value)
     {
         if (!$this->hasProperty($propertyName)) {
-            throw new \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException(
+            throw new \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\Exception\NonExistentPropertyException(
                 'Property ' . $propertyName . ' does not Exist in ' . __CLASS__,
                 1442413257
             );

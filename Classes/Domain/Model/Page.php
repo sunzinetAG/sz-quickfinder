@@ -1,4 +1,6 @@
 <?php
+declare(strict_types = 1);
+
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 /**
@@ -48,13 +50,6 @@ class Page extends AbstractSearch
      * @var string
      */
     protected $breadcrumb;
-
-    /**
-     * changeUidToPid
-     *
-     * @var bool
-     */
-    public $changeUidToPid = true;
 
     /**
      * Returns the title
