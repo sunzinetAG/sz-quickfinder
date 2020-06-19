@@ -428,7 +428,7 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
                 if (is_array($var)) {
                     return $var;
                 }
-                return array_map('trim', explode(',', $var));
+                return array_map('trim', explode(',', (string) $var));
             default:
                 throw new \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException(
                     'Unsupported type',
