@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 
 namespace Sunzinet\SzQuickfinder\Service;
 
@@ -101,7 +101,7 @@ class PidListService
         $recursiveStoragePids = $pidList;
         $storagePids = GeneralUtility::intExplode(',', $pidList);
         foreach ($storagePids as $startPid) {
-            $pids = $queryGenerator->getTreeList($startPid, $recursive, 0, 'hidden=0 AND deleted=0');
+            $pids = (string) $queryGenerator->getTreeList($startPid, $recursive, 0, 'hidden=0 AND deleted=0');
             if (strlen($pids) > 0) {
                 $recursiveStoragePids .= ',' . $pids;
             }

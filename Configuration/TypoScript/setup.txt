@@ -34,10 +34,6 @@ plugin.tx_szquickfinder {
                 class = Sunzinet\SzQuickfinder\Domain\Model\Page
                 searchFields = title, keywords
             }
-            trees {
-                class = Sunzinet\SzProducts\Domain\Model\Product
-                searchFields = tree_searchfield
-            }
             #More examples:
 #            news {
 #                class = Sunzinet\SzQuickfinder\Domain\Model\News
@@ -80,6 +76,7 @@ plugin.tx_szquickfinder {
     )
 }
 
+# @deprecated: will be removed in 6.0.0
 plugin.tx_szquickfinder {
     persistence {
         classes {

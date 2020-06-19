@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace Sunzinet\SzQuickfinder\Domain\Repository;
 
@@ -7,7 +8,9 @@ use Sunzinet\SzQuickfinder\Domain\Model\Page;
 use Sunzinet\SzQuickfinder\Domain\Model\PageLanguageOverlay;
 use Sunzinet\SzQuickfinder\Search;
 use Sunzinet\SzQuickfinder\Searchable;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
@@ -60,10 +63,17 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     /**
      * objectManager
      *
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-     * @inject
+     * @var ObjectManagerInterface
      */
     protected $objectManager;
+
+    /**
+     * @param ObjectManagerInterface $objectManager
+     */
+    public function __construct(ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
 
     /**
      * Sets the type of the Model
@@ -74,11 +84,25 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
     public function initClass(Search $class)
     {
         $this->class = $class;
+        $this->className = $class->getSettings()->getClass();
+        if (!$this->useOldLanguageHandling()) {
+            return;
+        }
+
         if ($class->getSettings()->getClass() === Page::class and intval(GeneralUtility::_GP('L')) !== 0) {
             $this->className = PageLanguageOverlay::class;
-        } else {
-            $this->className = $class->getSettings()->getClass();
         }
+    }
+
+    /**
+     * @return bool
+     */
+    private function useOldLanguageHandling(): bool
+    {
+        /** @var Typo3Version $typo3 */
+        $typo3 = GeneralUtility::makeInstance(Typo3Version::class);
+
+        return ($typo3->getMajorVersion() < 10);
     }
 
     /**
@@ -98,9 +122,13 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
 
         // @Todo: Language not working correctly yet
         $this->query->getQuerySettings()
-            ->setLanguageUid(intval(GeneralUtility::_GP('L')))
             ->setRespectStoragePage(false)
             ->setRespectSysLanguage(true);
+
+        if ($this->useOldLanguageHandling()) {
+            $this->query->getQuerySettings()
+              ->setLanguageUid(intval(GeneralUtility::_GP('L')));
+        }
     }
 
     /**
@@ -120,10 +148,15 @@ class SearchRepository extends \TYPO3\CMS\Extbase\Persistence\Repository impleme
         $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
         $signalSlotDispatcher->dispatch(__CLASS__, 'afterInitSettings', [&$this->logicalAnd, $this->className, $this->query]);
 
+        $constraints[] = $this->query->logicalAnd($this->logicalAnd);
+        if (!empty($this->logicalOr)) {
+            $constraints[] = $this->query->logicalOr($this->logicalOr);
+        }
+
+        [$this->logicalAnd, $this->logicalOr];
         $this->query->matching(
             $this->query->logicalAnd(
-                $this->query->logicalAnd($this->logicalAnd),
-                $this->query->logicalOr($this->logicalOr)
+                $constraints
             )
         );
 

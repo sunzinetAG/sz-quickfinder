@@ -1,11 +1,13 @@
 <?php
+declare(strict_types = 1);
+
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 /**
  * Class News
  * @package Sunzinet\SzQuickfinder\Domain\Model
  */
-class News extends \GeorgRinger\News\Domain\Model\News
+class News extends AbstractSearch
 {
     /**
      * @var string $title

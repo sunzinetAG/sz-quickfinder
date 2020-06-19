@@ -21,13 +21,13 @@
   "require": {
     "php": "^7.2",
 
-    "typo3/cms-core": "^10.4",
-    "typo3/cms-backend": "^10.4",
-    "typo3/cms-extbase": "^10.4",
-    "typo3/cms-extensionmanager": "^10.4",
-    "typo3/cms-install": "^10.4",
-    "typo3/cms-scheduler": "^10.4",
-    "typo3/cms-fluid": "^10.4"
+    "typo3/cms-core": "^9.5 || ^10.4",
+    "typo3/cms-backend": "^9.5 || ^10.4",
+    "typo3/cms-extbase": "^9.5 || ^10.4",
+    "typo3/cms-extensionmanager": "^9.5 || ^10.4",
+    "typo3/cms-install": "^9.5 || ^10.4",
+    "typo3/cms-scheduler": "^9.5 || ^10.4",
+    "typo3/cms-fluid": "^9.5 || ^10.4"
   },
   "require-dev": {
     "nimut/testing-framework": "^4.1 || ^5.0",

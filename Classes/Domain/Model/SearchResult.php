@@ -1,9 +1,10 @@
 <?php
+declare(strict_types = 1);
+
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\RootlineUtility;
-use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * Trait SearchResult
@@ -12,24 +13,12 @@ use TYPO3\CMS\Frontend\Page\PageRepository;
 trait SearchResult
 {
     /**
-     * objectManager
-     *
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManager
-     * @inject
-     */
-    protected $objectManager;
-
-    /**
      * getRootline
      *
      * @return array
      */
     public function getRootline()
     {
-        /** @var $pageSelect PageRepository */
-        $pageSelect = $this->objectManager->get(PageRepository::class);
-        $pageSelect->init(false);
-
         /** @var RootlineUtility $rootline */
         $rootline = GeneralUtility::makeInstance(RootlineUtility::class, $this->getPid());
 

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types = 1);
+
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 /**
@@ -43,13 +45,6 @@ class PageLanguageOverlay extends AbstractSearch
     protected $author;
 
     /**
-     * changeUidToPid
-     *
-     * @var bool
-     */
-    public $changeUidToPid = false;
-
-    /**
      * breadcrumb
      *
      * @var string
@@ -64,14 +59,6 @@ class PageLanguageOverlay extends AbstractSearch
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUid()
-    {
-        return $this->pid;
     }
 
     /**
