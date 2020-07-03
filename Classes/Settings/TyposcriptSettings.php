@@ -211,7 +211,7 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
     /**
      * setSearchFields
      *
-     * @param [] $searchFields
+     * @param array $searchFields
      * @return $this
      */
     public function setSearchFields($searchFields)
@@ -234,7 +234,7 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
     /**
      * setSearchFields
      *
-     * @param [] $searchFields
+     * @param array $searchFields
      * @return $this
      */
     public function setAllowedFieldnames($allowedFieldnames)
