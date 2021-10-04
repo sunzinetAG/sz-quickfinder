@@ -48,7 +48,7 @@ page {
     10.stdWrap.noTrimWrap = |language-| |
     
     stdWrap.trim = 1
-    stdWrap.dataWrap = <body class="|" data-languid="{tsfe : sys_language_uid}">
+    stdWrap.dataWrap = <body class="|" data-languid="{sitelanguage:languageId}">
   }
 }
 ```
