@@ -36,7 +36,7 @@ jobs:
       uses: php-actions/composer@v6
       with:
         php_version: ${{ matrix.php }}
-        command: install
+        command: req typo3/cms^${{ matrix.typo3_version }}
         
         
 
