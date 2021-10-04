@@ -15,6 +15,11 @@ jobs:
       matrix:
         typo3_version: ['9.5', '10.4', '11.5.x-dev']
         php: ['7.2', '7.3', '7.4']
+        exclude:
+          - typo3_version: '11.5.x-dev'
+            php: '7.2'
+          - typo3_version: '11.5.x-dev'
+            php: '7.3'
 
     steps:
     - uses: actions/checkout@v2
