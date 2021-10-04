@@ -36,7 +36,7 @@ jobs:
       uses: php-actions/composer@v6
       with:
         php_version: ${{ matrix.php }}
-        command: create typo3/cms-base-distribution=${{ matrix.typo3_version }} . --prefer-dist
+        command: install
         
         
 
