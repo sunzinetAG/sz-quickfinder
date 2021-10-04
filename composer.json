@@ -5,8 +5,7 @@
   "keywords": ["Quickfinder", "Autocomplete"],
   "homepage": "http://www.sunzinet.com/",
   "license": "GPL-3.0-or-later",
-    "version": "6.0.0",
-    "authors": [
+  "authors": [
     {
       "name": "Dennis Römmich",
       "email": "dennis@roemmich.eu",
