@@ -35,7 +35,7 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v6
       with:
-        command: composer require typo3/minimal="${{ matrix.typo3_version }}"
+        command: require typo3/minimal="${{ matrix.typo3_version }}"
         
         
 
