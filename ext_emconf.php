@@ -20,7 +20,7 @@ $EM_CONF['sz_quickfinder'] = [
     'version' => '5.2.1',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5 - 10.4.99',
+            'typo3' => '9.5 - 11.5.99',
         ],
         'conflicts' => [],
         'suggests' => [],
