@@ -26,7 +26,7 @@ jobs:
       id: composer-cache
       uses: actions/cache@v2
       with:
-        php-version: ${{ matrix.php }}
+        php_version: ${{ matrix.php }}
         path: vendor
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
@@ -35,7 +35,7 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v6
       with:
-        php-version: ${{ matrix.php }}
+        php_version: ${{ matrix.php }}
         command: composer require typo3/minimal="${{ matrix.typo3_version }}"
         
         
@@ -57,11 +57,11 @@ jobs:
     - name: Run unit tests
       uses: php-actions/phpunit@v3
       with:
-        php-version: ${{ matrix.php }}
+        php_version: ${{ matrix.php }}
         configuration: .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml
       
     - name: Run functional tests
       uses: php-actions/phpunit@v3
       with:
-        php-version: ${{ matrix.php }}
+        php_version: ${{ matrix.php }}
         configuration: .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml
