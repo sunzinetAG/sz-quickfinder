@@ -1,0 +1,54 @@
+name: PHP Composer
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+
+    name: Test on node ${{ matrix.typo3_version }} and ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        typo3_version: ['9.5', '10.4', '11.x-dev']
+        php: ['7.2', '7.3', '7.4']
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      run: |
+        composer require typo3/minimal="${{ matrix.typo3_version }}"
+        export TYPO3_PATH_WEB=$PWD/.Build/Web
+
+    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+    - name: Run code style checks
+      run: .Build/bin/phpcs -n --standard=PSR2 --extensions=php *
+
+    - name: Run unit tests
+      run: .Build/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml Tests/Unit/
+
+    - name: Run functional tests
+      run: |
+        export typo3DatabaseName="typo3_test"
+        export typo3DatabaseHost="172.17.0.2"
+        export typo3DatabaseUsername="root"
+        export typo3DatabasePassword=""
+        .Build/bin/phpunit -c .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml Tests/Functional/
