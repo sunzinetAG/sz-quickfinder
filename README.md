@@ -1,3 +1,5 @@
+# This Extension is not supported anymore
+
 # Documentation - sz_quickfinder
 
 ## Installation
@@ -6,7 +8,7 @@
 ```sh
 composer require sunzinet/sz-quickfinder
 ```
-2. Activate sz-quickfinder in the Extensionmanager
+2. Activate sz-quickfinder in the Extens**ionmanager
 3. Include TypoScript
 4. Include sz-quickfinder in your template. Example:
 
