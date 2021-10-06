@@ -14,7 +14,7 @@ jobs:
     env: 
       TYPO3_PATH_WEB: '$PWD/.Build/Web'
       typo3DatabaseName: 'typo3_test'
-      typo3DatabaseHost: 'localhost'
+      typo3DatabaseHost: '127.0.0.1'
       typo3DatabaseUsername: 'typo3'
       typo3DatabasePassword: 'typo3'
     strategy:
@@ -26,6 +26,17 @@ jobs:
             php: '7.2'
           - typo3_version: '11.5'
             php: '7.3'
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_DATABASE: typo3_test
+          MYSQL_HOST: 127.0.0.1
+          MYSQL_USER: typo3
+          MYSQL_PASSWORD: typo3
+          MYSQL_ROOT_PASSWORD: typo3
+        ports:
+          - 3306:3306        
 
     steps:
     - uses: actions/checkout@v2
@@ -48,14 +59,6 @@ jobs:
       with:
         php_version: ${{ matrix.php }}
         command: req typo3/cms-core ^${{ matrix.typo3_version }}
- 
-    - name: Set up Database
-      uses: mirromutth/mysql-action@1.1
-      with:
-        mysql_version: '8.0'
-        mysql_database: 'typo3_test'
-        mysql_user: 'typo3'
-        mysql_password: 'typo3'
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
