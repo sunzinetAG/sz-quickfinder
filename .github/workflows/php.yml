@@ -7,16 +7,9 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
-
-    name: Test on TYPO3 ${{ matrix.typo3_version }} and ${{ matrix.php }}
+  setup:
+    name: Setup
     runs-on: ubuntu-latest
-    env: 
-      TYPO3_PATH_WEB: '$PWD/.Build/Web'
-      typo3DatabaseName: 'typo3_test'
-      typo3DatabaseHost: '127.0.0.1'
-      typo3DatabaseUsername: 'typo3'
-      typo3DatabasePassword: 'typo3'
     strategy:
       matrix:
         typo3_version: ['9.5', '10.4', '11.5']
@@ -25,7 +18,7 @@ jobs:
           - typo3_version: '11.5'
             php: '7.2'
           - typo3_version: '11.5'
-            php: '7.3'
+            php: '7.3'   
     services:
       mysql:
         image: mysql:latest
@@ -36,8 +29,7 @@ jobs:
           MYSQL_PASSWORD: typo3
           MYSQL_ROOT_PASSWORD: typo3
         ports:
-          - 3306:3306        
-
+          - 3306:3306  
     steps:
     - uses: actions/checkout@v2
 
@@ -60,9 +52,18 @@ jobs:
         php_version: ${{ matrix.php }}
         command: req typo3/cms-core ^${{ matrix.typo3_version }}
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
+  test:
+    name: Test on TYPO3 ${{ matrix.typo3_version }} and ${{ matrix.php }}
+    needs: setup
+    runs-on: ubuntu-latest
+    env: 
+      TYPO3_PATH_WEB: '$PWD/.Build/Web'
+      typo3DatabaseName: 'typo3_test'
+      typo3DatabaseHost: '127.0.0.1'
+      typo3DatabaseUsername: 'typo3'
+      typo3DatabasePassword: 'typo3'   
 
+    steps:
     - name: Run code style checks
       run: .Build/bin/phpcs -n --standard=PSR2 --extensions=php Classes/*
 
