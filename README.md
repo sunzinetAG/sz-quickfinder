@@ -1,3 +1,5 @@
+# This Extension is not supported anymore
+
 # Documentation - sz_quickfinder
 
 ## Installation
@@ -6,7 +8,7 @@
 ```sh
 composer require sunzinet/sz-quickfinder
 ```
-2. Activate sz-quickfinder in the Extensionmanager
+2. Activate sz-quickfinder in the Extens**ionmanager
 3. Include TypoScript
 4. Include sz-quickfinder in your template. Example:
 
@@ -48,7 +50,7 @@ page {
     10.stdWrap.noTrimWrap = |language-| |
     
     stdWrap.trim = 1
-    stdWrap.dataWrap = <body class="|" data-languid="{tsfe : sys_language_uid}">
+    stdWrap.dataWrap = <body class="|" data-languid="{sitelanguage:languageId}">
   }
 }
 ```

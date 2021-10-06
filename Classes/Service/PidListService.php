@@ -74,7 +74,7 @@ class PidListService
         $tsfe = $this->getTyposcriptFrontendController();
         foreach ($storagePids as $pkey => $pid) {
             $page = $tsfe->sys_page->getPage_noCheck($pid);
-            if ((int) $page['doktype'] === \TYPO3\CMS\Frontend\Page\PageRepository::DOKTYPE_DEFAULT && count($tsfe->sys_page->getPage($pid)) === 0) {
+            if ((int) $page['doktype'] === \TYPO3\CMS\Core\Domain\Repository\PageRepository::DOKTYPE_DEFAULT && count($tsfe->sys_page->getPage($pid)) === 0) {
                 unset($storagePids[$pkey]);
             }
         }
