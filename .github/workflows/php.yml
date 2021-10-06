@@ -65,6 +65,7 @@ jobs:
         version: '8.5'
         php_version: ${{ matrix.php }}
         configuration: .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml
+        filter: Tests/Unit/
       
     - name: Run functional tests
       uses: php-actions/phpunit@v3
@@ -72,3 +73,4 @@ jobs:
         version: '8.5'
         php_version: ${{ matrix.php }}
         configuration: .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml
+        filter: Tests/Functional/
