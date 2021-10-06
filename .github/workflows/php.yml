@@ -78,5 +78,6 @@ jobs:
       with:
         version: '8.5'
         php_version: ${{ matrix.php }}
+        php_extensions: mysqli
         configuration: .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml
         args: Tests/Functional/
