@@ -57,7 +57,7 @@ jobs:
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
     - name: Run code style checks
-      run: .Build/bin/phpcs -n --standard=PSR2 --extensions=php *
+      run: .Build/bin/phpcs -n --standard=PSR2 --extensions=php Classes/*
 
     - name: Run unit tests
       uses: php-actions/phpunit@v3
