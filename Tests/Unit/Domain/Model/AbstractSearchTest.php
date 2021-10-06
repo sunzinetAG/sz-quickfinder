@@ -12,7 +12,7 @@ class AbstractSearchTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->subject = new \Sunzinet\SzQuickfinder\Tests\Stub\AbstractSearch();
     }

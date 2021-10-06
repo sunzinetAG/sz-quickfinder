@@ -1,5 +1,9 @@
 # Change Log
 
+## [**6.0.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/6.0.0) - 2021-10-04
+
+* Marked setup.txt as deprecated. Use setup.typoscript instead
+
 ## [**4.1.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.1.0) - 2019-08-13
 
 * Add functionality for blacklist pids to exclude them from whitelist pids

@@ -28,7 +28,7 @@ class HighlightViewHelperTest extends \Nimut\TestingFramework\TestCase\ViewHelpe
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->viewHelper = $this->createPartialMock($this->buildAccessibleProxy(HighlightViewHelper::class), array('renderChildren'));

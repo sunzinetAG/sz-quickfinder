@@ -7,7 +7,7 @@ $boot = function ($extensionKey) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'Sunzinet.' . $extensionKey,
         'Pi1',
-        ['Search' => 'index, search, autocomplete']
+        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'index, search, autocomplete']
     );
 
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder']['default']['repository'] =
