@@ -62,11 +62,13 @@ jobs:
     - name: Run unit tests
       uses: php-actions/phpunit@v3
       with:
+        version: '8.5'
         php_version: ${{ matrix.php }}
         configuration: .Build/vendor/nimut/testing-framework/res/Configuration/UnitTests.xml
       
     - name: Run functional tests
       uses: php-actions/phpunit@v3
       with:
+        version: '8.5'
         php_version: ${{ matrix.php }}
         configuration: .Build/vendor/nimut/testing-framework/res/Configuration/FunctionalTests.xml
