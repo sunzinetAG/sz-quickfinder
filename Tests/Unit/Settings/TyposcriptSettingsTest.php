@@ -12,7 +12,7 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->subject = new \Sunzinet\SzQuickfinder\Settings\TyposcriptSettings([]);
     }
