@@ -62,6 +62,7 @@
   },
   "extra": {
       "typo3/cms": {
+          "extension-key": "sz_quickfinder",
           "cms-package-dir": "{$vendor-dir}/typo3/cms",
           "web-dir": ".Build/Web",
           "Package": {
