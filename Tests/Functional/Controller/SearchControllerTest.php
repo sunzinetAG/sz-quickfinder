@@ -16,7 +16,7 @@ class SearchControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
         'typo3conf/ext/sz_quickfinder',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->importDataSet('ntf://Database/pages.xml');

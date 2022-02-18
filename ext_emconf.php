@@ -17,10 +17,10 @@ $EM_CONF['sz_quickfinder'] = [
     'modify_tables' => '',
     'clearCacheOnLoad' => 0,
     'lockType' => '',
-    'version' => '5.2.2',
+    'version' => '6.0.0-dev',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5 - 10.4.99',
+            'typo3' => '9.5 - 11.5.99',
         ],
         'conflicts' => [],
         'suggests' => [],

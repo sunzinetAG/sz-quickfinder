@@ -1,5 +1,9 @@
 # Change Log
 
+## [**6.0.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/6.0.0) - 2021-10-04
+
+* Marked setup.txt as deprecated. Use setup.typoscript instead
+
 ## [**5.2.2**](https://github.com/sunzinetAG/sz-quickfinder/tree/5.2.2) - 2021-10-13
 
 * 2021-10-13 [FEATURE] Set version to 5.2.2 (Commit 0696672 by Christian Efthimoglou)
