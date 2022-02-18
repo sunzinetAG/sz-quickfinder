@@ -1,5 +1,11 @@
 # Change Log
 
+## [**5.2.2**](https://github.com/sunzinetAG/sz-quickfinder/tree/5.2.2) - 2021-10-13
+
+* 2021-10-13 [FEATURE] Set version to 5.2.2 (Commit 0696672 by Christian Efthimoglou)
+* 2021-10-13 [BUGFIX] Add extension-key property to composer.json (Commit 61daa61 by Christian Efthimoglou)
+* 2021-10-13 [BUGFIX] Add missing Services.yaml (Commit 9df1f58 by Christian Efthimoglou)
+
 ## [**4.1.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/4.1.0) - 2019-08-13
 
 * Add functionality for blacklist pids to exclude them from whitelist pids
