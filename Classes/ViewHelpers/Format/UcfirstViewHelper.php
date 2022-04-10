@@ -1,32 +1,37 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\ViewHelpers\Format;
 
+use Closure;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
-/**
- * Class UcfirstViewHelper
- * @package Sunzinet\SzQuickfinder\ViewHelpers\Format
- */
-class UcfirstViewHelper extends AbstractViewHelper
+final class UcfirstViewHelper extends AbstractViewHelper
 {
+    use CompileWithContentArgumentAndRenderStatic;
+
     /**
-     * Make a string's first character uppercase
-     *
+     * @return void
+     */
+    public function initializeArguments(): void
+    {
+        $this->registerArgument('string', 'string', 'String which first char should be uppercase.');
+    }
+
+    /**
+     * @param array $arguments
+     * @param Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
      * @return string
      */
-    public function render()
-    {
-        $string = $this->renderChildren();
-        if (!is_string($string)) {
-            throw new \InvalidArgumentException('Parameter $searchString must be of type string', 1440585046);
-        }
-
-        if ($string === '') {
-            throw new \InvalidArgumentException('Given String must not be Empty', 1440581637);
-        }
-
-        return ucfirst($string);
+    public static function renderStatic(
+        array $arguments,
+        Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ): string {
+        return ucfirst($renderChildrenClosure());
     }
 }
