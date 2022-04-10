@@ -1,5 +1,5 @@
-<f:layout name="Default"/>
-
-<f:for each="{results}" as="result">
-    <f:render partial="Result/Title" arguments="{title: result.username}"/>
-</f:for>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://typo3.org/ns/TYPO3Fluid/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:for each="{results}" as="result">
+        <f:render partial="Result/Title" arguments="{title: result.username}" />
+    </f:for>
+</html>
