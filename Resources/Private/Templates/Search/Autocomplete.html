@@ -6,9 +6,10 @@
             <f:for each="{results}" as="result" key="sectionName">
                 <f:if condition="{result}">
                     <div class="{sectionName}-results results">
-                        <strong class="results-headline">{sectionName -> sz:format.ucfirst()}</strong>
+                        <f:variable name="capitalizedSectionName" value="{f:format.case(mode: 'capital', value: '{sectionName}')}" />
+                        <strong class="results-headline">{capitalizedSectionName}</strong>
                         <div class="results-list">
-                            <f:render partial="result{sectionName -> sz:format.ucfirst()}" arguments="{results : result}" />
+                            <f:render partial="result{capitalizedSectionName}" arguments="{results : result}" />
                         </div>
                     </div>
                 </f:if>
