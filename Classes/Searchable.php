@@ -1,17 +1,16 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder;
 
 /**
- * Interface Searchable
- * @package Sunzinet\SzQuickfinder
+ * Must be implemented by repositories defined via
+ * $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder'][$customSearch['class']]['repository'].
  */
 interface Searchable
 {
     /**
-     * executeCustomSearch
-     *
      * @return mixed
      */
     public function executeCustomSearch();
@@ -20,12 +19,10 @@ interface Searchable
      * @param Search $class
      * @return void
      */
-    public function initClass(Search $class);
+    public function initClass(Search $class): void;
 
     /**
-     * reset
-     *
      * @return void
      */
-    public function reset();
+    public function reset(): void;
 }

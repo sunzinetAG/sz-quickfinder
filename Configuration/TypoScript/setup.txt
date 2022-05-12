@@ -1,2 +1,0 @@
-#Deprecated File will be removed in next major update
-@import 'EXT:sz_quickfinder/Configuration/TypoScript/*.typoscript'

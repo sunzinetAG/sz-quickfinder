@@ -1,6 +1,8 @@
-.idea
-.Build
+.idea/
+.DS_Store
+Icon
+._*
 node_modules
-vendor
+.Build/*
 composer.lock
 package-lock.json

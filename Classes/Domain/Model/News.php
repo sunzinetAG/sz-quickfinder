@@ -1,23 +1,20 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
-/**
- * Class News
- * @package Sunzinet\SzQuickfinder\Domain\Model
- */
 class News extends AbstractSearch
 {
     /**
-     * @var string $title
+     * @var string
      */
     protected $title;
 
     /**
-     *
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }

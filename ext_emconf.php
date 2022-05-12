@@ -1,34 +1,20 @@
 <?php
 
-$EM_CONF['sz_quickfinder'] = [
+$EM_CONF[$_EXTKEY] = [
     'title' => 'Quickfinder',
-    'description' => 'SzQuickfinder - Quickfinder Plugin der sunzinet AG',
+    'description' => 'SzQuickfinder - Quickfinder Plugin from SUNZINET GmbH',
     'category' => 'plugin',
     'author' => 'Dennis Römmich',
-    'author_email' => 'dennis.roemmich@sunzinet.com',
-    'author_company' => 'sunzinet AG',
-    'shy' => '',
-    'priority' => '',
-    'module' => '',
+    'author_email' => 'info@sunzinet.com',
+    'author_company' => 'SUNZINET GmbH',
     'state' => 'stable',
-    'internal' => '',
-    'uploadfolder' => '0',
-    'createDirs' => '',
-    'modify_tables' => '',
-    'clearCacheOnLoad' => 0,
-    'lockType' => '',
+    'uploadfolder' => false,
     'version' => '6.0.0-dev',
     'constraints' => [
         'depends' => [
-            'typo3' => '9.5 - 11.5.99',
+            'php' => '7.2.0-8.0.99',
+            'typo3' => '10.4.0-11.5.99',
+            'filemetadata' => '*',
         ],
-        'conflicts' => [],
-        'suggests' => [],
     ],
-    'autoload' => [
-        'psr-4' => ['Sunzinet\\SzQuickfinder\\' => 'Classes']
-    ],
-    'autoload-dev' => [
-        'psr-4' => ['Sunzinet\\SzQuickfinder\\Tests\\' => 'Tests']
-    ]
 ];

@@ -1,102 +1,75 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder;
 
-/**
- * Interface TyposcriptSettings
- * @package Sunzinet\SzQuickfinder
- */
 interface TyposcriptSettings
 {
     /**
-     * getClass
-     *
      * @return string
      */
-    public function getClass();
+    public function getClass(): string;
 
     /**
-     * getRegEx
-     *
      * @return string
      */
-    public function getRegEx();
+    public function getRegEx(): string;
 
     /**
-     * getMaxResults
-     *
      * @return int
      */
-    public function getMaxResults();
+    public function getMaxResults(): int;
 
     /**
-     * getIncludeNavHiddenPages
-     *
-     * @return int
+     * @return bool
      */
-    public function getIncludeNavHiddenPages();
+    public function getIncludeNavHiddenPages(): bool;
 
     /**
-     * getSearchfields
-     *
-     * @return string
+     * @return iterable
      */
-    public function getSearchfields();
+    public function getSearchfields(): iterable;
 
     /**
-     * getAllowedFieldnames
-     *
-     * @return string
-     */
-    public function getAllowedFieldnames();
-
-    /**
-     * getSearchString
-     *
-     * @return string
-     */
-    public function getSearchString();
-
-    /**
-     * getOrderBy
-     *
-     * @return string
-     */
-    public function getOrderBy();
-
-    /**
-     * getScript
-     *
-     * @return string
-     */
-    public function getScript();
-
-    /**
-     * getParams
-     *
      * @return array
      */
-    public function getParams();
+    public function getAllowedFieldnames(): array;
 
     /**
-     * getBlacklistPid
-     *
+     * @return string
+     */
+    public function getSearchString(): string;
+
+    /**
+     * @return string
+     */
+    public function getOrderBy(): string;
+
+    /**
+     * @return string
+     */
+    public function getScript(): string;
+
+    /**
      * @return array
      */
-    public function getBlacklistPid();
+    public function getParams(): array;
 
     /**
-     * @return boolean
+     * @return array
      */
-    public function getAscending();
+    public function getBlacklistPid(): array;
 
     /**
-     * setProperty
-     *
+     * @return bool
+     */
+    public function getAscending(): bool;
+
+    /**
      * @param string $propertyName
      * @param mixed $value
      * @return void
      */
-    public function setProperty($propertyName, $value);
+    public function setProperty(string $propertyName, $value): void;
 }

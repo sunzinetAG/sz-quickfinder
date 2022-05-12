@@ -1,55 +1,46 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
-/**
- * Class Content
- * @package Sunzinet\SzQuickfinder\Domain\Model
- */
 class Content extends AbstractSearch
 {
     /**
-     * @var string $header
+     * @var string
      */
-    protected $header;
+    protected $header = '';
 
     /**
-     * @var string $bodytext
+     * @var string
      */
-    protected $bodytext;
+    protected $bodytext = '';
 
     /**
-     * @var string $subheader
+     * @var string
      */
-    protected $subheader;
+    protected $subheader = '';
 
     /**
-     * Returns the header
-     *
-     * @return string $header
+     * @return string
      */
-    public function getHeader()
+    public function getHeader(): string
     {
         return $this->header;
     }
 
     /**
-     * Returns the bodytext
-     *
-     * @return string $bodytext
+     * @return string
      */
-    public function getBodytext()
+    public function getBodytext(): string
     {
         return $this->bodytext;
     }
 
     /**
-     * Returns the subheader
-     *
-     * @return string $subheader
+     * @return string
      */
-    public function getSubheader()
+    public function getSubheader(): string
     {
         return $this->subheader;
     }

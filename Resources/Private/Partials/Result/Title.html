@@ -1,12 +1,20 @@
-{namespace sz=Sunzinet\SzQuickfinder\ViewHelpers}
-
-<f:if condition="{pageUid}">
-    <f:then>
-        <f:link.page pageUid="{pageUid}" section="{section}">
-            <div><f:format.html><sz:format.highlight>{title}</sz:format.highlight></f:format.html></div>
-        </f:link.page>
-    </f:then>
-    <f:else>
-        <div><f:format.html><sz:format.highlight>{title}</sz:format.highlight></f:format.html></div>
-    </f:else>
-</f:if>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://typo3.org/ns/TYPO3Fluid/Fluid/ViewHelpers" xmlns:sz="http://typo3.org/ns/Sunzinet/SzQuickfinder/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:if condition="{pageUid}">
+        <f:then>
+            <f:link.page pageUid="{pageUid}" section="{section}">
+                <div>
+                    <f:format.html>
+                        <sz:format.highlight>{title}</sz:format.highlight>
+                    </f:format.html>
+                </div>
+            </f:link.page>
+        </f:then>
+        <f:else>
+            <div>
+                <f:format.html>
+                    <sz:format.highlight>{title}</sz:format.highlight>
+                </f:format.html>
+            </div>
+        </f:else>
+    </f:if>
+</html>
