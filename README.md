@@ -67,3 +67,12 @@ page {
 composer install
 ./vendor/bin/phpunit -c Tests/phpunit.xml
 ```
+
+## Todos:
+
+* Redesign interfaces
+  for example:
+  * interface SearchResult
+  * interface PageResult implements SearchResult
+  * interface FileResult implements SearchResult
+  * interface NewsResult implements SearchResult

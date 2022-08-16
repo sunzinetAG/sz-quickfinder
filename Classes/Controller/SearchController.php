@@ -9,6 +9,7 @@ use Sunzinet\SzQuickfinder\Search;
 use Sunzinet\SzQuickfinder\Searchable;
 use Sunzinet\SzQuickfinder\SearchResult;
 use Sunzinet\SzQuickfinder\Settings\TyposcriptSettings;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class SearchController extends ActionController
