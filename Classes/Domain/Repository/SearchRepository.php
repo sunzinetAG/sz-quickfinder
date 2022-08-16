@@ -146,10 +146,10 @@ class SearchRepository extends Repository implements Searchable
                 break;
         }
 
-        /** @var PidListService $pidListService */
-        $pidListService = GeneralUtility::makeInstance(PidListService::class, $storagePageIds, $blockedPageIds);
-        $allowedPageIds = $pidListService->generate();
-
+        $allowedPageIds = GeneralUtility::makeInstance(PidListService::class)->generate(
+            $storagePageIds,
+            $blockedPageIds
+        );
         if ($allowedPageIds !== []) {
             $this->logicalOr[] = $this->query->in('pid', $allowedPageIds);
         }
