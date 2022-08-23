@@ -71,6 +71,11 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
     protected $blacklistPid = [];
 
     /**
+     * @var int
+     */
+    protected $maxListResults = 20;
+
+    /**
      * @param array $settings
      */
     public function __construct(array $settings)
@@ -359,5 +364,24 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
                     1442418939
                 );
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxListResults(): int
+    {
+        return $this->maxListResults;
+    }
+
+    /**
+     * @param int $maxListResults
+     * @retrun self
+     */
+    public function setMaxListResults(int $maxListResults): self
+    {
+        $this->maxListResults = $maxListResults;
+
+        return $this;
     }
 }

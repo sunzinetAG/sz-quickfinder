@@ -8,4 +8,9 @@ defined('TYPO3_MODE') || exit;
         'Pi1',
         'Quickfinder'
     );
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+        'SzQuickfinder',
+        'List',
+        'Quickfinder Search Results'
+    );
 })();

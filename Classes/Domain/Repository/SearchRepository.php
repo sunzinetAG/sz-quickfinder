@@ -92,7 +92,6 @@ class SearchRepository extends Repository implements Searchable
         }
 
         $this->query->matching($this->query->logicalAnd($constraints));
-        $this->query->setLimit($this->class->getSettings()->getMaxResults());
     }
 
     /**

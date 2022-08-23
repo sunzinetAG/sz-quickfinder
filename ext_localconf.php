@@ -9,6 +9,16 @@ defined('TYPO3_MODE') || exit;
         'Pi1',
         [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'index, search, autocomplete']
     );
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SzQuickfinder',
+        'Autocomplete',
+        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'autocomplete']
+    );
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SzQuickfinder',
+        'List',
+        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'list']
+    );
 })();
 
 // Setting ext config
@@ -20,6 +30,6 @@ defined('TYPO3_MODE') || exit;
 // Adjust global TYPO3 config variables
 (static function (): void {
     // Exclude searchParameter from cHash, due to problems with pageNotFoundOnCHashError=1
-    $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_szquickfinder_pi1[searchString]';
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_szquickfinder_autocomplete[searchString]';
     $GLOBALS['TYPO3_CONF_VARS']['FE']['addRootLineFields'] .= ', nav_hide';
 })();

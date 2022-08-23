@@ -30,6 +30,7 @@ plugin.tx_szquickfinder {
       ascending = true
       // Exclude results from these page-ids; also available for customSearch
       blacklistPid =
+      maxListResults = 30
     }
 
     customSearch {
@@ -97,9 +98,8 @@ ajaxRequest {
     userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
     vendorName = Sunzinet
     extensionName = SzQuickfinder
-    pluginName = Pi1
+    pluginName = Autocomplete
     controller = Search
-    action = autocomplete
   }
 
   view =< plugin.tx_szquickfinder.view

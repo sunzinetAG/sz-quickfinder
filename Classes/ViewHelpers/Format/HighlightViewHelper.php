@@ -14,13 +14,19 @@ final class HighlightViewHelper extends AbstractViewHelper
      */
     private $searchString = '';
 
+    public function initializeArguments(): void
+    {
+        $this->registerArgument('searchString', 'string', 'String to highlight', false);
+    }
+
     /**
      * @return void
      */
     public function initialize(): void
     {
-        $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_pi1');
-        $this->searchString = urldecode($searchStringArr['searchString']);
+        $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_autocomplete');
+        $this->searchString = $this->arguments['searchString'] ??
+            (isset($searchStringArr['searchString']) ? urldecode($searchStringArr['searchString']) : '');
     }
 
     /**
