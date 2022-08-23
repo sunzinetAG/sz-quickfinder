@@ -106,7 +106,7 @@ var quickfinder = {
     sectionBar.find('.active').removeClass('active')
     el.addClass('active')
   }
-}
+};
 
 /**
  * Created by roemmichde on 20.03.14.
