@@ -48,8 +48,4 @@
     $(function() {
         initAutocomplete();
     });
-
-    $(document).ready(function() {
-      quickfinder.init()
-    });
 })(jQuery);
