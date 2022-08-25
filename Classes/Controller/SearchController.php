@@ -11,15 +11,9 @@ use Sunzinet\SzQuickfinder\SearchResult;
 use Sunzinet\SzQuickfinder\Settings\TyposcriptSettings;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 class SearchController extends ActionController
 {
-    /**
-     * @var Search
-     */
-    private static $searchModelClasses;
-
     /**
      * @var SearchRepository
      */
@@ -51,13 +45,38 @@ class SearchController extends ActionController
         $resultCount = [];
         $customSearchArray = $this->settings['customSearch'];
         foreach ($customSearchArray as $sectionName => $customSearch) {
-            $search = $this->getSearchModelObject($customSearch['class']);
+            $search = GeneralUtility::makeInstance($customSearch['class']);
+            if (! $search instanceof SearchResult) {
+                throw new \UnexpectedValueException(
+                    sprintf('Class "%s" must implement interface "%s".', get_class($search), SearchResult::class),
+                    1497260885905
+                );
+            }
 
-            $results[$sectionName] = $this->performSearch($searchString, $customSearch);
+            /** @var TyposcriptSettings $settings */
+            $settings = GeneralUtility::makeInstance(
+                TyposcriptSettings::class,
+                array_merge($this->settings['global'], $customSearch)
+            );
+            $settings->setProperty('searchString', $searchString);
+
+            $search->injectSettings($settings);
+            $repository = $this->getRepository($customSearch);
+
+            if (! $search instanceof Search) {
+                throw new \UnexpectedValueException(
+                    get_class($repository) . ' must implement interface ' . Search::class,
+                    1469445839
+                );
+            }
+
+            $repository->initClass($search);
+            $results[$sectionName] = $repository->executeCustomSearch();
 
             $resultCount[$sectionName] = $results[$sectionName]->count();
-
             $results[$sectionName] = array_slice($results[$sectionName]->toArray(), 0, $search->getSettings()->getMaxResults());
+
+            $repository->reset();
         }
 
         $this->view->assignMultiple([
@@ -65,79 +84,6 @@ class SearchController extends ActionController
             'results' => $results,
             'resultCount' => $resultCount,
         ]);
-    }
-
-    public function listAction(string $searchString = ''): void
-    {
-        if (empty($searchString)) {
-            return;
-        }
-
-        $results = [];
-        $resultCount = [];
-        $customSearchArray = $this->settings['customSearch'];
-        foreach ($customSearchArray as $sectionName => $customSearch) {
-            $search = $this->getSearchModelObject($customSearch['class']);
-
-            $results[$sectionName] = $this->performSearch($searchString, $customSearch);
-
-            $results[$sectionName] = array_slice($results[$sectionName]->toArray(), 0, $search->getSettings()->getMaxListResults());
-
-            $resultCount[$sectionName] = count($results[$sectionName]);
-        }
-
-        $this->view->assignMultiple([
-            'searchString' => $searchString,
-            'results' => $results,
-            'resultCount' => $resultCount,
-            'totalResults' => array_sum($resultCount)
-        ]);
-    }
-
-    private function getSearchModelObject(string $className)
-    {
-        if (isset(static::$searchModelClasses[$className])) {
-            return static::$searchModelClasses[$className];
-        }
-
-        static::$searchModelClasses[$className] = GeneralUtility::makeInstance($className);
-
-        if (! static::$searchModelClasses[$className] instanceof SearchResult) {
-            throw new \UnexpectedValueException(
-                sprintf('Class "%s" must implement interface "%s".', get_class(static::$searchModelClasses[$className]), SearchResult::class),
-                1497260885905
-            );
-        }
-
-        return static::$searchModelClasses[$className];
-    }
-
-    private function performSearch(string $searchString, array $customSearch): QueryResultInterface
-    {
-        $search = $this->getSearchModelObject($customSearch['class']);
-
-        /** @var TyposcriptSettings $settings */
-        $settings = GeneralUtility::makeInstance(
-            TyposcriptSettings::class,
-            array_merge($this->settings['global'], $customSearch)
-        );
-        $settings->setProperty('searchString', $searchString);
-
-        $search->injectSettings($settings);
-        $repository = $this->getRepository($customSearch);
-
-        if (! $search instanceof Search) {
-            throw new \UnexpectedValueException(
-                get_class($repository) . ' must implement interface ' . Search::class,
-                1469445839
-            );
-        }
-
-        $repository->initClass($search);
-        $results = $repository->executeCustomSearch();
-        $repository->reset();
-
-        return $results;
     }
 
     /**

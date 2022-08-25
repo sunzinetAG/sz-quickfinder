@@ -30,7 +30,6 @@ plugin.tx_szquickfinder {
       ascending = true
       // Exclude results from these page-ids; also available for customSearch
       blacklistPid =
-      maxListResults = 30
     }
 
     customSearch {
