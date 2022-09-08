@@ -25,6 +25,7 @@ defined('TYPO3_MODE') || exit;
 // Adjust global TYPO3 config variables
 (static function (): void {
     // Exclude searchParameter from cHash, due to problems with pageNotFoundOnCHashError=1
+    $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_szquickfinder_pi1[searchString]';
     $GLOBALS['TYPO3_CONF_VARS']['FE']['cacheHash']['excludedParameters'][] = 'tx_szquickfinder_autocomplete[searchString]';
     $GLOBALS['TYPO3_CONF_VARS']['FE']['addRootLineFields'] .= ', nav_hide';
 })();
