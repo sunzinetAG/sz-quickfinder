@@ -10,7 +10,6 @@ use TYPO3\CMS\Core\Utility\RootlineUtility;
 
 trait QuickfinderModelTrait
 {
-
     /**
      * @var TyposcriptSettings
      */
@@ -19,7 +18,7 @@ trait QuickfinderModelTrait
     /**
      * @var int
      */
-    protected $pid;
+    protected $pid = 0;
 
     /**
      * @param TyposcriptSettings $settings

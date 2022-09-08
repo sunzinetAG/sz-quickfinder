@@ -70,7 +70,6 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
      */
     protected $blacklistPid = [];
 
-
     /**
      * @param array $settings
      */
