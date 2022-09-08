@@ -16,7 +16,7 @@ final class HighlightViewHelper extends AbstractViewHelper
 
     public function initializeArguments(): void
     {
-        $this->registerArgument('searchString', 'string', 'String to highlight', false);
+        $this->registerArgument('searchString', 'string', 'String to highlight', false, '');
     }
 
     /**
@@ -25,8 +25,15 @@ final class HighlightViewHelper extends AbstractViewHelper
     public function initialize(): void
     {
         $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_autocomplete');
-        $this->searchString = $this->arguments['searchString'] ??
-            (isset($searchStringArr['searchString']) ? urldecode($searchStringArr['searchString']) : '');
+        if (GeneralUtility::_GP('tx_szquickfinder_pi1') !== null) {
+            $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_pi1');
+            trigger_error(
+                'Param "tx_szquickfinder_pi1" is deprecated since version 6.0.0, will be removed in version 7.0.0',
+                E_USER_DEPRECATED
+            );
+        }
+
+        $this->searchString = $this->arguments['searchString'] ?: urldecode($searchStringArr['searchString']) ?? '';
     }
 
     /**
