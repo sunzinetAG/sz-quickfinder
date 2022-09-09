@@ -107,6 +107,29 @@ ajaxRequest {
   settings =< plugin.sz_quickfinder.settings
 }
 
+szQuickfinderAutocomplete = PAGE
+szQuickfinderAutocomplete {
+  typeNum = 1662617600
+  config {
+    admPanel = 0
+    debug = 0
+    disableAllHeaderCode = 1
+  }
+
+  10 = USER
+  10 {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    vendorName = Sunzinet
+    extensionName = SzQuickfinder
+    pluginName = Autocomplete
+    controller = Search
+  }
+
+  view =< plugin.tx_szquickfinder.view
+  persistence =< plugin.sz_quickfinder.persistence
+  settings =< plugin.sz_quickfinder.settings
+}
+
 page {
   includeJS {
     sz_quickfinder = EXT:sz_quickfinder/Resources/Public/JavaScript/SzQuickfinder.min.js

@@ -42,6 +42,7 @@ class SearchController extends ActionController
     public function autocompleteAction(string $searchString): void
     {
         $results = [];
+        $resultCount = [];
         $customSearchArray = $this->settings['customSearch'];
         foreach ($customSearchArray as $sectionName => $customSearch) {
             $search = GeneralUtility::makeInstance($customSearch['class']);
@@ -71,12 +72,17 @@ class SearchController extends ActionController
 
             $repository->initClass($search);
             $results[$sectionName] = $repository->executeCustomSearch();
+
+            $resultCount[$sectionName] = $results[$sectionName]->count();
+            $results[$sectionName] = array_slice($results[$sectionName]->toArray(), 0, $search->getSettings()->getMaxResults());
+
             $repository->reset();
         }
 
         $this->view->assignMultiple([
             'searchString' => $searchString,
             'results' => $results,
+            'resultCount' => $resultCount,
         ]);
     }
 

@@ -14,13 +14,26 @@ final class HighlightViewHelper extends AbstractViewHelper
      */
     private $searchString = '';
 
+    public function initializeArguments(): void
+    {
+        $this->registerArgument('searchString', 'string', 'String to highlight', false, '');
+    }
+
     /**
      * @return void
      */
     public function initialize(): void
     {
-        $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_pi1');
-        $this->searchString = urldecode($searchStringArr['searchString']);
+        $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_autocomplete');
+        if (GeneralUtility::_GP('tx_szquickfinder_pi1') !== null) {
+            $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_pi1');
+            trigger_error(
+                'Param "tx_szquickfinder_pi1" is deprecated since version 6.0.0, will be removed in version 7.0.0',
+                E_USER_DEPRECATED
+            );
+        }
+
+        $this->searchString = $this->arguments['searchString'] ?: urldecode($searchStringArr['searchString']) ?? '';
     }
 
     /**
