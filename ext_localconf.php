@@ -12,6 +12,7 @@ defined('TYPO3_MODE') || exit;
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'SzQuickfinder',
         'Autocomplete',
+        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'autocomplete'],
         [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'autocomplete']
     );
 })();
