@@ -24,6 +24,9 @@ plugin.tx_szquickfinder {
 
     global {
       regEx = %|%
+      // set maxResults to 0 and this to limit results AND access the number of total results in template through
+      // {resultCount}
+      displayMaxResults = 0
       maxResults = 3
       includeNavHiddenPages = 0
       orderBy = uid

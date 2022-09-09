@@ -22,6 +22,11 @@ interface TyposcriptSettings
     public function getMaxResults(): int;
 
     /**
+     * @return int
+     */
+    public function getDisplayMaxResults(): int;
+
+    /**
      * @return bool
      */
     public function getIncludeNavHiddenPages(): bool;

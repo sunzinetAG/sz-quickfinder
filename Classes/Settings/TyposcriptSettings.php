@@ -24,6 +24,11 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
     protected $maxResults = 3;
 
     /**
+     * @var int
+     */
+    protected $displayMaxResults = 0;
+
+    /**
      * @var bool
      */
     protected $includeNavHiddenPages = false;
@@ -131,6 +136,24 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
     public function setMaxResults(int $maxResults): self
     {
         $this->maxResults = $maxResults;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDisplayMaxResults(): int
+    {
+        return $this->displayMaxResults;
+    }
+
+    /**
+     * @param int $displayMaxResults
+     * @return TyposcriptSettings
+     */
+    public function setDisplayMaxResults(int $displayMaxResults): TyposcriptSettings
+    {
+        $this->displayMaxResults = $displayMaxResults;
         return $this;
     }
 

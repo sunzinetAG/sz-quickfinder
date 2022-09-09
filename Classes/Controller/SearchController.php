@@ -74,7 +74,9 @@ class SearchController extends ActionController
             $results[$sectionName] = $repository->executeCustomSearch();
 
             $resultCount[$sectionName] = $results[$sectionName]->count();
-            $results[$sectionName] = array_slice($results[$sectionName]->toArray(), 0, $search->getSettings()->getMaxResults());
+            if($search->getSettings()->getDisplayMaxResults()) {
+                $results[$sectionName] = array_slice($results[$sectionName]->toArray(), 0, $search->getSettings()->getDisplayMaxResults());
+            }
 
             $repository->reset();
         }
