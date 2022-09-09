@@ -23,7 +23,7 @@
                 }
                 if ($this.val().length > 2) {
                     $.ajax({
-                        url: window.location.origin + '/?type=' + pageType + '&L=' + L + '&tx_szquickfinder_autocomplete[searchString]=' + encodeURIComponent($this.val()),
+                        url: window.location.origin + window.location.pathname + '?type=' + pageType + '&ts=' + Date.now() + '&L=' + L + '&tx_szquickfinder_autocomplete[searchString]=' + encodeURIComponent($this.val()) + '&no_cache=1',
                         success: function(response) {
                             container.html(response);
                         },
