@@ -85,6 +85,7 @@ class SearchController extends ActionController
             'searchString' => $searchString,
             'results' => $results,
             'resultCount' => $resultCount,
+            'resultCountOverall' => array_sum($resultCount),
         ]);
     }
 
