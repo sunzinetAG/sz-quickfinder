@@ -140,6 +140,7 @@ lib.tx_szquickfinder = COA
 lib.tx_szquickfinder {
   10 = USER
   10 {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
     vendorName = Sunzinet
     extensionName = SzQuickfinder
     pluginName = Pi1
