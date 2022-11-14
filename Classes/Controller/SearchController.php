@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository;
+use Sunzinet\SzQuickfinder\Domain\Repository\SuggestionRepository;
 use Sunzinet\SzQuickfinder\Search;
 use Sunzinet\SzQuickfinder\Searchable;
 use Sunzinet\SzQuickfinder\SearchResult;
@@ -20,26 +22,37 @@ class SearchController extends ActionController
     protected $searchRepository;
 
     /**
-     * @param SearchRepository $searchRepository
+     * @var SuggestionRepository
      */
-    public function __construct(SearchRepository $searchRepository)
+    protected SuggestionRepository $suggestionRepository;
+
+    /**
+     * @param SearchRepository $searchRepository
+     * @param SuggestionRepository $suggestionRepository
+     */
+    public function __construct(SearchRepository $searchRepository, SuggestionRepository $suggestionRepository)
     {
         $this->searchRepository = $searchRepository;
+        $this->suggestionRepository = $suggestionRepository;
     }
 
     /**
-     * @return void
+     * @return ResponseInterface
      */
-    public function indexAction(): void
+    public function indexAction(): ResponseInterface
     {
-        $this->view->assign('searchPid', $this->settings['searchPid']);
+        $this->view->assignMultiple([
+            'searchPid' => $this->settings['searchPid'],
+            'suggestions' => $this->suggestionRepository->findAll(),
+        ]);
+        return $this->htmlResponse();
     }
 
     /**
      * @param string $searchString
-     * @return void
+     * @return ResponseInterface
      */
-    public function autocompleteAction(string $searchString): void
+    public function autocompleteAction(string $searchString): ResponseInterface
     {
         $results = [];
         $resultCount = [];
@@ -86,7 +99,9 @@ class SearchController extends ActionController
             'results' => $results,
             'resultCount' => $resultCount,
             'resultCountOverall' => array_sum($resultCount),
+            'suggestions' => $this->suggestionRepository->findAll(),
         ]);
+        return $this->htmlResponse();
     }
 
     /**
