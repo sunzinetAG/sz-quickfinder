@@ -11,6 +11,18 @@ defined('TYPO3_MODE') || exit;
     );
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'SzQuickfinder',
+        'Index',
+        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'index'],
+        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'index']
+    );
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SzQuickfinder',
+        'Search',
+        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'search'],
+        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'search']
+    );
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'SzQuickfinder',
         'Autocomplete',
         [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'autocomplete'],
         [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'autocomplete']
