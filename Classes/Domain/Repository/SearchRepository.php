@@ -9,6 +9,7 @@ use Sunzinet\SzQuickfinder\Domain\Model\Page;
 use Sunzinet\SzQuickfinder\Domain\Model\PageLanguageOverlay;
 use Sunzinet\SzQuickfinder\Search;
 use Sunzinet\SzQuickfinder\Searchable;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -172,14 +173,16 @@ class SearchRepository extends Repository implements Searchable
                     : QueryInterface::ORDER_DESCENDING,
         ]);
 
-        // @Todo: Language not working correctly yet
         $this->query->getQuerySettings()
             ->setRespectStoragePage(false)
             ->setRespectSysLanguage(true);
 
         if (self::useOldLanguageHandling()) {
-            $this->query->getQuerySettings()->setLanguageUid((int) GeneralUtility::_GP('L'));
+            $languageId = (int) GeneralUtility::_GP('L');
+        } else {
+            $languageId = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'id', 0);
         }
+        $this->query->getQuerySettings()->setLanguageUid($languageId);
     }
 
     /**

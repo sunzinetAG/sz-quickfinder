@@ -22,8 +22,14 @@
                     jQuery('.tx-quickfinder-searchbox-results').html('<div class="ajax-loader"></div>');
                 }
                 if ($this.val().length > 2) {
+                    var url = new URL($this.data('typo3-ajax-url'));
+                    var params = url.searchParams;
+                    params.set('tx_szquickfinder_autocomplete[controller]', 'Search');
+                    params.set('tx_szquickfinder_autocomplete[searchString]', encodeURIComponent($this.val()));
+                    params.set('t', Date.now().toString());
+                    url.search = params.toString();
                     $.ajax({
-                        url: window.location.origin + '?type=' + pageType + '&ts=' + Date.now() + '&L=' + L + '&tx_szquickfinder_autocomplete[searchString]=' + encodeURIComponent($this.val()) + '&no_cache=1',
+                        url: url.toString(),
                         success: function(response) {
                             container.html(response);
                         },
