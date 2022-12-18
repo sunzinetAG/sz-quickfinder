@@ -12,6 +12,7 @@ use Sunzinet\SzQuickfinder\Searchable;
 use Sunzinet\SzQuickfinder\SearchResult;
 use Sunzinet\SzQuickfinder\Settings\TyposcriptSettings;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class SearchController extends ActionController
@@ -108,12 +109,15 @@ class SearchController extends ActionController
      * Forwards to EXT:indexed_search
      *
      * @param string $string
-     * @return void
+     * @return ResponseInterface
      */
-    public function searchAction(string $string): void
+    public function searchAction(string $string): ResponseInterface
     {
         $params = ['search' => ['searchWords' => $string, 'searchParams' => $string, 'sword' => $string]];
-        $this->forward('search', 'Search', 'IndexedSearch', $params);
+        return (new ForwardResponse('search'))
+            ->withControllerName('Search')
+            ->withExtensionName('IndexedSearch')
+            ->withArguments($params);
     }
 
     /**

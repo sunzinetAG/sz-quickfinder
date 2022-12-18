@@ -18,6 +18,10 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 use Sunzinet\SzQuickfinder\Service\PidListService;
 
+/**
+ * @todo replace usage of dispatcher
+ * @extensionScannerIgnoreFile
+ */
 class SearchRepository extends Repository implements Searchable
 {
     /**

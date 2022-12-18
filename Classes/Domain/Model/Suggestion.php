@@ -6,6 +6,14 @@ namespace Sunzinet\SzQuickfinder\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
+/**
+ * False positives for
+ * - Deprecation: #84289 - Use ServerRequestInterface in File/CreateFolderController
+ * - Breaking: #87193 - Deprecated functionality removed
+ * - Deprecation: #84295 - Use ServerRequestInterface in File/EditFileController
+ *
+ * @extensionScannerIgnoreFile
+ */
 class Suggestion extends AbstractEntity
 {
     public const TABLE = 'tx_szquickfinder_domain_model_suggestion';
