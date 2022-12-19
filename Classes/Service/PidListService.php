@@ -143,6 +143,6 @@ class PidListService
      */
     private static function getTsfe(): TypoScriptFrontendController
     {
-        return $GLOBALS['TYPO3_REQUEST']->getArgument('frontend.controller');
+        return $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.controller');
     }
 }
