@@ -12,7 +12,7 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->subject = new \Sunzinet\SzQuickfinder\Settings\TyposcriptSettings([]);
     }
@@ -212,10 +212,5 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
         $this->assertSame('/foo/bar', $subject->getScript());
         $this->assertSame(['foo', 'bar'], $subject->getParams());
         $this->assertSame([0 => '1234'], $subject->getBlacklistPid());
-    }
-
-    public function tearDown()
-    {
-        unset($GLOBALS['TYPO3_DB']);
     }
 }

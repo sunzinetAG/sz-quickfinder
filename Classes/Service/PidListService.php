@@ -3,64 +3,43 @@ declare(strict_types = 1);
 
 namespace Sunzinet\SzQuickfinder\Service;
 
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\Exception;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryHelper;
+use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
-/**
- * Class PidListService
- *
- * @package Sunzinet\SzQuickfinder\Service
- */
 class PidListService
 {
     /**
-     * @var array
-     */
-    private $storagePids = [];
-
-    /**
-     * @var array
-     */
-    private $blacklistPids = [];
-
-    /**
-     * @var ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * PidListService constructor.
-     * @param array $storagePids
-     * @param array $blacklistPids
-     */
-    public function __construct(array $storagePids, array $blacklistPids, ObjectManager $objectManager)
-    {
-        $this->storagePids = $storagePids;
-        $this->blacklistPids = $blacklistPids;
-        $this->objectManager = $objectManager;
-    }
-
-    /**
-     * @param array $storagePids contains the whitelist pids
-     * @param array $blacklistPids contains the blacklist pids
-     *
+     * @param array $storagePageIds
+     * @param array $blockedPageIds
      * @return array
      */
-    public function generate()
+    public function generate(array $storagePageIds, array $blockedPageIds): array
     {
-        $whitelistPids = [];
-        $blacklistPids = [];
-        foreach ($this->storagePids as $storagePid) {
-            $whitelistPids = array_merge($whitelistPids, $this->extendPidListByChildren($storagePid, 6));
+        $allowedPageIds = [];
+        $disallowedPageIds = [];
+
+        foreach ($storagePageIds as $storagePageId) {
+            $allowedPageIds = array_merge(
+                $allowedPageIds,
+                $this->extendPidListByChildren((int) $storagePageId)
+            );
         }
 
-        foreach ($this->blacklistPids as $blacklistPid) {
-            $blacklistPids = array_merge($blacklistPids, $this->extendPidListByChildren($blacklistPid, 6));
+        foreach ($blockedPageIds as $blockedPageId) {
+            $disallowedPageIds = array_merge(
+                $disallowedPageIds,
+                $this->extendPidListByChildren((int) $blockedPageId)
+            );
         }
 
-        return array_diff($whitelistPids, $blacklistPids);
+        return array_diff($allowedPageIds, $disallowedPageIds);
     }
 
     /**
@@ -69,12 +48,17 @@ class PidListService
      * @param array $storagePids
      * @return array
      */
-    private function filterNotAllowed(array $storagePids)
+    private static function filterNotAllowed(array $storagePids)
     {
-        $tsfe = $this->getTyposcriptFrontendController();
+        // @extensionScannerIgnoreLine
+        $pageRepository = self::getTsfe()->sys_page;
+
         foreach ($storagePids as $pkey => $pid) {
-            $page = $tsfe->sys_page->getPage_noCheck($pid);
-            if ((int) $page['doktype'] === \TYPO3\CMS\Frontend\Page\PageRepository::DOKTYPE_DEFAULT && count($tsfe->sys_page->getPage($pid)) === 0) {
+            $page = $pageRepository->getPage_noCheck($pid);
+            if (
+                (int) $page['doktype'] === PageRepository::DOKTYPE_DEFAULT
+                && count($pageRepository->getPage($pid)) === 0
+            ) {
                 unset($storagePids[$pkey]);
             }
         }
@@ -85,38 +69,80 @@ class PidListService
     /**
      * Find all ids from given ids and level
      *
-     * @param string $pidList comma separated list of ids
-     * @param integer $recursive recursive levels
-     * @return string comma separated list of ids
+     * @param int $storagePageId
+     * @return array
      */
-    private function extendPidListByChildren($pidList = '', $recursive = 0)
+    private function extendPidListByChildren(int $storagePageId): array
     {
-        $recursive = (int)$recursive;
-        if ($recursive <= 0) {
-            return $pidList;
-        }
+        $treeList = $this->getTreeList(
+            $storagePageId,
+            6,
+            0,
+            'hidden=0 AND deleted=0'
+        );
+        $allStoragePageIds = [$storagePageId, ...GeneralUtility::intExplode(',', $treeList, true)];
+        return array_unique(self::filterNotAllowed($allStoragePageIds), SORT_NUMERIC);
+    }
 
-        /** @var $queryGenerator QueryGenerator */
-        $queryGenerator = $this->objectManager->get(QueryGenerator::class);
-        $recursiveStoragePids = $pidList;
-        $storagePids = GeneralUtility::intExplode(',', $pidList);
-        foreach ($storagePids as $startPid) {
-            $pids = (string) $queryGenerator->getTreeList($startPid, $recursive, 0, 'hidden=0 AND deleted=0');
-            if (strlen($pids) > 0) {
-                $recursiveStoragePids .= ',' . $pids;
+    /**
+     * Recursively fetch all descendants of a given page
+     *
+     * @param int $id uid of the page
+     * @param int $depth
+     * @param int $begin
+     * @param string $permClause
+     * @throws DBALException
+     * @throws Exception
+     * @return string comma separated list of descendant pages
+     */
+    public function getTreeList($id, $depth, $begin = 0, $permClause = '')
+    {
+        $depth = (int)$depth;
+        $begin = (int)$begin;
+        $id = (int)$id;
+        if ($id < 0) {
+            $id = abs($id);
+        }
+        if ($begin === 0) {
+            $theList = $id;
+        } else {
+            $theList = '';
+        }
+        if ($id && $depth > 0) {
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+            $queryBuilder->getRestrictions()->removeAll()->add(GeneralUtility::makeInstance(DeletedRestriction::class));
+            $queryBuilder->select('uid')
+                ->from('pages')
+                ->where(
+                    $queryBuilder->expr()->eq('pid', $queryBuilder->createNamedParameter($id, \PDO::PARAM_INT)),
+                    $queryBuilder->expr()->eq('sys_language_uid', 0)
+                )
+                ->orderBy('uid');
+            if ($permClause !== '') {
+                $queryBuilder->andWhere(QueryHelper::stripLogicalOperatorPrefix($permClause));
+            }
+            $statement = $queryBuilder->execute();
+            while ($row = $statement->fetchAssociative()) {
+                if ($begin <= 0) {
+                    $theList .= ',' . $row['uid'];
+                }
+                if ($depth > 1) {
+                    $theSubList = $this->getTreeList($row['uid'], $depth - 1, $begin - 1, $permClause);
+                    if (!empty($theList) && !empty($theSubList) && ($theSubList[0] !== ',')) {
+                        $theList .= ',';
+                    }
+                    $theList .= $theSubList;
+                }
             }
         }
-
-        $return = explode(',', $recursiveStoragePids);
-
-        return $this->filterNotAllowed($return);
+        return $theList;
     }
 
     /**
      * @return TypoScriptFrontendController
      */
-    private function getTyposcriptFrontendController()
+    private static function getTsfe(): TypoScriptFrontendController
     {
-        return $GLOBALS['TSFE'];
+        return $GLOBALS['TYPO3_REQUEST']->getAttribute('frontend.controller');
     }
 }

@@ -5,6 +5,7 @@ namespace Sunzinet\SzQuickfinder\Tests\Repository;
 use Sunzinet\SzQuickfinder\Domain\Model\Page;
 use Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Domain\Repository\PageRepository;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 
@@ -27,7 +28,7 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
      */
     protected $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->importDataSet('ntf://Database/pages.xml');
@@ -39,14 +40,14 @@ class SearchRepositoryTest extends \Nimut\TestingFramework\TestCase\FunctionalTe
         $this->setUpFrontendRootPage(1, [
             'EXT:sz_quickfinder/Tests/Functional/Fixtures/TypoScript/page.ts',
         ]);
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->subject = $objectManager->get(SearchRepository::class);
+        $this->subject = GeneralUtility::makeInstance(SearchRepository::class);
         $this->mockPageRepository();
     }
 
     private function mockPageRepository()
     {
-        $GLOBALS['TSFE']->sys_page = GeneralUtility::makeInstance(\TYPO3\CMS\Frontend\Page\PageRepository::class);
+        // @extensionScannerIgnoreLine
+        $GLOBALS['TSFE']->sys_page = GeneralUtility::makeInstance(PageRepository::class);
     }
 
     /**

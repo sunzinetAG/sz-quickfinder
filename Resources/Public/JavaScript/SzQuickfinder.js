@@ -3,7 +3,7 @@
  */
 (function($) {
     'use strict';
-    var pageType = 1402582595;
+    var pageType = 1662617600;
     var timer = null;
 
     var initAutocomplete = function() {
@@ -22,8 +22,14 @@
                     jQuery('.tx-quickfinder-searchbox-results').html('<div class="ajax-loader"></div>');
                 }
                 if ($this.val().length > 2) {
+                    var url = new URL($this.data('typo3-ajax-url'));
+                    var params = url.searchParams;
+                    params.set('tx_szquickfinder_autocomplete[controller]', 'Search');
+                    params.set('tx_szquickfinder_autocomplete[searchString]', encodeURIComponent($this.val()));
+                    params.set('t', Date.now().toString());
+                    url.search = params.toString();
                     $.ajax({
-                        url: window.location.origin + window.location.pathname + '?type=' + pageType + '&L=' + L + '&tx_szquickfinder_pi1[searchString]=' + encodeURIComponent($this.val()),
+                        url: url.toString(),
                         success: function(response) {
                             container.html(response);
                         },

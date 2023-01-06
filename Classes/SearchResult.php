@@ -1,25 +1,22 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder;
 
 /**
- * Interface SearchResult
- * @package Sunzinet\SzQuickfinder
+ * Must be implemented by custom search classes together with Search interface.
+ * Alternatively custom search class can extend AbstractSearch model.
  */
 interface SearchResult
 {
     /**
-     * getRootline
-     *
      * @return array
      */
-    public function getRootline();
+    public function getRootline(): array;
 
     /**
-     * getPageId
-     *
      * @return int
      */
-    public function getPid();
+    public function getPid(): int;
 }

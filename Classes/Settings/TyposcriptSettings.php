@@ -1,103 +1,82 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\Settings;
 
-/**
- * Class TyposcriptSettings
- * @package Sunzinet\SzQuickfinder\Settings
- */
-class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
+use Sunzinet\SzQuickfinder\TyposcriptSettings as TyposcriptSettingsInterface;
+
+class TyposcriptSettings implements TyposcriptSettingsInterface
 {
     /**
-     * class
-     *
-     * @var string $class
+     * @var string
      */
     protected $class = '';
 
     /**
-     * regEx
-     *
-     * @var string $regEx
+     * @var string
      */
     protected $regEx = '%|%';
 
     /**
-     * maxResults
-     *
-     * @var int $maxResults
+     * @var int
      */
     protected $maxResults = 3;
 
     /**
-     * includeNavHiddenPages
-     *
-     * @var bool $includeNavHiddenPages
+     * @var int
+     */
+    protected $displayMaxResults = 0;
+
+    /**
+     * @var bool
      */
     protected $includeNavHiddenPages = false;
 
     /**
-     * searchFields
-     *
-     * @var array $searchFields
+     * @var array
      */
     protected $searchFields = ['title'];
 
     /**
-     * allowedFieldnames needed for document search
+     * Necessary for document search
      *
-     * @var array $allowedFieldnames
+     * @var array
      */
     protected $allowedFieldnames = ['media'];
 
     /**
-     * searchString
-     *
-     * @var string $searchString
+     * @var string
      */
     protected $searchString = '';
 
     /**
-     * orderBy
-     *
-     * @var string $orderBy
+     * @var string
      */
     protected $orderBy = 'uid';
 
     /**
-     * ascending
-     *
-     * @var bool $ascending
+     * @var bool
      */
     protected $ascending = true;
 
     /**
-     * script
-     *
-     * @var string $script
+     * @var string
      */
     protected $script = '';
 
     /**
-     * params
-     *
-     * @var array $params
+     * @var array
      */
     protected $params = [];
 
     /**
-     * blacklistPid
-     *
-     * @var array $blacklistPid
+     * @var array
      */
     protected $blacklistPid = [];
 
     /**
-     * TyposcriptSettings constructor.
-     *
      * @param array $settings
-     * @throws \TYPO3\CMS\Extbase\Property\Exception\InvalidPropertyException
      */
     public function __construct(array $settings)
     {
@@ -107,247 +86,218 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
     }
 
     /**
-     * getClass
-     *
      * @return string
      */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
 
     /**
-     * setModel
-     *
      * @param string $class
-     * @return $this
+     * @return self
      */
-    public function setClass($class)
+    public function setClass(string $class): self
     {
         $this->class = $class;
-
         return $this;
     }
 
     /**
-     * getRegEx
-     *
      * @return string
      */
-    public function getRegEx()
+    public function getRegEx(): string
     {
         return $this->regEx;
     }
 
     /**
-     * setRegEx
-     *
      * @param string $regEx
-     * @return $this
+     * @return self
      */
-    public function setRegEx($regEx)
+    public function setRegEx(string $regEx): self
     {
         $this->regEx = $regEx;
-
         return $this;
     }
 
     /**
-     * getMaxResults
-     *
      * @return int
      */
-    public function getMaxResults()
+    public function getMaxResults(): int
     {
         return $this->maxResults;
     }
 
     /**
-     * setMaxResults
-     *
      * @param int $maxResults
-     * @return $this
+     * @return self
      */
-    public function setMaxResults($maxResults)
+    public function setMaxResults(int $maxResults): self
     {
         $this->maxResults = $maxResults;
-
         return $this;
     }
 
     /**
-     * getIncludeNavHiddenPages
-     *
      * @return int
      */
-    public function getIncludeNavHiddenPages()
+    public function getDisplayMaxResults(): int
+    {
+        return $this->displayMaxResults;
+    }
+
+    /**
+     * @param int $displayMaxResults
+     * @return TyposcriptSettings
+     */
+    public function setDisplayMaxResults(int $displayMaxResults): TyposcriptSettings
+    {
+        $this->displayMaxResults = $displayMaxResults;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIncludeNavHiddenPages(): bool
     {
         return $this->includeNavHiddenPages;
     }
 
     /**
-     * setIncludeNavHiddenPages
-     *
-     * @param int $includeNavHiddenPages
-     * @return $this
+     * @param int|bool $includeNavHiddenPages
+     * @return self
      */
-    public function setIncludeNavHiddenPages($includeNavHiddenPages)
+    public function setIncludeNavHiddenPages($includeNavHiddenPages): self
     {
-        $this->includeNavHiddenPages = $includeNavHiddenPages;
-
+        $this->includeNavHiddenPages = (bool) $includeNavHiddenPages;
         return $this;
     }
 
     /**
-     * getSearchfields
-     *
-     * @return array
+     * @return iterable
      */
-    public function getSearchFields()
+    public function getSearchFields(): iterable
     {
         return $this->searchFields;
     }
 
     /**
-     * setSearchFields
-     *
-     * @param array $searchFields
-     * @return $this
+     * @param iterable $searchFields
+     * @return self
      */
-    public function setSearchFields($searchFields)
+    public function setSearchFields(iterable $searchFields): self
     {
         $this->searchFields = $searchFields;
-
         return $this;
     }
 
     /**
-     * getAllowedFieldnames
-     *
      * @return array
      */
-    public function getAllowedFieldnames()
+    public function getAllowedFieldnames(): array
     {
         return $this->allowedFieldnames;
     }
 
     /**
-     * setSearchFields
-     *
-     * @param array $searchFields
-     * @return $this
+     * @param array $allowedFieldnames
+     * @return self
      */
-    public function setAllowedFieldnames($allowedFieldnames)
+    public function setAllowedFieldnames(array $allowedFieldnames): self
     {
         $this->allowedFieldnames = $allowedFieldnames;
-
         return $this;
     }
 
     /**
-     * getSearchString
-     *
      * @return string
      */
-    public function getSearchString()
+    public function getSearchString(): string
     {
         return $this->searchString;
     }
 
     /**
-     * setSearchString
-     *
      * @param string $searchString
-     * @return $this
+     * @return self
      */
-    public function setSearchString($searchString)
+    public function setSearchString(string $searchString): self
     {
         $this->searchString = $searchString;
-
         return $this;
     }
 
     /**
-     * getOrderBy
-     *
      * @return string
      */
-    public function getOrderBy()
+    public function getOrderBy(): string
     {
         return $this->orderBy;
     }
 
     /**
-     * setOrderBy
-     *
      * @param string $orderBy
-     * @return $this
+     * @return self
      */
-    public function setOrderBy($orderBy)
+    public function setOrderBy(string $orderBy): self
     {
         $this->orderBy = $orderBy;
-
         return $this;
     }
 
     /**
-     * getAscending
-     *
-     * @return boolean
+     * @return bool
      */
-    public function getAscending()
+    public function getAscending(): bool
     {
         return $this->ascending;
     }
 
     /**
-     * setAscending
-     *
-     * @param boolean $ascending
-     * @return $this
+     * @param bool $ascending
+     * @return self
      */
-    public function setAscending($ascending)
+    public function setAscending(bool $ascending): self
     {
         $this->ascending = $ascending;
-
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getScript()
+    public function getScript(): string
     {
         return $this->script;
     }
 
     /**
      * @param string $script
-     * @return $this
+     * @return self
      */
-    public function setScript($script)
+    public function setScript(string $script): self
     {
         $this->script = $script;
-
         return $this;
     }
 
     /**
      * @return array
      */
-    public function getParams()
+    public function getParams(): array
     {
         return $this->params;
     }
 
     /**
      * @param array $params
-     * @return $this
+     * @return self
      */
-    public function setParams($params)
+    public function setParams(array $params): self
     {
         $this->params = $params;
-
         return $this;
     }
 
@@ -361,67 +311,64 @@ class TyposcriptSettings implements \Sunzinet\SzQuickfinder\TyposcriptSettings
 
     /**
      * @param array $blacklistPid
+     * @return self
      */
-    public function setBlacklistPid(array $blacklistPid)
+    public function setBlacklistPid(array $blacklistPid): self
     {
         $this->blacklistPid = $blacklistPid;
+        return $this;
     }
 
     /**
-     * setProperty
-     *
      * @param string $propertyName
      * @param mixed $value
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\Exception\NonExistentPropertyException
      * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
      * @return void
      */
-    public function setProperty($propertyName, $value)
+    public function setProperty(string $propertyName, $value): void
     {
-        if (!$this->hasProperty($propertyName)) {
+        if (! $this->hasProperty($propertyName)) {
             throw new \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\Exception\NonExistentPropertyException(
-                'Property ' . $propertyName . ' does not Exist in ' . __CLASS__,
+                sprintf('Property "%s" does not exist in class "%s".', $propertyName, __CLASS__),
                 1442413257
             );
         }
+
         $method = 'set' . ucfirst($propertyName);
         $value = self::convert(gettype($this->{$propertyName}), $value);
-        if (!method_exists($this, $method)) {
+        if (! method_exists($this, $method)) {
             throw new \BadMethodCallException(
-                'Method ' . $method . ' does not Exist in ' . __CLASS__,
+                sprintf('Method "%s" does not exist in class "%s".', $method, __CLASS__),
                 1456819227
             );
         }
 
-        call_user_func([$this, $method], $value);
+        $this->$method($value);
     }
 
     /**
-     * hasProperty
-     *
      * @param string $propertyName
      * @return bool
      */
-    protected function hasProperty($propertyName)
+    protected function hasProperty(string $propertyName): bool
     {
         return property_exists(self::class, $propertyName);
     }
 
     /**
-     * convert
-     *
-     * @param mixed $type
+     * @param string $type
      * @param mixed $var
-     * @return array|bool|int|string
      * @throws \TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException
+     * @return array|bool|int|string
      */
-    protected static function convert($type, $var)
+    protected static function convert(string $type, $var)
     {
         switch ($type) {
             case 'string':
-                return (string)$var;
+                return (string) $var;
             case 'integer':
-                return (int)$var;
+                return (int) $var;
             case 'boolean':
                 return filter_var($var, FILTER_VALIDATE_BOOLEAN);
             case 'array':

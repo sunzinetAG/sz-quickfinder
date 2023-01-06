@@ -1,66 +1,56 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
-/**
- * Class File
- * @package Sunzinet\SzQuickfinder\Domain\Model
- */
 class File extends AbstractSearch
 {
     /**
-     * @var string $title
+     * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
-     * @var string $description
+     * @var string
      */
-    protected $description;
+    protected $description = '';
 
     /**
-     * @var int $uidForeign
+     * @var int
      */
-    protected $uidForeign;
+    protected $uidForeign = 0;
 
     /**
-     * @var string $tablenames
+     * @var string
      */
-    protected $tablenames;
+    protected $tablenames = '';
 
     /**
-     * @var string $fieldname
+     * @var string
      */
-    protected $fieldname;
-
+    protected $fieldname = '';
 
     /**
-     * Returns the title
-     *
-     * @return string $title
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * Returns the description
-     *
-     * @return string $description
+     * @return string
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
     /**
-     * Returns the uidForeign
-     *
-     * @return int $uidForeign
+     * @return int
      */
-    public function getUidForeign()
+    public function getUidForeign(): int
     {
         return $this->uidForeign;
     }
@@ -68,15 +58,16 @@ class File extends AbstractSearch
     /**
      * @return string
      */
-    public function getTablenames()
+    public function getTablenames(): string
     {
         return $this->tablenames;
     }
 
     /**
-     * @param string $tablenames
+     * @param string
+     * @return void
      */
-    public function setTablenames($tablenames)
+    public function setTablenames(string $tablenames): void
     {
         $this->tablenames = $tablenames;
     }
@@ -84,15 +75,16 @@ class File extends AbstractSearch
     /**
      * @return string
      */
-    public function getFieldname()
+    public function getFieldname(): string
     {
         return $this->fieldname;
     }
 
     /**
-     * @param string $fieldname
+     * @param string
+     * @return void
      */
-    public function setFieldname($fieldname)
+    public function setFieldname(string $fieldname): void
     {
         $this->fieldname = $fieldname;
     }

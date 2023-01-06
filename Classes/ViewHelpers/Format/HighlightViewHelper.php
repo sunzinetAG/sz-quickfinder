@@ -1,84 +1,58 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\ViewHelpers\Format;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 
-/**
- * Class HighlightViewHelper
- * @package Sunzinet\SzQuickfinder\ViewHelpers\Format
- */
-class HighlightViewHelper extends AbstractViewHelper
+final class HighlightViewHelper extends AbstractViewHelper
 {
     /**
-     * searchstring
-     *
-     * @var string $searchstring
+     * @var string
      */
-    protected $searchString = '';
+    private $searchString = '';
 
-    /**
-     * Sets the SearchString
-     *
-     * @return void
-     */
-    public function initialize()
+    public function initializeArguments(): void
     {
-        $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_pi1');
-        $this->setSearchString(urldecode($searchStringArr['searchString']));
+        $this->registerArgument('searchString', 'string', 'String to highlight', false, '');
     }
 
     /**
-     * The result with highlighted String
+     * @return void
+     */
+    public function initialize(): void
+    {
+        $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_autocomplete');
+        if (GeneralUtility::_GP('tx_szquickfinder_pi1') !== null) {
+            $searchStringArr = GeneralUtility::_GP('tx_szquickfinder_pi1');
+            trigger_error(
+                'Param "tx_szquickfinder_pi1" is deprecated since version 6.0.0, will be removed in version 7.0.0',
+                E_USER_DEPRECATED
+            );
+        }
+
+        $this->searchString = $this->arguments['searchString'] ?: urldecode($searchStringArr['searchString']) ?? '';
+    }
+
+    /**
+     * The result with highlighted string
      *
      * @return string
      */
-    public function render()
+    public function render(): string
     {
         $return = htmlspecialchars_decode($this->renderChildren());
         $occurrences = substr_count(strtolower($return), strtolower($this->searchString));
 
         $match = [];
-
         for ($i = 0; $i < $occurrences; $i++) {
-            $match[$i] = stripos($return, $this->getSearchString(), $i);
-            $match[$i] = substr($return, $match[$i], strlen($this->getSearchString()));
+            $match[$i] = stripos($return, $this->searchString, $i);
+            $match[$i] = substr($return, $match[$i], strlen($this->searchString));
             $return = str_replace($match[$i], '[#]' . $match[$i] . '[@]', $return);
         }
 
-        $return = str_replace('[#]', '<strong>', $return);
-        $return = str_replace('[@]', '</strong>', $return);
-
-        return $return;
-    }
-
-    /**
-     * getSearchstring
-     *
-     * @return string
-     */
-    protected function getSearchString()
-    {
-        return $this->searchString;
-    }
-
-    /**
-     * setSearchString
-     *
-     * @param string $searchString
-     * @return void
-     */
-    protected function setSearchString($searchString = '')
-    {
-        if (!is_string($searchString)) {
-            throw new \InvalidArgumentException('Parameter $searchString must be of type string', 1440585046);
-        }
-
-        if ($searchString === '') {
-            throw new \InvalidArgumentException('Given String must not be Empty', 1440581637);
-        }
-        $this->searchString = $searchString;
+        return str_replace(['[#]', '[@]'], ['<strong>', '</strong>'], $return);
     }
 }

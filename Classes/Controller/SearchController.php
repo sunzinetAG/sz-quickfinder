@@ -1,69 +1,74 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository;
+use Sunzinet\SzQuickfinder\Domain\Repository\SuggestionRepository;
 use Sunzinet\SzQuickfinder\Search;
 use Sunzinet\SzQuickfinder\Searchable;
 use Sunzinet\SzQuickfinder\SearchResult;
 use Sunzinet\SzQuickfinder\Settings\TyposcriptSettings;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
-/**
- * Class SearchController
- *
- * @package Sunzinet\SzQuickfinder\Controller
- */
 class SearchController extends ActionController
 {
     /**
-     * searchRepository
-     *
      * @var SearchRepository
      */
     protected $searchRepository;
 
     /**
-     * @param SearchRepository $searchRepository
+     * @var SuggestionRepository
      */
-    public function __construct(SearchRepository $searchRepository)
+    protected SuggestionRepository $suggestionRepository;
+
+    /**
+     * @param SearchRepository $searchRepository
+     * @param SuggestionRepository $suggestionRepository
+     */
+    public function __construct(SearchRepository $searchRepository, SuggestionRepository $suggestionRepository)
     {
         $this->searchRepository = $searchRepository;
+        $this->suggestionRepository = $suggestionRepository;
     }
 
     /**
-     * Only show the SearchForm
-     *
-     * @return void
+     * @return ResponseInterface
      */
-    public function indexAction()
+    public function indexAction(): ResponseInterface
     {
-        $this->view->assign('searchPid', $this->settings['searchPid']);
+        $this->view->assignMultiple([
+            'searchPid' => $this->settings['searchPid'],
+            'suggestions' => $this->suggestionRepository->findAll(),
+        ]);
+        return $this->htmlResponse();
     }
 
     /**
-     * autocomplete action
-     *
-     * @param string $searchString The string
-     * @return void
+     * @param string $searchString
+     * @return ResponseInterface
      */
-    public function autocompleteAction($searchString)
+    public function autocompleteAction(string $searchString): ResponseInterface
     {
-        $customSearchArray = $this->settings['customSearch'];
-
         $results = [];
-
+        $resultCount = [];
+        $customSearchArray = $this->settings['customSearch'];
         foreach ($customSearchArray as $sectionName => $customSearch) {
-            $search = $this->objectManager->get($customSearch['class']);
-            if (!($search instanceof SearchResult)) {
+            $search = GeneralUtility::makeInstance($customSearch['class']);
+            if (! $search instanceof SearchResult) {
                 throw new \UnexpectedValueException(
-                    get_class($search) . ' must implement interface ' . SearchResult::class,
+                    sprintf('Class "%s" must implement interface "%s".', get_class($search), SearchResult::class),
                     1497260885905
                 );
             }
+
             /** @var TyposcriptSettings $settings */
-            $settings = $this->objectManager->get(
+            $settings = GeneralUtility::makeInstance(
                 TyposcriptSettings::class,
                 array_merge($this->settings['global'], $customSearch)
             );
@@ -72,7 +77,7 @@ class SearchController extends ActionController
             $search->injectSettings($settings);
             $repository = $this->getRepository($customSearch);
 
-            if (!($search instanceof Search)) {
+            if (! $search instanceof Search) {
                 throw new \UnexpectedValueException(
                     get_class($repository) . ' must implement interface ' . Search::class,
                     1469445839
@@ -81,49 +86,56 @@ class SearchController extends ActionController
 
             $repository->initClass($search);
             $results[$sectionName] = $repository->executeCustomSearch();
+
+            $resultCount[$sectionName] = $results[$sectionName]->count();
+            if($search->getSettings()->getDisplayMaxResults()) {
+                $results[$sectionName] = array_slice($results[$sectionName]->toArray(), 0, $search->getSettings()->getDisplayMaxResults());
+            }
+
             $repository->reset();
         }
 
-        $this->view->assign('searchString', $searchString);
-        $this->view->assign('results', $results);
+        $this->view->assignMultiple([
+            'searchString' => $searchString,
+            'results' => $results,
+            'resultCount' => $resultCount,
+            'resultCountOverall' => array_sum($resultCount),
+            'suggestions' => $this->suggestionRepository->findAll(),
+        ]);
+        return $this->htmlResponse();
+    }
+
+    /**
+     * Forwards to EXT:indexed_search
+     *
+     * @param string $string
+     * @return ResponseInterface
+     */
+    public function searchAction(string $string): ResponseInterface
+    {
+        $params = ['search' => ['searchWords' => $string, 'searchParams' => $string, 'sword' => $string]];
+        return (new ForwardResponse('search'))
+            ->withControllerName('Search')
+            ->withExtensionName('IndexedSearch')
+            ->withArguments($params);
     }
 
     /**
      * @param array $customSearch
      * @return Searchable
      */
-    protected function getRepository($customSearch)
+    protected function getRepository(array $customSearch): Searchable
     {
-        /** @var Searchable $repository */
-        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder'][$customSearch['class']]['repository'])) {
-            $repository = $this->objectManager->get(
-                $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder'][$customSearch['class']]['repository']
-            );
-        } else {
-            $repository = $this->objectManager->get(
-                $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder']['default']['repository']
-            );
-        }
-
-        if (!($repository instanceof Searchable)) {
+        $class = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder'][$customSearch['class']]['repository']
+            ?? $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder']['default']['repository'];
+        $repository = GeneralUtility::makeInstance($class);
+        if (! $repository instanceof Searchable) {
             throw new \UnexpectedValueException(
-                get_class($repository) . ' must implement interface ' . Searchable::class,
+                sprintf('Class "%s" must implement interface "%s".', get_class($repository), Searchable::class),
                 1469445839
             );
         }
 
         return $repository;
-    }
-
-    /**
-     * Goes forward to IndexedSearch
-     *
-     * @param string $string The string
-     * @return void
-     */
-    public function searchAction($string)
-    {
-        $params = ['search' => ['searchWords' => $string, 'searchParams' => $string, 'sword' => $string]];
-        $this->forward('search', 'Search', 'IndexedSearch', $params);
     }
 }

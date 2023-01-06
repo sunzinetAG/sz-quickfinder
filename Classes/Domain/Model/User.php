@@ -1,23 +1,20 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
-/**
- * Class User
- * @package Sunzinet\SzQuickfinder\Domain\Model
- */
 class User extends AbstractSearch
 {
     /**
-     * @var string $username
+     * @var string
      */
-    protected $username;
+    protected $username = '';
 
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }

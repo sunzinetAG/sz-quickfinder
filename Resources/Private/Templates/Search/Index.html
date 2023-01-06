@@ -1,12 +1,17 @@
-<f:layout name="Default"/>
-
-<f:section name="main">
-
-    <f:form pageUid="{settings.searchPid}" controller="">
-        <input type="text" class="tx-quickfinder-searchbox-sword"
-               name="tx_indexedsearch[sword]" value="" placeholder="{f:translate(key: 'search-placeholder')}"/>
-        <button type="submit"><f:translate key="search">Search</f:translate></button>
-        <div class="tx-quickfinder-searchbox-results"></div>
-    </f:form>
-
-</f:section>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://typo3.org/ns/TYPO3Fluid/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:layout name="Default" />
+    <f:section name="main">
+        <f:form pageUid="{settings.searchPid}" controller="Search">
+            <input
+                type="text"
+                class="tx-quickfinder-searchbox-sword"
+                name="tx_indexedsearch[sword]"
+                value=""
+                placeholder="{f:translate(key: 'search-placeholder')}"
+                data-typo3-ajax-url="{f:uri.page(pageType: '1662617600', absolute: 1, noCache: 1)}"
+            >
+            <button type="submit">{f:translate(key: 'search')}</button>
+            <div class="tx-quickfinder-searchbox-results"></div>
+        </f:form>
+    </f:section>
+</html>

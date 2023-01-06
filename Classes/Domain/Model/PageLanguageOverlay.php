@@ -1,126 +1,96 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\Domain\Model;
 
-/**
- * Class PageLanguageOverlay
- * @package Sunzinet\SzQuickfinder\Domain\Model
- */
 class PageLanguageOverlay extends AbstractSearch
 {
     /**
-     * title
-     *
      * @var string
      */
-    protected $title;
+    protected $title = '';
 
     /**
-     * url
-     *
      * @var string
      */
-    protected $url;
+    protected $url = '';
 
     /**
-     * subtitle
-     *
      * @var string
      */
-    protected $subtitle;
+    protected $subtitle = '';
 
     /**
-     * keywords
-     *
      * @var string
      */
-    protected $keywords;
+    protected $keywords = '';
 
     /**
-     * author
-     *
      * @var string
      */
-    protected $author;
+    protected $author = '';
 
     /**
-     * breadcrumb
-     *
      * @var string
      */
-    protected $breadcrumb;
+    protected $breadcrumb = '';
 
     /**
-     * Returns the title
-     *
-     * @return string $title
+     * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * Returns the url
-     *
-     * @return string $url
+     * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
     /**
-     * Returns the subtitle
-     *
-     * @return string $subtitle
+     * @return string
      */
-    public function getSubtitle()
+    public function getSubtitle(): string
     {
         return $this->subtitle;
     }
 
     /**
-     * Returns the keywords
-     *
-     * @return string $keywords
+     * @return string
      */
-    public function getKeywords()
+    public function getKeywords(): string
     {
         return $this->keywords;
     }
 
     /**
-     * Returns the author
-     *
-     * @return string $author
+     * @return string
      */
-    public function getAuthor()
+    public function getAuthor(): string
     {
         return $this->author;
     }
 
     /**
-     * Returns the breadcrumb
-     *
-     * @return string $breadcrumb
+     * @return string
      */
-    public function getBreadcrumb()
+    public function getBreadcrumb(): string
     {
         return $this->breadcrumb;
     }
 
     /**
-     * Sets the breadcrumb
-     *
      * @param string $breadcrumb
-     * @return PageLanguageOverlay
+     * @return self
      */
-    public function setBreadcrumb($breadcrumb)
+    public function setBreadcrumb(string $breadcrumb): self
     {
         $this->breadcrumb = $breadcrumb;
-
         return $this;
     }
 }

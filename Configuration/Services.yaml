@@ -1,9 +1,8 @@
 services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-        public: false
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
 
-    Sunzinet\SzQuickfinder\:
-        resource: '../Classes/*'
-
+  Sunzinet\SzQuickfinder\:
+    resource: '../Classes/*'

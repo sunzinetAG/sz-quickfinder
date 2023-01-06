@@ -1,27 +1,24 @@
-{namespace sz=Sunzinet\SzQuickfinder\ViewHelpers}
-
-<f:layout name="Default"/>
-
-<f:section name="main">
-
-    <f:translate key="search-quick">Quick search</f:translate>
-
-    <div class="results-drop">
-        <f:for each="{results}" as="result" key="sectionName">
-            <f:if condition="{result}">
-                <div class="{sectionName}-results results">
-                    <strong class="results-headline">{sectionName -> sz:format.ucfirst()}</strong>
-                    <div class="results-list">
-                        <f:render partial="result{sectionName -> sz:format.ucfirst()}" arguments="{results : result}"/>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://typo3.org/ns/TYPO3Fluid/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+    <f:layout name="Default" />
+    <f:section name="main">
+        {f:translate(key: 'search-quick')}
+        <div class="results-drop">
+            <f:for each="{results}" as="result" key="sectionName">
+                <f:if condition="{result}">
+                    <div class="{sectionName}-results results">
+                        <f:variable name="capitalizedSectionName" value="{f:format.case(mode: 'capital', value: '{sectionName}')}" />
+                        <strong class="results-headline">{capitalizedSectionName}</strong>
+                        <div class="results-list">
+                            <f:render partial="result{capitalizedSectionName}" arguments="{results : result}" />
+                        </div>
                     </div>
-                 </div>
-            </f:if>
-        </f:for>
-    </div>
-    <div class="search-holder">
-        <button type="submit" class="btn-search">
-            <f:translate key="search-all">Search all</f:translate>
-        </button>
-    </div>
-
-</f:section>
+                </f:if>
+            </f:for>
+        </div>
+        <div class="search-holder">
+            <button type="submit" class="btn-search">
+                {f:translate(key: 'search-all')}
+            </button>
+        </div>
+    </f:section>
+</html>

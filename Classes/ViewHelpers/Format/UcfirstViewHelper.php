@@ -1,32 +1,45 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\ViewHelpers\Format;
 
+use Closure;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 
 /**
- * Class UcfirstViewHelper
- * @package Sunzinet\SzQuickfinder\ViewHelpers\Format
+ * @deprecated
  */
-class UcfirstViewHelper extends AbstractViewHelper
+final class UcfirstViewHelper extends AbstractViewHelper
 {
+    use CompileWithContentArgumentAndRenderStatic;
+
     /**
-     * Make a string's first character uppercase
-     *
-     * @return string
+     * @return void
      */
-    public function render()
+    public function initializeArguments(): void
     {
-        $string = $this->renderChildren();
-        if (!is_string($string)) {
-            throw new \InvalidArgumentException('Parameter $searchString must be of type string', 1440585046);
-        }
+        $this->registerArgument('string', 'string', 'String which first char should be uppercase.');
+    }
 
-        if ($string === '') {
-            throw new \InvalidArgumentException('Given String must not be Empty', 1440581637);
-        }
-
-        return ucfirst($string);
+    /**
+     * @param array $arguments
+     * @param Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     * @return string
+     * @deprecated
+     */
+    public static function renderStatic(
+        array $arguments,
+        Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ): string {
+        trigger_error(
+            'ViewHelper "Ucfirst" from EXT:sz_quickfinder is deprecated since version 6.0.0-dev, will be removed in version 6.0.0. Use f:format.case() instead.',
+            E_USER_DEPRECATED
+        );
+        return ucfirst($renderChildrenClosure());
     }
 }
