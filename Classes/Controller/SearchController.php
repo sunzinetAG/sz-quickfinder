@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Sunzinet\SzQuickfinder\Controller;
 
+use Psr\Http\Message\ResponseInterface;
 use Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository;
+use Sunzinet\SzQuickfinder\Domain\Repository\SuggestionRepository;
 use Sunzinet\SzQuickfinder\Search;
 use Sunzinet\SzQuickfinder\Searchable;
 use Sunzinet\SzQuickfinder\SearchResult;
 use Sunzinet\SzQuickfinder\Settings\TyposcriptSettings;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class SearchController extends ActionController
@@ -20,26 +23,37 @@ class SearchController extends ActionController
     protected $searchRepository;
 
     /**
-     * @param SearchRepository $searchRepository
+     * @var SuggestionRepository
      */
-    public function __construct(SearchRepository $searchRepository)
+    protected SuggestionRepository $suggestionRepository;
+
+    /**
+     * @param SearchRepository $searchRepository
+     * @param SuggestionRepository $suggestionRepository
+     */
+    public function __construct(SearchRepository $searchRepository, SuggestionRepository $suggestionRepository)
     {
         $this->searchRepository = $searchRepository;
+        $this->suggestionRepository = $suggestionRepository;
     }
 
     /**
-     * @return void
+     * @return ResponseInterface
      */
-    public function indexAction(): void
+    public function indexAction(): ResponseInterface
     {
-        $this->view->assign('searchPid', $this->settings['searchPid']);
+        $this->view->assignMultiple([
+            'searchPid' => $this->settings['searchPid'],
+            'suggestions' => $this->suggestionRepository->findAll(),
+        ]);
+        return $this->htmlResponse();
     }
 
     /**
      * @param string $searchString
-     * @return void
+     * @return ResponseInterface
      */
-    public function autocompleteAction(string $searchString): void
+    public function autocompleteAction(string $searchString): ResponseInterface
     {
         $results = [];
         $resultCount = [];
@@ -74,7 +88,9 @@ class SearchController extends ActionController
             $results[$sectionName] = $repository->executeCustomSearch();
 
             $resultCount[$sectionName] = $results[$sectionName]->count();
-            $results[$sectionName] = array_slice($results[$sectionName]->toArray(), 0, $search->getSettings()->getMaxResults());
+            if($search->getSettings()->getDisplayMaxResults()) {
+                $results[$sectionName] = array_slice($results[$sectionName]->toArray(), 0, $search->getSettings()->getDisplayMaxResults());
+            }
 
             $repository->reset();
         }
@@ -83,19 +99,25 @@ class SearchController extends ActionController
             'searchString' => $searchString,
             'results' => $results,
             'resultCount' => $resultCount,
+            'resultCountOverall' => array_sum($resultCount),
+            'suggestions' => $this->suggestionRepository->findAll(),
         ]);
+        return $this->htmlResponse();
     }
 
     /**
      * Forwards to EXT:indexed_search
      *
      * @param string $string
-     * @return void
+     * @return ResponseInterface
      */
-    public function searchAction(string $string): void
+    public function searchAction(string $string): ResponseInterface
     {
         $params = ['search' => ['searchWords' => $string, 'searchParams' => $string, 'sword' => $string]];
-        $this->forward('search', 'Search', 'IndexedSearch', $params);
+        return (new ForwardResponse('search'))
+            ->withControllerName('Search')
+            ->withExtensionName('IndexedSearch')
+            ->withArguments($params);
     }
 
     /**

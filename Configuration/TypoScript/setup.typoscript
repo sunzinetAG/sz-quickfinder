@@ -24,6 +24,9 @@ plugin.tx_szquickfinder {
 
     global {
       regEx = %|%
+      // set maxResults to 0 and this to limit results AND access the number of total results in template through
+      // {resultCount}
+      displayMaxResults = 0
       maxResults = 3
       includeNavHiddenPages = 0
       orderBy = uid
@@ -100,11 +103,11 @@ ajaxRequest {
     pluginName = Pi1
     controller = Search
     action = autocomplete
-  }
 
-  view =< plugin.tx_szquickfinder.view
-  persistence =< plugin.sz_quickfinder.persistence
-  settings =< plugin.sz_quickfinder.settings
+    view =< plugin.tx_szquickfinder.view
+    persistence =< plugin.tx_szquickfinder.persistence
+    settings =< plugin.tx_szquickfinder.settings
+  }
 }
 
 szQuickfinderAutocomplete = PAGE
@@ -123,11 +126,11 @@ szQuickfinderAutocomplete {
     extensionName = SzQuickfinder
     pluginName = Autocomplete
     controller = Search
-  }
 
-  view =< plugin.tx_szquickfinder.view
-  persistence =< plugin.sz_quickfinder.persistence
-  settings =< plugin.sz_quickfinder.settings
+    view =< plugin.tx_szquickfinder.view
+    persistence =< plugin.tx_szquickfinder.persistence
+    settings =< plugin.tx_szquickfinder.settings
+  }
 }
 
 page {

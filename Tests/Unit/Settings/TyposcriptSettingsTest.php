@@ -213,9 +213,4 @@ class TyposcriptSettingsTest extends \Nimut\TestingFramework\TestCase\UnitTestCa
         $this->assertSame(['foo', 'bar'], $subject->getParams());
         $this->assertSame([0 => '1234'], $subject->getBlacklistPid());
     }
-
-    public function tearDown()
-    {
-        unset($GLOBALS['TYPO3_DB']);
-    }
 }
