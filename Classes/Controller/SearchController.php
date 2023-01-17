@@ -57,6 +57,7 @@ class SearchController extends ActionController
     {
         $results = [];
         $resultCount = [];
+        $searchString = urldecode($searchString);
         $customSearchArray = $this->settings['customSearch'];
         foreach ($customSearchArray as $sectionName => $customSearch) {
             $search = GeneralUtility::makeInstance($customSearch['class']);
