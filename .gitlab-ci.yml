@@ -1,0 +1,15 @@
+stages:
+  - deploy
+
+default:
+  image: alpine:3.17.1
+
+deploy:
+  stage: deploy
+  before_script:
+    - apk update
+    - apk add curl
+  script:
+    - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=${CI_COMMIT_TAG} "${CI_API_V4_URL}/projects/$CI_PROJECT_ID/packages/composer"'
+  rules:
+    - if: $CI_COMMIT_TAG
