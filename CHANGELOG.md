@@ -1,5 +1,10 @@
 # Change Log
 
+## 6.1.0 - 2023-10-04
+
+* 2023-06-15 [TASK] Allow PHP 8.2.* (Commit 697a82c by Christian Efthimoglou)
+* 2023-06-15 [BUGFIX] Fix small inconsistencies in code (Commit 5dd2b92 by Christian Efthimoglou)
+
 ## [**6.0.0**](https://github.com/sunzinetAG/sz-quickfinder/tree/6.0.0) - 2021-10-04
 
 * Marked setup.txt as deprecated. Use setup.typoscript instead
@@ -69,7 +74,7 @@
 ## [**2.1.2**](https://github.com/sunzinetAG/sz-quickfinder/tree/2.1.2)- 2014-10-07
 
 * Fixes a bug which displayed the breadcrumbseperator, even if the site was hidden
-* Only find datasets which are locate on visible sites 
+* Only find datasets which are locate on visible sites
 
 ## [**2.1.1**](https://github.com/sunzinetAG/sz-quickfinder/tree/2.1.1)- 2014-09-11
 
