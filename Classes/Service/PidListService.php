@@ -55,8 +55,9 @@ class PidListService
 
         foreach ($storagePids as $pkey => $pid) {
             $page = $pageRepository->getPage_noCheck($pid);
+            $dokType = (int) ($page['doktype'] ?? 0);
             if (
-                (int) $page['doktype'] === PageRepository::DOKTYPE_DEFAULT
+                $dokType === PageRepository::DOKTYPE_DEFAULT
                 && count($pageRepository->getPage($pid)) === 0
             ) {
                 unset($storagePids[$pkey]);

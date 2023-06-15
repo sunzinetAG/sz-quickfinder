@@ -117,7 +117,6 @@ class SearchRepository extends Repository implements Searchable
     public function reset(): void
     {
         $this->query = null;
-        $this->settings = null;
         $this->logicalAnd = [];
         $this->logicalOr = [];
         $this->constraints = [];
