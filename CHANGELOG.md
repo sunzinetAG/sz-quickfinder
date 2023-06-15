@@ -1,5 +1,9 @@
 # Change Log
 
+## 6.1.1 - 2023-10-04
+
+* Add pipeline
+
 ## 6.1.0 - 2023-10-04
 
 * 2023-06-15 [TASK] Allow PHP 8.2.* (Commit 697a82c by Christian Efthimoglou)
