@@ -139,6 +139,7 @@ class SearchRepository extends Repository implements Searchable
                         $this->class->getSettings()->getIncludeNavHiddenPages()
                     );
                 }
+                $this->logicalAnd[] = $this->query->equals('no_search', 0);
                 $this->logicalAnd[] = $this->query->logicalNot($this->query->equals('doktype', 254));
                 $this->logicalAnd[] = $this->query->logicalNot($this->query->equals('doktype', 4));
                 break;
