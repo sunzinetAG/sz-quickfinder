@@ -9,7 +9,7 @@ class User extends AbstractSearch
     /**
      * @var string
      */
-    protected $username = '';
+    protected string $username = '';
 
     /**
      * @return string

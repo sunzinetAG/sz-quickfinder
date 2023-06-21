@@ -9,32 +9,32 @@ class Page extends AbstractSearch
     /**
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * @var string
      */
-    protected $url = '';
+    protected string $url = '';
 
     /**
      * @var string
      */
-    protected $subtitle = '';
+    protected string $subtitle = '';
 
     /**
      * @var string
      */
-    protected $keywords = '';
+    protected string $keywords = '';
 
     /**
      * @var string
      */
-    protected $author = '';
+    protected string $author = '';
 
     /**
      * @var string
      */
-    protected $breadcrumb = '';
+    protected string $breadcrumb = '';
 
     /**
      * @return string

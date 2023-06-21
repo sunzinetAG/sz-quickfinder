@@ -9,27 +9,27 @@ class File extends AbstractSearch
     /**
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * @var string
      */
-    protected $description = '';
+    protected string $description = '';
 
     /**
      * @var int
      */
-    protected $uidForeign = 0;
+    protected int $uidForeign = 0;
 
     /**
      * @var string
      */
-    protected $tablenames = '';
+    protected string $tablenames = '';
 
     /**
      * @var string
      */
-    protected $fieldname = '';
+    protected string $fieldname = '';
 
     /**
      * @return string

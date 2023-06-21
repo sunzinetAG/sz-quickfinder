@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types = 1);
 
 namespace Sunzinet\SzQuickfinder\Service;
@@ -9,18 +10,17 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryHelper;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Domain\Repository\PageRepository;
-use TYPO3\CMS\Core\Database\QueryGenerator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class PidListService
 {
     /**
-     * @param array $storagePageIds
-     * @param array $blockedPageIds
+     * @param iterable $storagePageIds
+     * @param iterable $blockedPageIds
      * @return array
      */
-    public function generate(array $storagePageIds, array $blockedPageIds): array
+    public function generate(iterable $storagePageIds, iterable $blockedPageIds): array
     {
         $allowedPageIds = [];
         $disallowedPageIds = [];

@@ -9,17 +9,17 @@ class Content extends AbstractSearch
     /**
      * @var string
      */
-    protected $header = '';
+    protected string $header = '';
 
     /**
      * @var string
      */
-    protected $bodytext = '';
+    protected string $bodytext = '';
 
     /**
      * @var string
      */
-    protected $subheader = '';
+    protected string $subheader = '';
 
     /**
      * @return string

@@ -20,7 +20,7 @@ class SearchController extends ActionController
     /**
      * @var SearchRepository
      */
-    protected $searchRepository;
+    protected SearchRepository $searchRepository;
 
     /**
      * @var SuggestionRepository

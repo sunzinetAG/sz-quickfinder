@@ -12,7 +12,7 @@ final class HighlightViewHelper extends AbstractViewHelper
     /**
      * @var string
      */
-    private $searchString = '';
+    private string $searchString = '';
 
     public function initializeArguments(): void
     {
