@@ -16,7 +16,7 @@ abstract class AbstractSearch extends AbstractEntity implements SearchResultInte
     /**
      * @var TyposcriptSettings
      */
-    protected $settings;
+    protected TyposcriptSettings $settings;
 
     /**
      * @param TyposcriptSettings $settings

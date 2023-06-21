@@ -1,38 +1,42 @@
 <?php
 
-defined('TYPO3_MODE') || exit;
+use Sunzinet\SzQuickfinder\Controller\SearchController;
+use Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
+defined('TYPO3') || exit;
 
 // Configure plugins
 (static function (): void {
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SzQuickfinder',
         'Pi1',
-        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'index, search, autocomplete']
+        [SearchController::class => 'index, search, autocomplete']
     );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SzQuickfinder',
         'Index',
-        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'index'],
-        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'index']
+        [SearchController::class => 'index'],
+        [SearchController::class => 'index']
     );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SzQuickfinder',
         'Search',
-        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'search'],
-        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'search']
+        [SearchController::class => 'search'],
+        [SearchController::class => 'search']
     );
-    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    ExtensionUtility::configurePlugin(
         'SzQuickfinder',
         'Autocomplete',
-        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'autocomplete'],
-        [\Sunzinet\SzQuickfinder\Controller\SearchController::class => 'autocomplete']
+        [SearchController::class => 'autocomplete'],
+        [SearchController::class => 'autocomplete']
     );
 })();
 
 // Setting ext config
 (static function (): void {
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['sz_quickfinder']['default']['repository'] =
-        \Sunzinet\SzQuickfinder\Domain\Repository\SearchRepository::class;
+        SearchRepository::class;
 })();
 
 // Adjust global TYPO3 config variables

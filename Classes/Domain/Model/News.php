@@ -9,7 +9,7 @@ class News extends AbstractSearch
     /**
      * @var string
      */
-    protected $title;
+    protected string $title;
 
     /**
      * @return string

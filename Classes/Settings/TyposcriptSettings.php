@@ -11,69 +11,69 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
     /**
      * @var string
      */
-    protected $class = '';
+    protected string $class = '';
 
     /**
      * @var string
      */
-    protected $regEx = '%|%';
+    protected string $regEx = '%|%';
 
     /**
      * @var int
      */
-    protected $maxResults = 3;
+    protected int $maxResults = 3;
 
     /**
      * @var int
      */
-    protected $displayMaxResults = 0;
+    protected int $displayMaxResults = 0;
 
     /**
      * @var bool
      */
-    protected $includeNavHiddenPages = false;
+    protected bool $includeNavHiddenPages = false;
 
     /**
      * @var array
      */
-    protected $searchFields = ['title'];
+    protected iterable $searchFields = ['title'];
 
     /**
      * Necessary for document search
      *
      * @var array
      */
-    protected $allowedFieldnames = ['media'];
+    protected array $allowedFieldnames = ['media'];
 
     /**
      * @var string
      */
-    protected $searchString = '';
+    protected string $searchString = '';
 
     /**
      * @var string
      */
-    protected $orderBy = 'uid';
+    protected string $orderBy = 'uid';
 
     /**
      * @var bool
      */
-    protected $ascending = true;
+    protected bool $ascending = true;
 
     /**
      * @var string
      */
-    protected $script = '';
+    protected string $script = '';
 
     /**
      * @var array
      */
-    protected $params = [];
+    protected array $params = [];
 
     /**
      * @var array
      */
-    protected $blacklistPid = [];
+    protected array $blacklistPid = [];
 
     /**
      * @param array $settings
@@ -151,7 +151,7 @@ class TyposcriptSettings implements TyposcriptSettingsInterface
      * @param int $displayMaxResults
      * @return TyposcriptSettings
      */
-    public function setDisplayMaxResults(int $displayMaxResults): TyposcriptSettings
+    public function setDisplayMaxResults(int $displayMaxResults): self
     {
         $this->displayMaxResults = $displayMaxResults;
         return $this;

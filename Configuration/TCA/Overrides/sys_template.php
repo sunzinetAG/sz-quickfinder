@@ -1,6 +1,6 @@
 <?php
 
-defined('TYPO3_MODE') || exit;
+defined('TYPO3') || exit;
 
 (static function (): void {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(

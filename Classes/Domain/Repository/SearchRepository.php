@@ -27,32 +27,32 @@ class SearchRepository extends Repository implements Searchable
     /**
      * @var string
      */
-    public $className = '';
+    public string $className = '';
 
     /**
      * @var Search
      */
-    protected $class;
+    protected Search $class;
 
     /**
      * @var array
      */
-    protected $logicalAnd = [];
+    protected array $logicalAnd = [];
 
     /**
      * @var array
      */
-    protected $logicalOr = [];
+    protected array $logicalOr = [];
 
     /**
      * @var array
      */
-    protected $constraints = [];
+    protected array $constraints = [];
 
     /**
-     * @var QueryInterface
+     * @var QueryInterface|null
      */
-    protected $query;
+    protected ?QueryInterface $query = null;
 
     /**
      * @param Search $class
@@ -62,13 +62,6 @@ class SearchRepository extends Repository implements Searchable
     {
         $this->class = $class;
         $this->className = $class->getSettings()->getClass();
-        if (! self::useOldLanguageHandling()) {
-            return;
-        }
-
-        if ($class->getSettings()->getClass() === Page::class and (int) GeneralUtility::_GP('L') !== 0) {
-            $this->className = PageLanguageOverlay::class;
-        }
     }
 
     /**
@@ -181,11 +174,7 @@ class SearchRepository extends Repository implements Searchable
             ->setRespectStoragePage(false)
             ->setRespectSysLanguage(true);
 
-        if (self::useOldLanguageHandling()) {
-            $languageId = (int) GeneralUtility::_GP('L');
-        } else {
-            $languageId = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'id', 0);
-        }
+        $languageId = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'id', 0);
         $this->query->getQuerySettings()->setLanguageUid($languageId);
     }
 
@@ -206,13 +195,5 @@ class SearchRepository extends Repository implements Searchable
                 $searchString
             );
         }
-    }
-
-    /**
-     * @return bool
-     */
-    private static function useOldLanguageHandling(): bool
-    {
-        return GeneralUtility::makeInstance(Typo3Version::class)->getMajorVersion() < 10;
     }
 }
